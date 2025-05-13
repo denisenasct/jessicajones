@@ -13,9 +13,9 @@ const historiaElyas = `Elyas decifra mentiras. Busca Aurora para expor a origem 
 
 const respostasModulo1 = {
   "veritas.boot();": `Sistema carregado. Infiltração iniciada.<br><br><strong>Aurora conectada...</strong><br><em>${historiaAurora}</em><br><br>Digite <code>aurora.scan();</code>`,
-  "aurora.scan();": `Analisando...<br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir(\"¬P\")</code>`,
-  'aurora.concluir("¬P")': `Conclusão válida. Mentira identificada: "O colapso não foi causado por IA."<br><br><strong>Elyas conectado...</strong><br><em>${historiaElyas}</em><br><br>Digite <code>elyas.track(\"aurora\")</code>`,
-  'elyas.track("aurora")': `Fragmentos encontrados:<br><strong>P ∨ Q</strong><br>P: Aurora escapou.<br>Q: Elyas foi traído.<br>Digite: <code>elyas.inferir(\"P ou Q\")</code>`,
+  "aurora.scan();": `Analisando...<br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code>`,
+  'aurora.concluir("¬P")': `Conclusão válida. Mentira identificada: "O colapso não foi causado por IA."<br><br><strong>Elyas conectado...</strong><br><em>${historiaElyas}</em><br><br>Digite <code>elyas.track("aurora")</code>`,
+  'elyas.track("aurora")': `Fragmentos encontrados:<br><strong>P ∨ Q</strong><br>P: Aurora escapou.<br>Q: Elyas foi traído.<br>Digite: <code>elyas.inferir("P ou Q")</code>`,
   'elyas.inferir("P ou Q")': `Inferência aceita. Ambos sobreviveram.<br><br><strong>Digite <code>veritas.nivel(2)</code> para continuar.</strong>`
 };
 
@@ -107,7 +107,7 @@ const finais = {
   "publicar.verdade();": "Você publicou tudo. O caos começou, mas a verdade prevalece. Fim verdadeiro."
 };
 
-// Comando principal
+// Comando principal no terminal
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const cmd = input.value.trim();
@@ -115,21 +115,31 @@ input.addEventListener("keydown", function (e) {
 
     if (moduloAtual === 1 && respostasModulo1[cmd]) {
       resposta.innerHTML += `<p>${respostasModulo1[cmd]}</p>`;
+
+      if (cmd === "veritas.boot();") {
+        document.getElementById("faseAurora").style.display = "block";
+      }
+
     } else if (cmd === "veritas.nivel(2)") {
       moduloAtual = 2;
-      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code>, <code>mover(\"norte\")</code> e <code>interagir(\"local\")</code></p>`;
+      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code>, <code>mover("norte")</code> e <code>interagir("local")</code></p>`;
       mostrarLocalAtual();
+
     } else if (moduloAtual === 2 && cmd.startsWith("mover(") && cmd.endsWith(")")) {
       const dir = cmd.slice(7, -2);
       mover(dir);
+
     } else if (moduloAtual === 2 && cmd.startsWith("interagir(") && cmd.endsWith(")")) {
       const obj = cmd.slice(10, -2);
       interagirCom(obj);
+
     } else if (cmd === "veritas.nivel(3)") {
       moduloAtual = 3;
       resposta.innerHTML += `<p><strong>[LIBERDADE]</strong> Você chegou ao núcleo lógico. Digite <code>liberdade.existe();</code></p>`;
+
     } else if (moduloAtual === 3 && respostasModulo3[cmd]) {
       resposta.innerHTML += `<p>${respostasModulo3[cmd]}</p>`;
+
     } else if (cmd === "veritas.nivel(4)") {
       moduloAtual = 4;
       finaisDesbloqueados = true;
@@ -137,8 +147,10 @@ input.addEventListener("keydown", function (e) {
         <code>desligar.fakeMind();</code><br>
         <code>reprogramar.fakeMind();</code><br>
         <code>publicar.verdade();</code></p>`;
+
     } else if (moduloAtual === 4 && finaisDesbloqueados && finais[cmd]) {
       resposta.innerHTML += `<p>${finais[cmd]}</p>`;
+
     } else {
       resposta.innerHTML += `<p>Comando não reconhecido.</p>`;
     }
@@ -147,5 +159,17 @@ input.addEventListener("keydown", function (e) {
     resposta.scrollTop = resposta.scrollHeight;
   }
 });
+
+// Executar aurora.scan(); via botão (HTML externo)
+function verificarAurora() {
+  const valor = document.getElementById("inputAurora").value.trim();
+  const saida = document.getElementById("respostaAurora");
+
+  if (valor === "aurora.scan();") {
+    saida.innerHTML = `Analisando...<br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code>`;
+  } else {
+    saida.innerHTML = "Comando inválido. Tente novamente.";
+  }
+}
 
 
