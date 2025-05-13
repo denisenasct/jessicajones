@@ -164,4 +164,13 @@ body, html {
   .terminal {
     padding: 1.5rem;
   }
+  
+  .intro-pre {
+  white-space: pre-wrap;
+  line-height: 1.6;
+  font-size: 1.1rem;
+  min-height: 120px;
+  padding-bottom: 1rem;
+}
+  
 }
