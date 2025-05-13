@@ -152,18 +152,21 @@ function verificarAurora() {
   const valor = document.getElementById("inputAurora").value.trim();
   const saida = document.getElementById("respostaAurora");
 
-  if (valor === "aurora.scan();") {
+  if (valor === "") {
+    saida.innerHTML = "Digite um comando válido.";
+  } else if (valor === "aurora.scan();") {
     saida.innerHTML = "Scan iniciado. Decodificando verdades ocultas...";
     setTimeout(() => {
       saida.innerHTML += `<br><br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code>`;
-    }, 3000);
+    }, 2000);
   } else if (valor === 'aurora.concluir("¬P")') {
-    saida.innerHTML = `Conclusão válida. Mentira identificada: "O colapso não foi causado por IA."
-    <br><br><strong>Elyas conectado...</strong>
-    <br><em>Elyas decifra mentiras. Busca Aurora para expor a origem do FakeMind.</em>
-    <br><br>Digite: <code>elyas.track("aurora")</code> no terminal.`;
+    saida.innerHTML += `<br><br>✔️ Conclusão válida.<br>
+    <em>Mentira identificada: "O colapso não foi causado por IA."</em><br><br>
+    <strong>Elyas conectado...</strong><br>
+    <em>Elyas decifra mentiras. Busca Aurora para expor a origem do FakeMind.</em><br><br>
+    Digite no terminal principal: <code>elyas.track("aurora")</code>`;
   } else {
-    saida.innerHTML = "Comando inválido. Tente novamente.";
+    saida.innerHTML += `<br>Comando inválido.`;
   }
 
   document.getElementById("inputAurora").value = "";
