@@ -200,6 +200,29 @@ button:hover {
     padding: 1.5rem;
   }
 
+  .avatar {
+  width: 120px;
+  border-radius: 50%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+#inputComando {
+  background: black;
+  color: #00ff00;
+  border: 1px solid #00ff00;
+  padding: 0.5rem;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+#inputComando:focus {
+  outline: none;
+  box-shadow: 0 0 10px #00ff00;
+}
   button {
     width: 100%;
     margin-top: 0.5rem;
