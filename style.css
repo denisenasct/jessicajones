@@ -5,7 +5,7 @@ body, html {
   background-color: black;
   color: #00ff00;
   height: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 #tela-intro {
@@ -20,6 +20,7 @@ body, html {
   justify-content: center;
   flex-direction: column;
   z-index: 1;
+  padding: 1rem;
 }
 
 .intro-matrix-overlay::before {
@@ -45,7 +46,7 @@ body, html {
   text-align: center;
   box-shadow: 0 0 25px #00ff00;
   max-width: 700px;
-  margin: auto;
+  width: 100%;
 }
 
 .intro-texto h1 {
@@ -80,11 +81,12 @@ body, html {
 
 .terminal-bg {
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
+  box-sizing: border-box;
 }
 
 .terminal {
@@ -95,6 +97,7 @@ body, html {
   border-radius: 10px;
   box-shadow: 0 0 20px #00ff00;
   text-align: left;
+  box-sizing: border-box;
 }
 
 #avatarContainer {
@@ -107,6 +110,7 @@ body, html {
   height: 150px;
   border-radius: 50%;
   box-shadow: 0 0 15px #00ff00;
+  object-fit: cover;
 }
 
 #narrativa {
@@ -154,7 +158,10 @@ body, html {
 
   #opcoes button {
     width: 100%;
-    margin-bottom: 0.5rem;
+    margin: 10px 0;
+  }
+
+  .terminal {
+    padding: 1.5rem;
   }
 }
-
