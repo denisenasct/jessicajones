@@ -1,0 +1,139 @@
+/* ======================== */
+/* Fonte e Reset Geral      */
+/* ======================== */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', monospace;
+  background-color: black;
+  color: #00ff00;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ======================== */
+/* Tela Inicial Cinemática  */
+/* ======================== */
+#tela-intro {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url('img/apocalipse.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.intro-matrix-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/matrix-numbers.gif');
+  background-size: cover;
+  opacity: 0.15;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.intro-texto {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2rem;
+  border-radius: 10px;
+  max-width: 700px;
+  color: #00ff00;
+  text-align: center;
+}
+
+.intro-texto h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.intro-texto p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  min-height: 100px;
+}
+
+.intro-texto button {
+  margin-top: 2rem;
+  background: transparent;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.intro-texto button:hover {
+  background: #00ff00;
+  color: black;
+}
+
+/* ======================== */
+/* Terminal Visual Matrix   */
+/* ======================== */
+.terminal-bg {
+  width: 100%;
+  height: 100vh;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.terminal {
+  max-width: 800px;
+  width: 90%;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00ff00;
+  color: #00ff00;
+  font-size: 1rem;
+}
+
+.prompt {
+  color: #00ff00;
+}
+
+#inputComando {
+  background: black;
+  color: #00ff00;
+  border: none;
+  outline: none;
+  width: 80%;
+  font-family: 'Courier New', monospace;
+  font-size: 1rem;
+}
+
+.typing {
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: .15em solid #00ff00;
+  animation: typing 2s steps(30, end), blink .75s step-end infinite;
+}
+
+.delay1 { animation-delay: 2s; }
+.delay2 { animation-delay: 4s; }
+.delay3 { animation-delay: 6s; }
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  from, to { border-color: transparent }
+  50% { border-color: #00ff00; }
+}
