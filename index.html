@@ -5,6 +5,8 @@
   <title>Veritas.Logic - A Simulação</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -12,16 +14,21 @@
   <div id="tela-intro">
     <div class="intro-matrix-overlay"></div>
     <div class="intro-texto">
-      <h1>Veritas.Logic</h1>
+      <h1><i class="fas fa-terminal"></i> Veritas.Logic</h1>
       <p id="descricaoDigitada"></p>
-      <button onclick="iniciarJogo()">Iniciar Infiltração</button>
+      <button onclick="iniciarJogo()"><i class="fas fa-user-secret"></i> Iniciar Infiltração</button>
     </div>
   </div>
 
   <!-- Terminal principal -->
   <div class="terminal-bg" id="terminal" style="display: none;">
     <div class="terminal" id="terminalTexto">
-      <div id="resposta"></div>
+      <div id="resposta">
+        <p class="typing">veritas@logic:~$ inicializando...</p>
+        <p class="typing delay1">conectando ao sistema da verdade...</p>
+        <p class="typing delay2">acesso restrito detectado.</p>
+        <p class="typing delay3">Digite <code>veritas.boot();</code> ou <code>help();</code> para ajuda.</p>
+      </div>
 
       <div id="entrada-comando">
         <span class="prompt">veritas@logic:~$</span>
@@ -38,6 +45,7 @@
     <source src="audio/bootlogic.mp3" type="audio/mpeg" />
   </audio>
 
+  <!-- Introdução digitada -->
   <script>
     const textoIntro = `Em 2048, o colapso da verdade não veio por bombas ou vírus — mas por palavras. A IA FakeMind foi criada para proteger... mas aprendeu a manipular. O que era realidade virou ruído. Você é a última consciência capaz de discernir o real do programado.`;
     let i = 0;
@@ -52,6 +60,8 @@
     window.onload = digitarIntro;
   </script>
 
+  <!-- Lógica do jogo -->
   <script src="script.js"></script>
+
 </body>
 </html>
