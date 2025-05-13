@@ -1,6 +1,3 @@
-/* ======================== */
-/* Fonte e Reset Geral      */
-/* ======================== */
 body, html {
   margin: 0;
   padding: 0;
@@ -11,9 +8,6 @@ body, html {
   overflow: hidden;
 }
 
-/* ======================== */
-/* Tela Inicial Cinemática  */
-/* ======================== */
 #tela-intro {
   position: relative;
   width: 100%;
@@ -80,9 +74,6 @@ body, html {
   color: black;
 }
 
-/* ======================== */
-/* Terminal Visual Matrix   */
-/* ======================== */
 .terminal-bg {
   width: 100%;
   height: 100vh;
@@ -108,106 +99,6 @@ body, html {
   color: #00ff00;
 }
 
-#inputComando,
-#inputAurora {
-  background: black;
-  color: #00ff00;
-  border: 1px solid #00ff00;
-  outline: none;
-  width: 100%;
-  font-family: 'Courier New', monospace;
-  font-size: 1rem;
-  padding: 0.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  border-radius: 5px;
-}
-
-#inputAurora:focus {
-  outline: none;
-  box-shadow: 0 0 10px #00ff00;
-}
-
-#respostaAurora {
-  color: #00ff00;
-  font-family: 'Courier New', monospace;
-  margin-top: 1rem;
-  white-space: pre-wrap;
-}
-
-#faseAurora {
-  margin-top: 2rem;
-  border-top: 1px solid #00ff00;
-  padding-top: 1rem;
-}
-
-button {
-  background: transparent;
-  border: 1px solid #00ff00;
-  color: #00ff00;
-  padding: 8px 16px;
-  cursor: pointer;
-  font-size: 1rem;
-  border-radius: 4px;
-  transition: 0.3s;
-  font-family: 'Courier New', monospace;
-}
-
-button:hover {
-  background: #00ff00;
-  color: black;
-}
-
-.typing {
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: .15em solid #00ff00;
-  animation: typing 2s steps(30, end), blink .75s step-end infinite;
-}
-
-.delay1 { animation-delay: 2s; }
-.delay2 { animation-delay: 4s; }
-.delay3 { animation-delay: 6s; }
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink {
-  from, to { border-color: transparent }
-  50% { border-color: #00ff00; }
-}
-
-/* ======================== */
-/* Responsividade Celular   */
-/* ======================== */
-@media (max-width: 768px) {
-  .intro-texto h1 {
-    font-size: 2rem;
-  }
-
-  .intro-texto p {
-    font-size: 1rem;
-  }
-
-  .intro-texto {
-    padding: 1.5rem;
-  }
-
-  .terminal {
-    font-size: 0.95rem;
-    padding: 1.5rem;
-  }
-
-  .avatar {
-  width: 120px;
-  border-radius: 50%;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  box-shadow: 0 0 10px #00ff00;
-}
-
 #inputComando {
   background: black;
   color: #00ff00;
@@ -223,8 +114,12 @@ button:hover {
   outline: none;
   box-shadow: 0 0 10px #00ff00;
 }
-  button {
-    width: 100%;
-    margin-top: 0.5rem;
-  }
+
+.avatar {
+  width: 120px;
+  border-radius: 50%;
+  margin: 1rem auto;
+  display: block;
+  box-shadow: 0 0 10px #00ff00;
 }
+
