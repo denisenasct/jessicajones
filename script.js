@@ -1,9 +1,39 @@
 const narrativa = document.getElementById("narrativa");
 const opcoes = document.getElementById("opcoes");
 const avatar = document.getElementById("avatarContainer");
+const musica = document.getElementById("musicaFundo");
+const botaoSom = document.getElementById("toggleSom");
 
 let etapa = 0;
-let manipulacoes = 0;
+
+// Controle de som
+if (botaoSom) {
+  botaoSom.addEventListener("click", () => {
+    if (musica.muted) {
+      musica.muted = false;
+      botaoSom.textContent = "🔊 Som";
+    } else {
+      musica.muted = true;
+      botaoSom.textContent = "🔇 Mudo";
+    }
+  });
+}
+
+// Forçar início da música no mobile
+window.addEventListener("touchstart", () => {
+  if (musica && musica.paused) {
+    musica.volume = 0.5;
+    musica.play().catch(() => {});
+  }
+}, { once: true });
+
+// Início automático da música ao carregar a página
+window.addEventListener("DOMContentLoaded", () => {
+  if (musica) {
+    musica.volume = 0.5;
+    musica.play().catch(() => {});
+  }
+});
 
 const etapas = [
   {
