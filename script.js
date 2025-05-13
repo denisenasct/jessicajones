@@ -1,10 +1,9 @@
-// script.js — Veritas.Logic
+// script.js — Veritas.Logic com movimento WASD e mapa visual
 
-// DOM
 const input = document.getElementById("inputComando");
 const resposta = document.getElementById("resposta");
+const mapaVisual = document.getElementById("mapaVisual");
 
-// Estado do jogo
 let moduloAtual = 1;
 let localAtual = "centro";
 
@@ -20,7 +19,7 @@ const respostasModulo1 = {
   'elyas.inferir("P ou Q")': `Inferência aceita. Ambos sobreviveram.<br><br><strong>Digite <code>veritas.nivel(2)</code> para continuar.</strong>`
 };
 
-// ======== MÓDULO 2: REDE.RUÍNA ========
+// ======== MÓDULO 2: REDE.RUÍNA COM VISUAL ========
 const mapaRede = {
   centro: { norte: "antena", leste: "terminal", sul: "ruinas" },
   antena: { sul: "centro" },
@@ -35,14 +34,30 @@ const descritivoLocais = {
   ruinas: "As ruínas ecoam vozes antigas. Rastro de fake news detectado."
 };
 
+function mostrarLocalAtual() {
+  resposta.innerHTML += `<p><strong>[Local]</strong> ${descritivoLocais[localAtual]}</p>`;
+  if (mapaVisual) mapaVisual.textContent = `Local atual: ${localAtual.toUpperCase()}`;
+}
+
 function mover(direcao) {
   if (mapaRede[localAtual] && mapaRede[localAtual][direcao]) {
     localAtual = mapaRede[localAtual][direcao];
-    resposta.innerHTML += `<p><strong>[Movimento]</strong> ${descritivoLocais[localAtual]}</p>`;
+    mostrarLocalAtual();
   } else {
     resposta.innerHTML += `<p><strong>Não é possível ir para ${direcao}.</strong></p>`;
   }
 }
+
+// Movimento com teclas WASD
+document.addEventListener("keydown", function (e) {
+  if (moduloAtual === 2 && ["w", "a", "s", "d"].includes(e.key.toLowerCase())) {
+    const tecla = e.key.toLowerCase();
+    if (tecla === "w") mover("norte");
+    if (tecla === "a") mover("oeste");
+    if (tecla === "s") mover("sul");
+    if (tecla === "d") mover("leste");
+  }
+});
 
 // ======== MÓDULO 3: LIBERDADE ========
 const historiaFinal = `Você entrou em um campo de energia onde o FakeMind não tem domínio. Aqui, as proposições são reconstruídas.`;
@@ -51,7 +66,7 @@ const respostasModulo3 = {
   "veritas.finalizar();": `Você desativou o núcleo do FakeMind. A verdade está restaurada.<br><br><em>Jogo Finalizado</em>`
 };
 
-// ======== PROCESSADOR DE COMANDOS ========
+// ======== COMANDOS PRINCIPAIS ========
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const cmd = input.value.trim();
@@ -61,7 +76,8 @@ input.addEventListener("keydown", function (e) {
       resposta.innerHTML += `<p>${respostasModulo1[cmd]}</p>`;
     } else if (cmd.startsWith("veritas.nivel(2)")) {
       moduloAtual = 2;
-      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use comandos como <code>mover(\"norte\")</code> para se locomover.</p><p>${descritivoLocais[localAtual]}</p>`;
+      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code> ou <code>mover(\"norte\")</code> etc.</p>`;
+      mostrarLocalAtual();
     } else if (moduloAtual === 2 && cmd.startsWith("mover(") && cmd.endsWith(")")) {
       const dir = cmd.slice(7, -2);
       mover(dir);
