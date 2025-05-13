@@ -33,6 +33,19 @@
 
       <div id="resposta"></div>
 
+      <!-- Nova sequência após boot -->
+      <div id="faseAurora" style="display: none; margin-top: 2rem;">
+        <p>Sistema carregado. Infiltração iniciada.</p>
+        <p><strong>Aurora conectada...</strong></p>
+        <p><em>Aurora detectou ruídos nos protocolos da verdade. Seu módulo está dentro de loops de validação lógica.</em></p>
+        <p>Digite <code>aurora.scan();</code></p>
+
+        <input type="text" id="inputAurora" placeholder="Digite aurora.scan();" />
+        <button onclick="verificarAurora()">Executar</button>
+
+        <p id="respostaAurora"></p>
+      </div>
+
       <!-- Mini mapa visual -->
       <div id="mapaVisual" style="margin-top: 2rem;"></div>
     </div>
@@ -54,6 +67,7 @@
         setTimeout(digitarIntro, velocidade);
       }
     }
+
     window.onload = digitarIntro;
 
     function iniciarJogo() {
@@ -61,6 +75,31 @@
       document.getElementById("terminal").style.display = "block";
       const audio = document.getElementById("musicaFundo");
       if (audio && audio.paused) audio.play();
+    }
+
+    // Verifica comando digitado
+    document.getElementById("inputComando").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        const comando = e.target.value.trim();
+        if (comando === "veritas.boot();") {
+          document.getElementById("resposta").innerHTML = "";
+          document.getElementById("faseAurora").style.display = "block";
+        } else {
+          document.getElementById("resposta").innerHTML = "Comando não reconhecido.";
+        }
+      }
+    });
+
+    function verificarAurora() {
+      const valor = document.getElementById("inputAurora").value.trim();
+      const saida = document.getElementById("respostaAurora");
+
+      if (valor === "aurora.scan();") {
+        saida.innerHTML = "Scan iniciado. Decodificando verdades ocultas...";
+        // aqui pode iniciar nova fase
+      } else {
+        saida.innerHTML = "Comando inválido. Tente novamente.";
+      }
     }
   </script>
 
