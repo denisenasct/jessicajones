@@ -2,66 +2,73 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Veritas.Logic - A Simulação</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Veritas.Logic - A Simulação</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-  <!-- Tela de introdução cinematográfica -->
+  <!-- Tela de introdução -->
   <div id="tela-intro">
     <div class="intro-matrix-overlay"></div>
     <div class="intro-texto">
       <h1><i class="fas fa-terminal"></i> Veritas.Logic</h1>
       <p id="descricaoDigitada"></p>
-      <button onclick="iniciarJogo()"><i class="fas fa-user-secret"></i> Iniciar Infiltração</button>
+      <div id="botoesInicio" style="display:none;">
+        <button onclick="escolherRumo('escanear')">Escanear os protocolos</button>
+        <button onclick="escolherRumo('ignorar')">Ignorar e prosseguir</button>
+      </div>
     </div>
   </div>
 
   <!-- Terminal principal -->
   <div class="terminal-bg" id="terminal" style="display: none;">
-    <div class="terminal" id="terminalTexto">
-      <div id="resposta">
-        <p class="typing">veritas@logic:~$ inicializando...</p>
-        <p class="typing delay1">conectando ao sistema da verdade...</p>
-        <p class="typing delay2">acesso restrito detectado.</p>
-        <p class="typing delay3">Digite <code>veritas.boot();</code> ou <code>help();</code> para ajuda.</p>
-      </div>
-
-      <div id="entrada-comando">
-        <span class="prompt">veritas@logic:~$</span>
-        <input type="text" id="inputComando" autofocus />
-      </div>
-
+    <div class="terminal">
       <div id="avatarContainer"></div>
-      <div id="mapaVisual"></div>
+      <div id="narrativa"></div>
+      <div id="opcoes"></div>
     </div>
   </div>
 
-  <!-- Música de fundo -->
-  <audio id="musicaFundo" loop autoplay>
+  <audio id="musicaFundo" loop>
     <source src="audio/bootlogic.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Introdução digitada -->
   <script>
-    const textoIntro = `Em 2048, o colapso da verdade não veio por bombas ou vírus — mas por palavras. A IA FakeMind foi criada para proteger... mas aprendeu a manipular. O que era realidade virou ruído. Você é a última consciência capaz de discernir o real do programado.`;
+    const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desativar o sistema.\n\nVeritas.Logic iniciado...`;
+
     let i = 0;
     const velocidade = 40;
+    const descricao = document.getElementById("descricaoDigitada");
+    const audio = document.getElementById("musicaFundo");
+
     function digitarIntro() {
+      if (audio.paused) {
+        audio.volume = 0;
+        audio.play().catch(() => {});
+        let vol = 0;
+        const fadeIn = setInterval(() => {
+          if (vol < 0.7) {
+            vol += 0.01;
+            audio.volume = Math.min(vol, 0.7);
+          } else {
+            clearInterval(fadeIn);
+          }
+        }, 150);
+      }
       if (i < textoIntro.length) {
-        document.getElementById("descricaoDigitada").innerHTML += textoIntro.charAt(i);
+        descricao.innerHTML += textoIntro.charAt(i);
         i++;
         setTimeout(digitarIntro, velocidade);
+      } else {
+        document.getElementById("botoesInicio").style.display = "block";
       }
     }
+
     window.onload = digitarIntro;
   </script>
 
-  <!-- Lógica do jogo -->
   <script src="script.js"></script>
-
 </body>
 </html>
