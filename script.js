@@ -1,4 +1,4 @@
-// script.js — Veritas.Logic com mapa, interações e finais múltiplos
+// script.js — Veritas.Logic com fade-in de música e narrativa lógica interativa
 
 const input = document.getElementById("inputComando");
 const resposta = document.getElementById("resposta");
@@ -13,7 +13,6 @@ const historiaElyas = `Elyas decifra mentiras. Busca Aurora para expor a origem 
 
 const respostasModulo1 = {
   "veritas.boot();": `Sistema carregado. Infiltração iniciada.<br><br><strong>Aurora conectada...</strong><br><em>${historiaAurora}</em><br><br>Digite <code>aurora.scan();</code>`,
-  "aurora.scan();": `Analisando...<br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code>`,
   'aurora.concluir("¬P")': `Conclusão válida. Mentira identificada: "O colapso não foi causado por IA."<br><br><strong>Elyas conectado...</strong><br><em>${historiaElyas}</em><br><br>Digite <code>elyas.track("aurora")</code>`,
   'elyas.track("aurora")': `Fragmentos encontrados:<br><strong>P ∨ Q</strong><br>P: Aurora escapou.<br>Q: Elyas foi traído.<br>Digite: <code>elyas.inferir("P ou Q")</code>`,
   'elyas.inferir("P ou Q")': `Inferência aceita. Ambos sobreviveram.<br><br><strong>Digite <code>veritas.nivel(2)</code> para continuar.</strong>`
@@ -83,17 +82,6 @@ function interagirCom(objeto) {
   }
 }
 
-// WASD
-document.addEventListener("keydown", function (e) {
-  if (moduloAtual === 2 && ["w", "a", "s", "d"].includes(e.key.toLowerCase())) {
-    const tecla = e.key.toLowerCase();
-    if (tecla === "w") mover("norte");
-    if (tecla === "a") mover("oeste");
-    if (tecla === "s") mover("sul");
-    if (tecla === "d") mover("leste");
-  }
-});
-
 // Módulo 3 — Liberdade
 const historiaFinal = `Você entrou em um campo de energia onde o FakeMind não tem domínio. Aqui, as proposições são reconstruídas.`;
 const respostasModulo3 = {
@@ -107,7 +95,7 @@ const finais = {
   "publicar.verdade();": "Você publicou tudo. O caos começou, mas a verdade prevalece. Fim verdadeiro."
 };
 
-// Comando principal no terminal
+// Entrada principal do terminal
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const cmd = input.value.trim();
@@ -119,6 +107,16 @@ input.addEventListener("keydown", function (e) {
       if (cmd === "veritas.boot();") {
         document.getElementById("faseAurora").style.display = "block";
       }
+
+    } else if (moduloAtual === 1 && cmd === 'aurora.scan();') {
+      resposta.innerHTML += `<p><span class="prompt">aurora@logic:~$</span> ${cmd}</p>`;
+      resposta.innerHTML += `<p>Scan iniciado. Decodificando verdades ocultas...</p>`;
+      setTimeout(() => {
+        resposta.innerHTML += `<p><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code></p>`;
+      }, 3000);
+
+    } else if (moduloAtual === 1 && respostasModulo1[cmd]) {
+      resposta.innerHTML += `<p>${respostasModulo1[cmd]}</p>`;
 
     } else if (cmd === "veritas.nivel(2)") {
       moduloAtual = 2;
@@ -160,15 +158,39 @@ input.addEventListener("keydown", function (e) {
   }
 });
 
-// Executar aurora.scan(); via botão (HTML externo)
+// Executar aurora.scan(); via botão separado (campo Aurora)
 function verificarAurora() {
   const valor = document.getElementById("inputAurora").value.trim();
   const saida = document.getElementById("respostaAurora");
 
   if (valor === "aurora.scan();") {
-    saida.innerHTML = `Analisando...<br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code>`;
+    saida.innerHTML = "Scan iniciado. Decodificando verdades ocultas...";
+    setTimeout(() => {
+      saida.innerHTML += `<br><br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code>`;
+    }, 3000);
   } else {
     saida.innerHTML = "Comando inválido. Tente novamente.";
+  }
+}
+
+// Música com fade-in ao iniciar o jogo
+function iniciarJogo() {
+  document.getElementById("tela-intro").style.display = "none";
+  document.getElementById("terminal").style.display = "block";
+
+  const audio = document.getElementById("musicaFundo");
+  if (audio) {
+    audio.volume = 0;
+    audio.play().catch(() => {});
+    let vol = 0;
+    const fadeIn = setInterval(() => {
+      if (vol < 0.7) {
+        vol += 0.01;
+        audio.volume = Math.min(vol, 0.7);
+      } else {
+        clearInterval(fadeIn);
+      }
+    }, 150);
   }
 }
 
