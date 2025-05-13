@@ -47,6 +47,7 @@ body, html {
   box-shadow: 0 0 25px #00ff00;
   max-width: 700px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 .intro-texto h1 {
@@ -54,10 +55,16 @@ body, html {
   text-shadow: 0 0 10px #00ff00;
 }
 
-.intro-texto p {
+/* CORRIGIDO: evita corte de texto no mobile */
+#descricaoDigitada {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  padding: 0 1rem;
+  line-height: 1.6;
   font-size: 1.2rem;
   min-height: 120px;
-  white-space: pre-wrap;
 }
 
 .intro-texto button {
@@ -118,6 +125,7 @@ body, html {
   font-size: 1rem;
   line-height: 1.6;
   white-space: pre-wrap;
+  overflow-wrap: break-word;
 }
 
 #opcoes button {
@@ -143,7 +151,7 @@ body, html {
     font-size: 2rem;
   }
 
-  .intro-texto p {
+  #descricaoDigitada {
     font-size: 1rem;
   }
 
@@ -164,13 +172,4 @@ body, html {
   .terminal {
     padding: 1.5rem;
   }
-  
-  .intro-pre {
-  white-space: pre-wrap;
-  line-height: 1.6;
-  font-size: 1.1rem;
-  min-height: 120px;
-  padding-bottom: 1rem;
-}
-  
 }
