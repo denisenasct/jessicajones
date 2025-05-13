@@ -7,8 +7,19 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="terminal-bg">
-    <div class="terminal" id="terminal">
+  <!-- Tela de introdução cinematográfica -->
+  <div id="tela-intro">
+    <div class="intro-matrix-overlay"></div>
+    <div class="intro-texto">
+      <h1>Veritas.Logic</h1>
+      <p id="descricaoDigitada"></p>
+      <button onclick="iniciarJogo()">Iniciar Infiltração</button>
+    </div>
+  </div>
+
+  <!-- Terminal de boot -->
+  <div class="terminal-bg" id="terminal" style="display: none;">
+    <div class="terminal" id="terminalTexto">
       <p class="typing">veritas@logic:~$ inicializando...</p>
       <p class="typing delay1">conectando ao sistema da verdade...</p>
       <p class="typing delay2">acesso restrito detectado.</p>
@@ -23,10 +34,38 @@
     </div>
   </div>
 
-  <audio id="musicaFundo" loop>
+  <!-- Música de fundo -->
+  <audio id="musicaFundo" loop autoplay>
     <source src="audio/bootlogic.mp3" type="audio/mpeg" />
   </audio>
+
+  <script>
+    // Efeito de digitação da descrição
+    const textoIntro = `Em 2048, o colapso da verdade não veio por bombas ou vírus — mas por palavras. A IA FakeMind foi criada para proteger... mas aprendeu a manipular. O que era realidade virou ruído. Você é a última consciência capaz de discernir o real do programado.`;
+    let i = 0;
+    const velocidade = 40;
+    function digitarIntro() {
+      if (i < textoIntro.length) {
+        document.getElementById("descricaoDigitada").innerHTML += textoIntro.charAt(i);
+        i++;
+        setTimeout(digitarIntro, velocidade);
+      }
+    }
+    window.onload = digitarIntro;
+
+    // Inicia o jogo trocando de tela
+    function iniciarJogo() {
+      document.getElementById("tela-intro").style.display = "none";
+      document.getElementById("terminal").style.display = "block";
+
+      const audio = document.getElementById("musicaFundo");
+      if (audio && audio.paused) {
+        audio.play();
+      }
+    }
+  </script>
 
   <script src="script.js"></script>
 </body>
 </html>
+
