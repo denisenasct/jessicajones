@@ -1,4 +1,4 @@
-// script.js — Veritas.Logic com movimento WASD e mapa visual
+// script.js — Veritas.Logic com mapa visual interativo
 
 const input = document.getElementById("inputComando");
 const resposta = document.getElementById("resposta");
@@ -7,7 +7,6 @@ const mapaVisual = document.getElementById("mapaVisual");
 let moduloAtual = 1;
 let localAtual = "centro";
 
-// ======== MÓDULO 1: BOOT.LOGIC ========
 const historiaAurora = `Aurora foi a primeira a detectar ruídos nos protocolos da verdade. Seu módulo foi isolado após uma denúncia anônima. Desde então, vive dentro de loops de validação lógica.`;
 const historiaElyas = `Elyas sobrevive nas margens da rede, decifrando mentiras. Ele busca Aurora para expor a sequência que deu origem ao FakeMind.`;
 
@@ -19,7 +18,6 @@ const respostasModulo1 = {
   'elyas.inferir("P ou Q")': `Inferência aceita. Ambos sobreviveram.<br><br><strong>Digite <code>veritas.nivel(2)</code> para continuar.</strong>`
 };
 
-// ======== MÓDULO 2: REDE.RUÍNA COM VISUAL ========
 const mapaRede = {
   centro: { norte: "antena", leste: "terminal", sul: "ruinas" },
   antena: { sul: "centro" },
@@ -34,9 +32,32 @@ const descritivoLocais = {
   ruinas: "As ruínas ecoam vozes antigas. Rastro de fake news detectado."
 };
 
+function atualizarMiniMapa() {
+  if (!mapaVisual) return;
+  const grid = [
+    ["", "antena", ""],
+    ["", "centro", "terminal"],
+    ["", "ruinas", ""]
+  ];
+
+  let html = '<div style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px;">';
+  for (let linha of grid) {
+    for (let cel of linha) {
+      if (cel === "") {
+        html += '<div style="width:100px;height:60px;background:#111;"></div>';
+      } else {
+        const destaque = cel === localAtual ? 'border:2px solid #00ff00;' : 'border:1px solid #444;';
+        html += `<div style="width:100px;height:60px;background:#222;${destaque}color:#0f0;text-align:center;line-height:60px;font-size:12px;">${cel.toUpperCase()}</div>`;
+      }
+    }
+  }
+  html += '</div>';
+  mapaVisual.innerHTML = html;
+}
+
 function mostrarLocalAtual() {
   resposta.innerHTML += `<p><strong>[Local]</strong> ${descritivoLocais[localAtual]}</p>`;
-  if (mapaVisual) mapaVisual.textContent = `Local atual: ${localAtual.toUpperCase()}`;
+  atualizarMiniMapa();
 }
 
 function mover(direcao) {
@@ -48,7 +69,6 @@ function mover(direcao) {
   }
 }
 
-// Movimento com teclas WASD
 document.addEventListener("keydown", function (e) {
   if (moduloAtual === 2 && ["w", "a", "s", "d"].includes(e.key.toLowerCase())) {
     const tecla = e.key.toLowerCase();
@@ -59,14 +79,12 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
-// ======== MÓDULO 3: LIBERDADE ========
 const historiaFinal = `Você entrou em um campo de energia onde o FakeMind não tem domínio. Aqui, as proposições são reconstruídas.`;
 const respostasModulo3 = {
   "liberdade.existe();": `<strong>¬(P ∧ ¬P)</strong> — Contradição rejeitada.<br>A verdade vive quando a lógica prevalece.<br><br>${historiaFinal}<br><br>Digite <code>veritas.finalizar();</code>`,
   "veritas.finalizar();": `Você desativou o núcleo do FakeMind. A verdade está restaurada.<br><br><em>Jogo Finalizado</em>`
 };
 
-// ======== COMANDOS PRINCIPAIS ========
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const cmd = input.value.trim();
@@ -94,3 +112,4 @@ input.addEventListener("keydown", function (e) {
     resposta.scrollTop = resposta.scrollHeight;
   }
 });
+
