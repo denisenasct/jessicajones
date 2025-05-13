@@ -18,6 +18,7 @@
       <div id="botoesInicio" style="display:none;">
         <button onclick="escolherRumo('escanear')">Escanear os protocolos</button>
         <button onclick="escolherRumo('ignorar')">Ignorar e prosseguir</button>
+        <button id="toggleSom">🔊 Som</button>
       </div>
     </div>
   </div>
@@ -31,21 +32,22 @@
     </div>
   </div>
 
-  <audio id="musicaFundo" loop>
+  <audio id="musicaFundo" loop autoplay muted>
     <source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
-    const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras
-antes que a população eleja o pior candidato..\n\nVeritas.Logic iniciado...`;
+    const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras antes que a população eleja o pior candidato.\n\nVeritas.Logic iniciado...`;
 
     let i = 0;
     const velocidade = 40;
     const descricao = document.getElementById("descricaoDigitada");
     const audio = document.getElementById("musicaFundo");
+    const botaoSom = document.getElementById("toggleSom");
 
     function digitarIntro() {
       if (audio.paused) {
+        audio.muted = false;
         audio.volume = 0;
         audio.play().catch(() => {});
         let vol = 0;
@@ -68,6 +70,26 @@ antes que a população eleja o pior candidato..\n\nVeritas.Logic iniciado...`;
     }
 
     window.onload = digitarIntro;
+
+    if (botaoSom) {
+      botaoSom.addEventListener("click", () => {
+        if (audio.muted) {
+          audio.muted = false;
+          botaoSom.textContent = "🔊 Som";
+        } else {
+          audio.muted = true;
+          botaoSom.textContent = "🔇 Mudo";
+        }
+      });
+    }
+
+    window.addEventListener("touchstart", () => {
+      if (audio && audio.paused) {
+        audio.volume = 0.5;
+        audio.muted = false;
+        audio.play().catch(() => {});
+      }
+    }, { once: true });
   </script>
 
   <script src="script.js"></script>
