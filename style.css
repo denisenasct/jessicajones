@@ -1,3 +1,6 @@
+/* ======================== */
+/* Fonte e Reset Geral      */
+/* ======================== */
 body, html {
   margin: 0;
   padding: 0;
@@ -8,6 +11,9 @@ body, html {
   overflow: hidden;
 }
 
+/* ======================== */
+/* Tela Inicial Cinemática  */
+/* ======================== */
 #tela-intro {
   position: relative;
   width: 100%;
@@ -20,6 +26,7 @@ body, html {
   justify-content: center;
   flex-direction: column;
   z-index: 1;
+  animation: fadeIn 2s ease-in;
 }
 
 .intro-matrix-overlay::before {
@@ -41,19 +48,21 @@ body, html {
   z-index: 2;
   background: rgba(0, 0, 0, 0.6);
   padding: 2rem;
-  border-radius: 10px;
+  border-radius: 15px;
   max-width: 700px;
-  color: #00ff00;
   text-align: center;
+  box-shadow: 0 0 25px #00ff00;
+  animation: slideUp 1.5s ease-out;
 }
 
 .intro-texto h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 1rem;
+  text-shadow: 0 0 10px #00ff00;
 }
 
 .intro-texto p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1.6;
   min-height: 100px;
 }
@@ -63,17 +72,24 @@ body, html {
   background: transparent;
   border: 1px solid #00ff00;
   color: #00ff00;
-  padding: 10px 20px;
+  padding: 12px 24px;
   cursor: pointer;
   font-size: 1rem;
   transition: 0.3s;
+  border-radius: 8px;
+  font-weight: bold;
+  box-shadow: 0 0 10px #00ff00;
 }
 
 .intro-texto button:hover {
   background: #00ff00;
   color: black;
+  box-shadow: 0 0 20px #00ff00;
 }
 
+/* ======================== */
+/* Terminal Visual Matrix   */
+/* ======================== */
 .terminal-bg {
   width: 100%;
   height: 100vh;
@@ -85,41 +101,119 @@ body, html {
 }
 
 .terminal {
-  max-width: 800px;
-  width: 90%;
+  max-width: 900px;
+  width: 95%;
   background: rgba(0, 0, 0, 0.85);
   padding: 2rem;
   border-radius: 10px;
-  box-shadow: 0 0 15px #00ff00;
-  color: #00ff00;
+  box-shadow: 0 0 25px #00ff00;
   font-size: 1rem;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .prompt {
   color: #00ff00;
+  font-weight: bold;
 }
 
 #inputComando {
   background: black;
   color: #00ff00;
   border: 1px solid #00ff00;
-  padding: 0.5rem;
+  padding: 0.6rem;
   font-family: 'Courier New', monospace;
   font-size: 1rem;
   width: 100%;
   margin-top: 0.5rem;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #00ff00 inset;
 }
 
 #inputComando:focus {
   outline: none;
-  box-shadow: 0 0 10px #00ff00;
+  box-shadow: 0 0 15px #00ff00;
+}
+
+code {
+  color: #00ffff;
+  font-weight: bold;
 }
 
 .avatar {
-  width: 120px;
+  width: 160px;
   border-radius: 50%;
-  margin: 1rem auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 20px #00ff00;
   display: block;
-  box-shadow: 0 0 10px #00ff00;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.5s;
 }
 
+.avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #00ff00;
+}
+
+.typing {
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: .15em solid #00ff00;
+  animation: typing 2s steps(30, end), blink .75s step-end infinite;
+}
+
+.delay1 { animation-delay: 2s; }
+.delay2 { animation-delay: 4s; }
+.delay3 { animation-delay: 6s; }
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink {
+  from, to { border-color: transparent }
+  50% { border-color: #00ff00; }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slideUp {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* ======================== */
+/* Responsividade Celular   */
+/* ======================== */
+@media (max-width: 768px) {
+  .intro-texto h1 {
+    font-size: 2rem;
+  }
+
+  .intro-texto p {
+    font-size: 1rem;
+  }
+
+  .intro-texto {
+    padding: 1.5rem;
+  }
+
+  .terminal {
+    font-size: 0.95rem;
+    padding: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .avatar {
+    width: 120px;
+  }
+}
