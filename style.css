@@ -90,6 +90,7 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: auto;
 }
 
 .terminal {
@@ -107,14 +108,35 @@ body, html {
   color: #00ff00;
 }
 
-#inputComando {
+#inputComando,
+#inputAurora {
   background: black;
   color: #00ff00;
-  border: none;
+  border: 1px solid #00ff00;
   outline: none;
-  width: 80%;
+  width: 100%;
   font-family: 'Courier New', monospace;
   font-size: 1rem;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 5px;
+}
+
+button {
+  background: transparent;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #00ff00;
+  color: black;
 }
 
 .typing {
@@ -136,4 +158,31 @@ body, html {
 @keyframes blink {
   from, to { border-color: transparent }
   50% { border-color: #00ff00; }
+}
+
+/* ======================== */
+/* Responsividade Celular   */
+/* ======================== */
+@media (max-width: 768px) {
+  .intro-texto h1 {
+    font-size: 2rem;
+  }
+
+  .intro-texto p {
+    font-size: 1rem;
+  }
+
+  .intro-texto {
+    padding: 1.5rem;
+  }
+
+  .terminal {
+    font-size: 0.95rem;
+    padding: 1.5rem;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
 }
