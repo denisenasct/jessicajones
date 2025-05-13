@@ -1,4 +1,4 @@
-// script.js — Veritas.Logic com mapa visual interativo
+// script.js — Veritas.Logic com mapa, interações e finais múltiplos
 
 const input = document.getElementById("inputComando");
 const resposta = document.getElementById("resposta");
@@ -6,9 +6,10 @@ const mapaVisual = document.getElementById("mapaVisual");
 
 let moduloAtual = 1;
 let localAtual = "centro";
+let finaisDesbloqueados = false;
 
-const historiaAurora = `Aurora foi a primeira a detectar ruídos nos protocolos da verdade. Seu módulo foi isolado após uma denúncia anônima. Desde então, vive dentro de loops de validação lógica.`;
-const historiaElyas = `Elyas sobrevive nas margens da rede, decifrando mentiras. Ele busca Aurora para expor a sequência que deu origem ao FakeMind.`;
+const historiaAurora = `Aurora detectou ruídos nos protocolos da verdade. Seu módulo foi isolado. Vive dentro de loops de validação lógica.`;
+const historiaElyas = `Elyas decifra mentiras. Busca Aurora para expor a origem do FakeMind.`;
 
 const respostasModulo1 = {
   "veritas.boot();": `Sistema carregado. Infiltração iniciada.<br><br><strong>Aurora conectada...</strong><br><em>${historiaAurora}</em><br><br>Digite <code>aurora.scan();</code>`,
@@ -26,10 +27,10 @@ const mapaRede = {
 };
 
 const descritivoLocais = {
-  centro: "Você está no centro da cidade digital. Tudo está em ruínas.",
-  antena: "Você vê uma antena caída, ainda piscando em vermelho.",
-  terminal: "Um terminal abandonado, com dados corrompidos.",
-  ruinas: "As ruínas ecoam vozes antigas. Rastro de fake news detectado."
+  centro: "Centro da cidade digital. Tudo está em ruínas.",
+  antena: "Uma antena caída, ainda piscando em vermelho.",
+  terminal: "Terminal abandonado, com dados corrompidos.",
+  ruinas: "Ruínas ecoam vozes antigas. Rastro de fake news detectado."
 };
 
 function atualizarMiniMapa() {
@@ -69,6 +70,20 @@ function mover(direcao) {
   }
 }
 
+function interagirCom(objeto) {
+  const interacoes = {
+    antena: "<strong>[ANTENA]</strong> Sinal interceptado: 'Toda informação não verificada será tratada como verdade por padrão.'",
+    terminal: "<strong>[TERMINAL]</strong> Código corrompido restaurado: Se não P, então não Q. Mas Q aconteceu...",
+    ruinas: "<strong>[RUÍNAS]</strong> Você encontra uma lógica circular: P se e somente se P. Paradoxo neutralizado."
+  };
+  if (localAtual === objeto && interacoes[localAtual]) {
+    resposta.innerHTML += `<p>${interacoes[localAtual]}</p>`;
+  } else {
+    resposta.innerHTML += `<p>Nenhum objeto válido para interação aqui.</p>`;
+  }
+}
+
+// WASD
 document.addEventListener("keydown", function (e) {
   if (moduloAtual === 2 && ["w", "a", "s", "d"].includes(e.key.toLowerCase())) {
     const tecla = e.key.toLowerCase();
@@ -79,12 +94,20 @@ document.addEventListener("keydown", function (e) {
   }
 });
 
+// Módulo 3 — Liberdade
 const historiaFinal = `Você entrou em um campo de energia onde o FakeMind não tem domínio. Aqui, as proposições são reconstruídas.`;
 const respostasModulo3 = {
-  "liberdade.existe();": `<strong>¬(P ∧ ¬P)</strong> — Contradição rejeitada.<br>A verdade vive quando a lógica prevalece.<br><br>${historiaFinal}<br><br>Digite <code>veritas.finalizar();</code>`,
-  "veritas.finalizar();": `Você desativou o núcleo do FakeMind. A verdade está restaurada.<br><br><em>Jogo Finalizado</em>`
+  "liberdade.existe();": `<strong>¬(P ∧ ¬P)</strong> — Contradição rejeitada.<br>${historiaFinal}<br><br><strong>Digite <code>veritas.nivel(4)</code> para acessar o núcleo ético.</strong>`
 };
 
+// Módulo 4 — Decisões Éticas e Finais
+const finais = {
+  "desligar.fakeMind();": "Você desligou o sistema. O silêncio reina, mas ninguém saberá a verdade. Fim sombrio.",
+  "reprogramar.fakeMind();": "Você reprogramou a IA. Há esperança, mas riscos de recaída. Fim incerto.",
+  "publicar.verdade();": "Você publicou tudo. O caos começou, mas a verdade prevalece. Fim verdadeiro."
+};
+
+// Comando principal
 input.addEventListener("keydown", function (e) {
   if (e.key === "Enter") {
     const cmd = input.value.trim();
@@ -92,18 +115,30 @@ input.addEventListener("keydown", function (e) {
 
     if (moduloAtual === 1 && respostasModulo1[cmd]) {
       resposta.innerHTML += `<p>${respostasModulo1[cmd]}</p>`;
-    } else if (cmd.startsWith("veritas.nivel(2)")) {
+    } else if (cmd === "veritas.nivel(2)") {
       moduloAtual = 2;
-      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code> ou <code>mover(\"norte\")</code> etc.</p>`;
+      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code>, <code>mover(\"norte\")</code> e <code>interagir(\"local\")</code></p>`;
       mostrarLocalAtual();
     } else if (moduloAtual === 2 && cmd.startsWith("mover(") && cmd.endsWith(")")) {
       const dir = cmd.slice(7, -2);
       mover(dir);
+    } else if (moduloAtual === 2 && cmd.startsWith("interagir(") && cmd.endsWith(")")) {
+      const obj = cmd.slice(10, -2);
+      interagirCom(obj);
     } else if (cmd === "veritas.nivel(3)") {
       moduloAtual = 3;
-      resposta.innerHTML += `<p><strong>[MÓDULO 3 – LIBERDADE]</strong><br>Você chegou ao núcleo livre da rede.</p><p>Digite <code>liberdade.existe();</code></p>`;
+      resposta.innerHTML += `<p><strong>[LIBERDADE]</strong> Você chegou ao núcleo lógico. Digite <code>liberdade.existe();</code></p>`;
     } else if (moduloAtual === 3 && respostasModulo3[cmd]) {
       resposta.innerHTML += `<p>${respostasModulo3[cmd]}</p>`;
+    } else if (cmd === "veritas.nivel(4)") {
+      moduloAtual = 4;
+      finaisDesbloqueados = true;
+      resposta.innerHTML += `<p><strong>[NUCLEO ÉTICO]</strong> Três caminhos:<br>
+        <code>desligar.fakeMind();</code><br>
+        <code>reprogramar.fakeMind();</code><br>
+        <code>publicar.verdade();</code></p>`;
+    } else if (moduloAtual === 4 && finaisDesbloqueados && finais[cmd]) {
+      resposta.innerHTML += `<p>${finais[cmd]}</p>`;
     } else {
       resposta.innerHTML += `<p>Comando não reconhecido.</p>`;
     }
@@ -112,4 +147,5 @@ input.addEventListener("keydown", function (e) {
     resposta.scrollTop = resposta.scrollHeight;
   }
 });
+
 
