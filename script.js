@@ -1,4 +1,4 @@
-// script.js — Veritas.Logic com terminal unificado, fade-in de música e narrativa lógica
+// script.js — Veritas.Logic com ajuda, guia de comandos e narrativa fluida
 
 const input = document.getElementById("inputComando");
 const resposta = document.getElementById("resposta");
@@ -9,7 +9,6 @@ let moduloAtual = 0;
 let localAtual = "centro";
 let finaisDesbloqueados = false;
 
-// Avatares por personagem
 function mostrarAvatar(nome) {
   const avatares = {
     aurora: "img/aurora.png",
@@ -76,34 +75,42 @@ input.addEventListener("keydown", function (e) {
     const cmd = input.value.trim();
     resposta.innerHTML += `<p><span class="prompt">veritas@logic:~$</span> ${cmd}</p>`;
 
-    if (cmd === "veritas.boot();") {
-      resposta.innerHTML += `<p>Sistema carregado. Infiltração iniciada.</p>
-        <p><strong>Aurora conectada...</strong></p>
-        <p><em>Aurora detectou ruídos nos protocolos da verdade. Seu módulo está dentro de loops de validação lógica.</em></p>
-        <p>Digite: <code>aurora.scan();</code></p>`;
+    if (cmd === "help();") {
+      resposta.innerHTML += `
+        <p>💡 <strong>Comandos disponíveis:</strong></p>
+        <ul>
+          <li><code>veritas.boot();</code> — Inicia a infiltração</li>
+          <li><code>aurora.scan();</code> — Escaneia os protocolos</li>
+          <li><code>aurora.concluir(\"\u00acP\");</code> — Conclui inferência lógica</li>
+          <li><code>elyas.track(\"aurora\");</code> — Busca conexão</li>
+          <li><code>veritas.nivel(2)</code> — Ativa o mapa</li>
+          <li><code>mover(\"norte\")</code>, <code>interagir(\"local\")</code>, etc.</li>
+        </ul>`;
+    } else if (cmd === "veritas.boot();") {
+      resposta.innerHTML += `<p>Sistema carregado. Infiltração iniciada.</p><p><strong>Aurora conectada...</strong></p><p><em>Aurora detectou ruídos nos protocolos da verdade. Seu módulo está dentro de loops de validação lógica.</em></p><p>Digite: <code>aurora.scan();</code></p>`;
       mostrarAvatar("aurora");
       moduloAtual = 1;
 
     } else if (cmd === "aurora.scan();" && moduloAtual === 1) {
       resposta.innerHTML += `<p>Scan iniciado. Decodificando verdades ocultas...</p>`;
       setTimeout(() => {
-        resposta.innerHTML += `<p><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code></p>`;
+        resposta.innerHTML += `<p><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir(\"\u00acP\")</code></p>`;
       }, 1000);
 
     } else if (cmd === 'aurora.concluir("¬P")' && moduloAtual === 1) {
-      resposta.innerHTML += `<p>✔️ Conclusão válida.<br><em>Mentira identificada: "O colapso não foi causado por IA."</em><br><br><strong>Elyas conectado...</strong><br><em>Elyas decifra mentiras. Busca Aurora para expor a origem do FakeMind.</em><br><br>Digite: <code>elyas.track("aurora")</code></p>`;
+      resposta.innerHTML += `<p>✔️ Conclusão válida.<br><em>Mentira identificada: \"O colapso não foi causado por IA.\"</em><br><br><strong>Elyas conectado...</strong><br><em>Elyas decifra mentiras. Busca Aurora para expor a origem do FakeMind.</em><br><br>Digite: <code>elyas.track(\"aurora\")</code></p>`;
       mostrarAvatar("elyas");
       moduloAtual = 2;
 
     } else if (cmd === 'elyas.track("aurora")' && moduloAtual === 2) {
-      resposta.innerHTML += `<p>Fragmentos encontrados:<br><strong>P ∨ Q</strong><br>P: Aurora escapou.<br>Q: Elyas foi traído.<br>Digite: <code>elyas.inferir("P ou Q")</code></p>`;
+      resposta.innerHTML += `<p>Fragmentos encontrados:<br><strong>P ∨ Q</strong><br>P: Aurora escapou.<br>Q: Elyas foi traído.<br>Digite: <code>elyas.inferir(\"P ou Q\")</code></p>`;
 
     } else if (cmd === 'elyas.inferir("P ou Q")' && moduloAtual === 2) {
       resposta.innerHTML += `<p>Inferência aceita. Ambos sobreviveram.<br><strong>Digite <code>veritas.nivel(2)</code> para continuar.</strong></p>`;
       moduloAtual = 3;
 
     } else if (cmd === "veritas.nivel(2)" && moduloAtual === 3) {
-      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code>, <code>mover("norte")</code> e <code>interagir("local")</code></p>`;
+      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code>, <code>mover(\"norte\")</code> e <code>interagir(\"local\")</code></p>`;
       mostrarLocalAtual();
 
     } else if (moduloAtual === 3 && cmd.startsWith("mover(")) {
@@ -134,7 +141,7 @@ input.addEventListener("keydown", function (e) {
       resposta.innerHTML += `<p>${finais[cmd]}</p>`;
 
     } else {
-      resposta.innerHTML += `<p>Comando não reconhecido.</p>`;
+      resposta.innerHTML += `<p>Comando não reconhecido. Digite <code>help();</code> para ajuda.</p>`;
     }
 
     input.value = "";
@@ -142,7 +149,6 @@ input.addEventListener("keydown", function (e) {
   }
 });
 
-// Música com fade-in ao iniciar o jogo
 function iniciarJogo() {
   document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "block";
