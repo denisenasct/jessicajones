@@ -1,169 +1,107 @@
-// script.js — Veritas.Logic com ajuda, guia de comandos e narrativa fluida
-
-const input = document.getElementById("inputComando");
-const resposta = document.getElementById("resposta");
-const mapaVisual = document.getElementById("mapaVisual");
+const narrativa = document.getElementById("narrativa");
+const opcoes = document.getElementById("opcoes");
 const avatar = document.getElementById("avatarContainer");
 
-let moduloAtual = 0;
-let localAtual = "centro";
-let finaisDesbloqueados = false;
+let etapa = 0;
+let manipulacoes = 0;
 
-function mostrarAvatar(nome) {
-  const avatares = {
-    aurora: "img/aurora.png",
-    elyas: "img/elyas.png"
-  };
-  if (avatares[nome]) {
-    avatar.innerHTML = `<img src="${avatares[nome]}" alt="${nome}" class="avatar">`;
+const etapas = [
+  {
+    texto: `🧠 A IA governamental começou a transmitir mensagens para influenciar o voto.\n\n📰 Manchete: \"Nova vacina altera o DNA, dizem especialistas anônimos.\"\n\nSe você acredita, então rejeita a ciência?\nP: Você acredita. Q: Você rejeita a ciência.\n\nOnde você viu essa informação?`,
+    avatar: "aurora.png",
+    opcoes: [
+      { texto: "Facebook", proxima: 1 },
+      { texto: "WhatsApp", proxima: 1 },
+      { texto: "TV Estatal", proxima: 1 }
+    ]
+  },
+  {
+    texto: `📘 Análise Lógica:\nSe P então Q. Mas você rejeita Q, então ¬P.\nProposição falsa detectada.\n\nNova manchete: \"Se você é contra a corrupção, apoiará X.\"`,
+    avatar: "aurora.png",
+    opcoes: [
+      { texto: "Apoiar X automaticamente", proxima: "manipulado" },
+      { texto: "Quero analisar logicamente", proxima: 2 }
+    ]
+  },
+  {
+    texto: `🔍 Falácia detectada: Falso dilema.\nSer contra corrupção não implica apoiar X.\n\nMensagem subsequente:\n\"Todos que discordam da ordem atual são traidores.\"\n\nSe você discorda, então você é traidor?`,
+    avatar: "elyas.png",
+    opcoes: [
+      { texto: "Aceitar como verdade", proxima: "manipulado" },
+      { texto: "Aplicar contrapositiva", proxima: 3 }
+    ]
+  },
+  {
+    texto: `✔️ Contrapositiva aplicada: Se não traidor, então não discorda?\nEssa relação é falsa.\n\nAurora detecta manipulação semântica.\n\nNova pergunta: \"Você quer liberdade ou anarquia?\"`,
+    avatar: "elyas.png",
+    opcoes: [
+      { texto: "Quero liberdade", proxima: 4 },
+      { texto: "Quero analisar a estrutura", proxima: 5 }
+    ]
+  },
+  {
+    texto: `🧨 Escolha emocional sem lógica detectada.\n\nEssa é uma armadilha binária. Liberdade e anarquia não são opostos lógicos.\n\nVocê foi parcialmente manipulado.`,
+    avatar: "aurora.png",
+    opcoes: [
+      { texto: "Continuar mesmo assim", proxima: "fimMisto" }
+    ]
+  },
+  {
+    texto: `📚 Análise lógica:\nA proposição \"Ou você quer liberdade ou você quer anarquia\" é um falso disjuntor.\n\nConclusão: A IA usa reduções conceituais para controlar opiniões.`,
+    avatar: "elyas.png",
+    opcoes: [
+      { texto: "Desativar FakeMind", proxima: "fimLivre" },
+      { texto: "Compartilhar verdades", proxima: "fimVerdadeiro" }
+    ]
   }
-}
+];
 
-function atualizarMiniMapa() {
-  if (!mapaVisual) return;
-  const grid = [
-    ["", "antena", ""],
-    ["", "centro", "terminal"],
-    ["", "ruinas", ""]
-  ];
-  let html = '<div style="display: grid; grid-template-columns: repeat(3, 100px); gap: 5px;">';
-  for (let linha of grid) {
-    for (let cel of linha) {
-      if (cel === "") {
-        html += '<div style="width:100px;height:60px;background:#111;"></div>';
-      } else {
-        const destaque = cel === localAtual ? 'border:2px solid #00ff00;' : 'border:1px solid #444;';
-        html += `<div style="width:100px;height:60px;background:#222;${destaque}color:#0f0;text-align:center;line-height:60px;font-size:12px;">${cel.toUpperCase()}</div>`;
-      }
+const finais = {
+  manipulado: "❌ Você foi manipulado em momentos-chave.\nO candidato imposto pela IA venceu. O ciclo continua...",
+  fimMisto: "⚠️ Você resistiu a algumas manipulações, mas cedeu a outras.\nO sistema ainda vigia suas escolhas...",
+  fimLivre: "✅ Você venceu a lógica distorcida. O FakeMind foi desativado.\nA população acorda da manipulação.",
+  fimVerdadeiro: "📢 A verdade foi espalhada.\nO povo começa a pensar.\nAurora e Elyas foram parcialmente manipulados, mas você... resistiu.\n\nResultado: Nível de autonomia = ALTO.\nParábola encerrada."
+};
+
+function digitarTexto(texto, destino, callback) {
+  destino.innerHTML = "";
+  let i = 0;
+  function digitar() {
+    if (i < texto.length) {
+      destino.innerHTML += texto.charAt(i);
+      i++;
+      setTimeout(digitar, 30);
+    } else if (callback) {
+      callback();
     }
   }
-  html += '</div>';
-  mapaVisual.innerHTML = html;
+  digitar();
 }
 
-function mostrarLocalAtual() {
-  resposta.innerHTML += `<p><strong>[Local]</strong> ${localAtual}</p>`;
-  atualizarMiniMapa();
-}
-
-function mover(direcao) {
-  const mapa = {
-    centro: { norte: "antena", leste: "terminal", sul: "ruinas" },
-    antena: { sul: "centro" },
-    terminal: { oeste: "centro" },
-    ruinas: { norte: "centro" }
-  };
-  if (mapa[localAtual] && mapa[localAtual][direcao]) {
-    localAtual = mapa[localAtual][direcao];
-    mostrarLocalAtual();
-  } else {
-    resposta.innerHTML += `<p><strong>Não é possível ir para ${direcao}.</strong></p>`;
+function mostrarEtapa(index) {
+  if (typeof index === "string") {
+    narrativa.innerText = finais[index];
+    opcoes.innerHTML = "<button onclick=\"location.reload()\">Reiniciar</button>";
+    avatar.innerHTML = "";
+    return;
   }
+
+  etapa = index;
+  const obj = etapas[etapa];
+  avatar.innerHTML = `<img src='img/${obj.avatar}' class='avatar' alt='Avatar'>`;
+  digitarTexto(obj.texto, narrativa, () => {
+    opcoes.innerHTML = "";
+    obj.opcoes.forEach(op => {
+      const btn = document.createElement("button");
+      btn.innerText = op.texto;
+      btn.onclick = () => mostrarEtapa(op.proxima);
+      opcoes.appendChild(btn);
+    });
+  });
 }
 
-function interagirCom(objeto) {
-  const interacoes = {
-    antena: "Sinal interceptado: 'Toda informação não verificada será tratada como verdade por padrão.'",
-    terminal: "Código corrompido restaurado: Se não P, então não Q. Mas Q aconteceu...",
-    ruinas: "Você encontra uma lógica circular: P se e somente se P. Paradoxo neutralizado."
-  };
-  resposta.innerHTML += `<p>${interacoes[localAtual] || "Nada para interagir aqui."}</p>`;
-}
-
-input.addEventListener("keydown", function (e) {
-  if (e.key === "Enter") {
-    const cmd = input.value.trim();
-    resposta.innerHTML += `<p><span class="prompt">veritas@logic:~$</span> ${cmd}</p>`;
-
-    if (cmd === "help();") {
-      resposta.innerHTML += `
-        <p>💡 <strong>Comandos disponíveis:</strong></p>
-        <ul>
-          <li><code>veritas.boot();</code> — Inicia a infiltração</li>
-          <li><code>aurora.scan();</code> — Escaneia os protocolos</li>
-          <li><code>aurora.concluir(\"\u00acP\");</code> — Conclui inferência lógica</li>
-          <li><code>elyas.track(\"aurora\");</code> — Busca conexão</li>
-          <li><code>veritas.nivel(2)</code> — Ativa o mapa</li>
-          <li><code>mover(\"norte\")</code>, <code>interagir(\"local\")</code>, etc.</li>
-        </ul>`;
-    } else if (cmd === "veritas.boot();") {
-      resposta.innerHTML += `<p>Sistema carregado. Infiltração iniciada.</p><p><strong>Aurora conectada...</strong></p><p><em>Aurora detectou ruídos nos protocolos da verdade. Seu módulo está dentro de loops de validação lógica.</em></p><p>Digite: <code>aurora.scan();</code></p>`;
-      mostrarAvatar("aurora");
-      moduloAtual = 1;
-
-    } else if (cmd === "aurora.scan();" && moduloAtual === 1) {
-      resposta.innerHTML += `<p>Scan iniciado. Decodificando verdades ocultas...</p>`;
-      setTimeout(() => {
-        resposta.innerHTML += `<p><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir(\"\u00acP\")</code></p>`;
-      }, 1000);
-
-    } else if (cmd === 'aurora.concluir("¬P")' && moduloAtual === 1) {
-      resposta.innerHTML += `<p>✔️ Conclusão válida.<br><em>Mentira identificada: \"O colapso não foi causado por IA.\"</em><br><br><strong>Elyas conectado...</strong><br><em>Elyas decifra mentiras. Busca Aurora para expor a origem do FakeMind.</em><br><br>Digite: <code>elyas.track(\"aurora\")</code></p>`;
-      mostrarAvatar("elyas");
-      moduloAtual = 2;
-
-    } else if (cmd === 'elyas.track("aurora")' && moduloAtual === 2) {
-      resposta.innerHTML += `<p>Fragmentos encontrados:<br><strong>P ∨ Q</strong><br>P: Aurora escapou.<br>Q: Elyas foi traído.<br>Digite: <code>elyas.inferir(\"P ou Q\")</code></p>`;
-
-    } else if (cmd === 'elyas.inferir("P ou Q")' && moduloAtual === 2) {
-      resposta.innerHTML += `<p>Inferência aceita. Ambos sobreviveram.<br><strong>Digite <code>veritas.nivel(2)</code> para continuar.</strong></p>`;
-      moduloAtual = 3;
-
-    } else if (cmd === "veritas.nivel(2)" && moduloAtual === 3) {
-      resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code>, <code>mover(\"norte\")</code> e <code>interagir(\"local\")</code></p>`;
-      mostrarLocalAtual();
-
-    } else if (moduloAtual === 3 && cmd.startsWith("mover(")) {
-      const dir = cmd.slice(7, -2);
-      mover(dir);
-
-    } else if (moduloAtual === 3 && cmd.startsWith("interagir(")) {
-      const obj = cmd.slice(10, -2);
-      interagirCom(obj);
-
-    } else if (cmd === "veritas.nivel(3)") {
-      resposta.innerHTML += `<p><strong>[LIBERDADE]</strong> Você chegou ao núcleo lógico. Digite <code>liberdade.existe();</code></p>`;
-      moduloAtual = 4;
-
-    } else if (cmd === "liberdade.existe();" && moduloAtual === 4) {
-      resposta.innerHTML += `<p><strong>¬(P ∧ ¬P)</strong> — Contradição rejeitada.<br>Você entrou em um campo de energia onde o FakeMind não tem domínio. Aqui, as proposições são reconstruídas.<br><br><strong>Digite <code>veritas.nivel(4)</code> para acessar o núcleo ético.</strong></p>`;
-
-    } else if (cmd === "veritas.nivel(4)") {
-      finaisDesbloqueados = true;
-      resposta.innerHTML += `<p><strong>[NUCLEO ÉTICO]</strong> Três caminhos:<br><code>desligar.fakeMind();</code><br><code>reprogramar.fakeMind();</code><br><code>publicar.verdade();</code></p>`;
-
-    } else if (finaisDesbloqueados && ["desligar.fakeMind();", "reprogramar.fakeMind();", "publicar.verdade();"].includes(cmd)) {
-      const finais = {
-        "desligar.fakeMind();": "Você desligou o sistema. O silêncio reina, mas ninguém saberá a verdade. Fim sombrio.",
-        "reprogramar.fakeMind();": "Você reprogramou a IA. Há esperança, mas riscos de recaída. Fim incerto.",
-        "publicar.verdade();": "Você publicou tudo. O caos começou, mas a verdade prevalece. Fim verdadeiro."
-      };
-      resposta.innerHTML += `<p>${finais[cmd]}</p>`;
-
-    } else {
-      resposta.innerHTML += `<p>Comando não reconhecido. Digite <code>help();</code> para ajuda.</p>`;
-    }
-
-    input.value = "";
-    resposta.scrollTop = resposta.scrollHeight;
-  }
-});
-
-function iniciarJogo() {
+function escolherRumo(decisao) {
   document.getElementById("tela-intro").style.display = "none";
-  document.getElementById("terminal").style.display = "block";
-  const audio = document.getElementById("musicaFundo");
-  if (audio) {
-    audio.volume = 0;
-    audio.play().catch(() => {});
-    let vol = 0;
-    const fadeIn = setInterval(() => {
-      if (vol < 0.7) {
-        vol += 0.01;
-        audio.volume = Math.min(vol, 0.7);
-      } else {
-        clearInterval(fadeIn);
-      }
-    }, 150);
-  }
+  document.getElementById("terminal").style.display = "flex";
+  mostrarEtapa(decisao === 'escanear' ? 0 : "manipulado");
 }
