@@ -123,6 +123,24 @@ body, html {
   border-radius: 5px;
 }
 
+#inputAurora:focus {
+  outline: none;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+#respostaAurora {
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  margin-top: 1rem;
+  white-space: pre-wrap;
+}
+
+#faseAurora {
+  margin-top: 2rem;
+  border-top: 1px solid #00ff00;
+  padding-top: 1rem;
+}
+
 button {
   background: transparent;
   border: 1px solid #00ff00;
@@ -132,6 +150,7 @@ button {
   font-size: 1rem;
   border-radius: 4px;
   transition: 0.3s;
+  font-family: 'Courier New', monospace;
 }
 
 button:hover {
