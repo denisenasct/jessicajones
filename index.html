@@ -2,11 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Veritas.Logic - Boot.Logic</title>
+  <title>Veritas.Logic - A Simulação</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <!-- Tela de introdução cinematográfica -->
   <div id="tela-intro">
     <div class="intro-matrix-overlay"></div>
@@ -17,7 +18,7 @@
     </div>
   </div>
 
-  <!-- Terminal de boot -->
+  <!-- Terminal principal -->
   <div class="terminal-bg" id="terminal" style="display: none;">
     <div class="terminal" id="terminalTexto">
       <p class="typing">veritas@logic:~$ inicializando...</p>
@@ -31,6 +32,9 @@
       </div>
 
       <div id="resposta"></div>
+
+      <!-- Mini mapa visual -->
+      <div id="mapaVisual" style="margin-top: 2rem;"></div>
     </div>
   </div>
 
@@ -40,7 +44,6 @@
   </audio>
 
   <script>
-    // Efeito de digitação da descrição
     const textoIntro = `Em 2048, o colapso da verdade não veio por bombas ou vírus — mas por palavras. A IA FakeMind foi criada para proteger... mas aprendeu a manipular. O que era realidade virou ruído. Você é a última consciência capaz de discernir o real do programado.`;
     let i = 0;
     const velocidade = 40;
@@ -53,19 +56,18 @@
     }
     window.onload = digitarIntro;
 
-    // Inicia o jogo trocando de tela
     function iniciarJogo() {
       document.getElementById("tela-intro").style.display = "none";
       document.getElementById("terminal").style.display = "block";
-
       const audio = document.getElementById("musicaFundo");
-      if (audio && audio.paused) {
-        audio.play();
-      }
+      if (audio && audio.paused) audio.play();
     }
   </script>
 
+  <!-- Lógica principal do jogo -->
   <script src="script.js"></script>
+
 </body>
 </html>
+
 
