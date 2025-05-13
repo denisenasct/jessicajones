@@ -20,54 +20,24 @@
 
   <!-- Terminal principal -->
   <div class="terminal-bg" id="terminal" style="display: none;">
-  <div class="terminal" id="terminalTexto">
-    <p class="typing">veritas@logic:~$ inicializando...</p>
-    <p class="typing delay1">conectando ao sistema da verdade...</p>
-    <p class="typing delay2">acesso restrito detectado.</p>
-    <p class="typing delay3">Digite <code>veritas.boot();</code> para iniciar o protocolo.</p>
+    <div class="terminal" id="terminalTexto">
+      <div id="resposta"></div>
 
-    <div id="entrada-comando">
-      <span class="prompt">veritas@logic:~$</span>
-      <input type="text" id="inputComando" autofocus />
-    </div>
-
-    <div id="resposta"></div>
-    <div id="avatarContainer"></div>
-    <div id="mapaVisual" style="margin-top: 2rem;"></div>
-  </div>
-</div>
-
-      <!-- BLOCO AURORA CORRIGIDO -->
-      <div id="faseAurora" style="display: none; margin-top: 2rem;">
-        <p><strong>🧠 Aurora conectada...</strong></p>
-        <p><em>Aurora detectou ruídos nos protocolos da verdade. Seu módulo está dentro de loops de validação lógica.</em></p>
-        <p>Digite <code>aurora.scan();</code> ou continue com o protocolo.</p>
-
-        <!-- Campo Aurora funcional -->
-        <input type="text" id="inputAurora" placeholder="Digite aurora.scan();"
-               onkeydown="if(event.key==='Enter'){verificarAurora()}"
-               style="width: 100%; padding: 0.5rem; background: black; color: #00ff00; border: 1px solid #00ff00; font-family: monospace; margin-top: 1rem;" />
-
-        <button onclick="verificarAurora()"
-                style="margin-top: 0.5rem; background: transparent; border: 1px solid #00ff00; color: #00ff00; padding: 6px 12px; font-weight: bold; cursor: pointer;">
-          Executar
-        </button>
-
-        <!-- Resposta Aurora -->
-        <p id="respostaAurora" style="margin-top: 1rem;"></p>
+      <div id="entrada-comando">
+        <span class="prompt">veritas@logic:~$</span>
+        <input type="text" id="inputComando" autofocus />
       </div>
 
-      <!-- Mini mapa visual -->
-      <div id="mapaVisual" style="margin-top: 2rem;"></div>
+      <div id="avatarContainer"></div>
+      <div id="mapaVisual"></div>
     </div>
   </div>
 
   <!-- Música de fundo -->
   <audio id="musicaFundo" loop autoplay>
-    <source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
+    <source src="audio/bootlogic.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Introdução digitada -->
   <script>
     const textoIntro = `Em 2048, o colapso da verdade não veio por bombas ou vírus — mas por palavras. A IA FakeMind foi criada para proteger... mas aprendeu a manipular. O que era realidade virou ruído. Você é a última consciência capaz de discernir o real do programado.`;
     let i = 0;
@@ -79,72 +49,9 @@
         setTimeout(digitarIntro, velocidade);
       }
     }
-
     window.onload = digitarIntro;
-
-    // Inicia o jogo com fade-in de música
-    function iniciarJogo() {
-      document.getElementById("tela-intro").style.display = "none";
-      document.getElementById("terminal").style.display = "block";
-      const audio = document.getElementById("musicaFundo");
-      if (audio) {
-        audio.volume = 0;
-        audio.play().catch(() => {});
-        let vol = 0;
-        const fadeIn = setInterval(() => {
-          if (vol < 0.7) {
-            vol += 0.01;
-            audio.volume = Math.min(vol, 0.7);
-          } else {
-            clearInterval(fadeIn);
-          }
-        }, 150);
-      }
-    }
-
-    // Terminal principal
-    document.getElementById("inputComando").addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        const comando = e.target.value.trim();
-        if (comando === "veritas.boot();") {
-          document.getElementById("resposta").innerHTML = "";
-          document.getElementById("faseAurora").style.display = "block";
-        } else {
-          document.getElementById("resposta").innerHTML = "Comando não reconhecido.";
-        }
-        e.target.value = "";
-      }
-    });
-
-    // Aurora: aceita aurora.scan(); e aurora.concluir("¬P")
-    function verificarAurora() {
-      const valor = document.getElementById("inputAurora").value.trim();
-      const saida = document.getElementById("respostaAurora");
-
-      if (valor === "") {
-        saida.innerHTML = "Digite um comando válido.";
-      } else if (valor === "aurora.scan();") {
-        saida.innerHTML = "Scan iniciado. Decodificando verdades ocultas...";
-        setTimeout(() => {
-          saida.innerHTML += `<br><br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code>`;
-        }, 2000);
-      } else if (valor === 'aurora.concluir("¬P")') {
-        saida.innerHTML += `<br><br>✔️ Conclusão válida.<br>
-        <em>Mentira identificada: "O colapso não foi causado por IA."</em><br><br>
-        <strong>Elyas conectado...</strong><br>
-        <em>Elyas decifra mentiras. Busca Aurora para expor a origem do FakeMind.</em><br><br>
-        Digite no terminal principal: <code>elyas.track("aurora")</code>`;
-      } else {
-        saida.innerHTML += `<br>Comando inválido.`;
-      }
-
-      document.getElementById("inputAurora").value = "";
-    }
   </script>
 
-  <!-- Lógica do restante do jogo -->
   <script src="script.js"></script>
-
 </body>
 </html>
-
