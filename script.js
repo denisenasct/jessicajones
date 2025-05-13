@@ -68,7 +68,8 @@ function digitarTexto(texto, destino, callback) {
   let i = 0;
   function digitar() {
     if (i < texto.length) {
-      destino.innerHTML += texto.charAt(i);
+      const char = texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i);
+      destino.innerHTML += char;
       i++;
       setTimeout(digitar, 30);
     } else if (callback) {
@@ -80,7 +81,7 @@ function digitarTexto(texto, destino, callback) {
 
 function mostrarEtapa(index) {
   if (typeof index === "string") {
-    narrativa.innerText = finais[index];
+    narrativa.innerHTML = finais[index].replace(/\n/g, "<br>");
     opcoes.innerHTML = "<button onclick=\"location.reload()\">Reiniciar</button>";
     avatar.innerHTML = "";
     return;
@@ -105,3 +106,37 @@ function escolherRumo(decisao) {
   document.getElementById("terminal").style.display = "flex";
   mostrarEtapa(decisao === 'escanear' ? 0 : "manipulado");
 }
+
+// Música sempre toca (mobile + PC)
+function iniciarMusica() {
+  const audio = document.getElementById("musicaFundo");
+  if (!audio) return;
+
+  audio.volume = 0;
+  audio.muted = false;
+
+  audio.play().then(() => {
+    let vol = 0;
+    const fade = setInterval(() => {
+      if (vol < 0.7) {
+        vol += 0.01;
+        audio.volume = Math.min(vol, 0.7);
+      } else {
+        clearInterval(fade);
+      }
+    }, 100);
+  }).catch(() => {
+    document.body.addEventListener('click', () => {
+      audio.muted = false;
+      audio.play();
+    }, { once: true });
+
+    document.body.addEventListener('touchstart', () => {
+      audio.muted = false;
+      audio.play();
+    }, { once: true });
+  });
+}
+
+window.addEventListener("DOMContentLoaded", iniciarMusica);
+
