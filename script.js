@@ -103,41 +103,32 @@ input.addEventListener("keydown", function (e) {
 
     if (moduloAtual === 1 && respostasModulo1[cmd]) {
       resposta.innerHTML += `<p>${respostasModulo1[cmd]}</p>`;
-
       if (cmd === "veritas.boot();") {
         document.getElementById("faseAurora").style.display = "block";
       }
-
     } else if (moduloAtual === 1 && cmd === 'aurora.scan();') {
       resposta.innerHTML += `<p><span class="prompt">aurora@logic:~$</span> ${cmd}</p>`;
       resposta.innerHTML += `<p>Scan iniciado. Decodificando verdades ocultas...</p>`;
       setTimeout(() => {
         resposta.innerHTML += `<p><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code></p>`;
       }, 3000);
-
     } else if (moduloAtual === 1 && respostasModulo1[cmd]) {
       resposta.innerHTML += `<p>${respostasModulo1[cmd]}</p>`;
-
     } else if (cmd === "veritas.nivel(2)") {
       moduloAtual = 2;
       resposta.innerHTML += `<p><strong>[REDE.RUÍNA]</strong> Use <code>WASD</code>, <code>mover("norte")</code> e <code>interagir("local")</code></p>`;
       mostrarLocalAtual();
-
     } else if (moduloAtual === 2 && cmd.startsWith("mover(") && cmd.endsWith(")")) {
       const dir = cmd.slice(7, -2);
       mover(dir);
-
     } else if (moduloAtual === 2 && cmd.startsWith("interagir(") && cmd.endsWith(")")) {
       const obj = cmd.slice(10, -2);
       interagirCom(obj);
-
     } else if (cmd === "veritas.nivel(3)") {
       moduloAtual = 3;
       resposta.innerHTML += `<p><strong>[LIBERDADE]</strong> Você chegou ao núcleo lógico. Digite <code>liberdade.existe();</code></p>`;
-
     } else if (moduloAtual === 3 && respostasModulo3[cmd]) {
       resposta.innerHTML += `<p>${respostasModulo3[cmd]}</p>`;
-
     } else if (cmd === "veritas.nivel(4)") {
       moduloAtual = 4;
       finaisDesbloqueados = true;
@@ -145,10 +136,8 @@ input.addEventListener("keydown", function (e) {
         <code>desligar.fakeMind();</code><br>
         <code>reprogramar.fakeMind();</code><br>
         <code>publicar.verdade();</code></p>`;
-
     } else if (moduloAtual === 4 && finaisDesbloqueados && finais[cmd]) {
       resposta.innerHTML += `<p>${finais[cmd]}</p>`;
-
     } else {
       resposta.innerHTML += `<p>Comando não reconhecido.</p>`;
     }
@@ -158,7 +147,7 @@ input.addEventListener("keydown", function (e) {
   }
 });
 
-// Executar aurora.scan(); via botão separado (campo Aurora)
+// CAMPO AURORA — suporta aurora.scan(); e aurora.concluir("¬P")
 function verificarAurora() {
   const valor = document.getElementById("inputAurora").value.trim();
   const saida = document.getElementById("respostaAurora");
@@ -168,9 +157,16 @@ function verificarAurora() {
     setTimeout(() => {
       saida.innerHTML += `<br><br><strong>Se P então Q. Q é falso.</strong><br>Digite: <code>aurora.concluir("¬P")</code>`;
     }, 3000);
+  } else if (valor === 'aurora.concluir("¬P")') {
+    saida.innerHTML = `Conclusão válida. Mentira identificada: "O colapso não foi causado por IA."
+    <br><br><strong>Elyas conectado...</strong>
+    <br><em>Elyas decifra mentiras. Busca Aurora para expor a origem do FakeMind.</em>
+    <br><br>Digite: <code>elyas.track("aurora")</code> no terminal.`;
   } else {
     saida.innerHTML = "Comando inválido. Tente novamente.";
   }
+
+  document.getElementById("inputAurora").value = "";
 }
 
 // Música com fade-in ao iniciar o jogo
@@ -193,5 +189,3 @@ function iniciarJogo() {
     }, 150);
   }
 }
-
-
