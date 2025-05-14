@@ -10,7 +10,7 @@
 </head>
 <body>
   <!-- Botão de som -->
-  <button id="muteToggle">🔊 Som</button>
+  <button id="muteToggle" class="mute-button">🔊 Som</button>
 
   <!-- Tela de introdução -->
   <div id="tela-intro">
@@ -35,11 +35,11 @@
   </div>
 
   <!-- Música de fundo -->
-  <audio id="musicaFundo" loop preload="auto" muted autoplay>
+  <audio id="musicaFundo" loop preload="auto">
     <source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Script de introdução + som -->
+  <!-- Digitação e som de introdução -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras antes que a população eleja o pior candidato.\n\nVeritas.Logic iniciado...`;
@@ -63,47 +63,38 @@
       }
 
       function iniciarSom() {
-        if (audio.paused) {
-          audio.muted = false;
-          audio.volume = 0;
-          audio.play().then(() => {
-            let vol = 0;
-            const fade = setInterval(() => {
-              if (vol < 0.7) {
-                vol += 0.01;
-                audio.volume = Math.min(vol, 0.7);
-              } else {
-                clearInterval(fade);
-              }
-            }, 100);
-          }).catch(() => {});
-        }
+        if (!audio) return;
+        audio.volume = 0;
+        audio.muted = false;
+        const fade = setInterval(() => {
+          if (audio.volume < 0.7) {
+            audio.volume = Math.min(audio.volume + 0.01, 0.7);
+          } else {
+            clearInterval(fade);
+          }
+        }, 100);
+        audio.play().catch(() => {});
       }
 
-      // Toca música com interação do usuário
-      ["click", "touchstart"].forEach(evt => {
-        window.addEventListener(evt, iniciarSom, { once: true });
-      });
+      // Toca música no primeiro toque/click
+      ["click", "touchstart"].forEach(evt =>
+        window.addEventListener(evt, iniciarSom, { once: true })
+      );
 
-      // Botão de mute
+      // Botão de som
       muteBtn.addEventListener("click", () => {
         if (!audio) return;
-        if (audio.paused) {
-          audio.muted = false;
-          audio.play().then(() => {
-            muteBtn.textContent = "🔊 Som";
-          }).catch(() => {});
-        } else {
-          audio.muted = !audio.muted;
-          muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
-        }
+        audio.muted = !audio.muted;
+        muteBtn.classList.toggle("muted", audio.muted);
+        muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
       });
 
       digitarIntro();
     });
   </script>
 
-  <!-- Script principal -->
+  <!-- Lógica do jogo -->
   <script src="script.js"></script>
 </body>
 </html>
+
