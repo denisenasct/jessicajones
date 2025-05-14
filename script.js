@@ -64,7 +64,6 @@ const finais = {
   fimVerdadeiro: "📢 A verdade foi espalhada.\nO povo começa a pensar.\nAurora e Elyas foram parcialmente manipulados, mas você... resistiu.\n\nResultado: Nível de autonomia = ALTO.\nParábola encerrada."
 };
 
-// Digitação simulada
 function digitarTexto(texto, destino, callback) {
   if (!destino) return;
   destino.innerHTML = "";
@@ -82,7 +81,6 @@ function digitarTexto(texto, destino, callback) {
   digitar();
 }
 
-// Exibe uma etapa com avatar, narrativa e botões
 function mostrarEtapa(index) {
   if (!narrativa || !opcoes || !avatar) return;
 
@@ -111,7 +109,6 @@ function mostrarEtapa(index) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-// Alterna entre a introdução e o jogo
 function escolherRumo(decisao) {
   document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
@@ -146,16 +143,28 @@ function iniciarMusica() {
   });
 }
 
-// Botão de som
+// Corrige o botão de som para iniciar o áudio se necessário
 if (muteBtn) {
   muteBtn.addEventListener("click", () => {
     if (!audio) return;
-    audio.muted = !audio.muted;
-    muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
+
+    // Se ainda não começou a tocar, tenta iniciar
+    if (audio.paused) {
+      audio.play().then(() => {
+        audio.muted = false;
+        muteBtn.textContent = "🔊 Som";
+      }).catch(() => {
+        // falha ao iniciar (ex: mobile sem interação)
+      });
+    } else {
+      // Alternar mute
+      audio.muted = !audio.muted;
+      muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
+    }
   });
 }
 
-// Inicia música ao carregar página
 window.addEventListener("DOMContentLoaded", iniciarMusica);
+
 
 
