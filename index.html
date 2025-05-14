@@ -9,6 +9,11 @@
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+  <!-- Botão de som -->
+  <button id="muteToggle" style="position: absolute; top: 10px; right: 10px; z-index: 99; background: black; border: 1px solid #00ff00; color: #00ff00; padding: 5px 10px; border-radius: 5px; font-size: 0.9rem; cursor: pointer;">
+    🔊 Som
+  </button>
+
   <!-- Tela de introdução -->
   <div id="tela-intro">
     <div class="intro-matrix-overlay"></div>
@@ -31,32 +36,38 @@
     </div>
   </div>
 
+  <!-- Música de fundo -->
   <audio id="musicaFundo" loop>
     <source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
   </audio>
 
+  <!-- Script de introdução digitada e som -->
   <script>
     const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras antes que a população eleja o pior candidato.\n\nVeritas.Logic iniciado...`;
 
-    let i = 0;
-    const velocidade = 40;
     const descricao = document.getElementById("descricaoDigitada");
     const audio = document.getElementById("musicaFundo");
+    const muteBtn = document.getElementById("muteToggle");
+
+    let i = 0;
+    const velocidade = 40;
 
     function digitarIntro() {
       if (audio.paused) {
         audio.volume = 0;
-        audio.play().catch(() => {});
-        let vol = 0;
-        const fadeIn = setInterval(() => {
-          if (vol < 0.7) {
-            vol += 0.01;
-            audio.volume = Math.min(vol, 0.7);
-          } else {
-            clearInterval(fadeIn);
-          }
-        }, 150);
+        audio.play().then(() => {
+          let vol = 0;
+          const fadeIn = setInterval(() => {
+            if (vol < 0.7) {
+              vol += 0.01;
+              audio.volume = Math.min(vol, 0.7);
+            } else {
+              clearInterval(fadeIn);
+            }
+          }, 100);
+        }).catch(() => {});
       }
+
       if (i < textoIntro.length) {
         const char = textoIntro.charAt(i) === "\n" ? "<br>" : textoIntro.charAt(i);
         descricao.innerHTML += char;
@@ -69,21 +80,24 @@
 
     window.onload = digitarIntro;
 
-    window.addEventListener("touchstart", () => {
-      if (audio && audio.paused) {
-        audio.volume = 0.5;
-        audio.play().catch(() => {});
-      }
-    }, { once: true });
+    // Som para mobile: ativa no primeiro toque ou clique
+    ["click", "touchstart"].forEach(evt => {
+      window.addEventListener(evt, () => {
+        if (audio && audio.paused) {
+          audio.volume = 0.5;
+          audio.play().catch(() => {});
+        }
+      }, { once: true });
+    });
 
-    window.addEventListener("click", () => {
-      if (audio && audio.paused) {
-        audio.volume = 0.5;
-        audio.play().catch(() => {});
-      }
-    }, { once: true });
+    // Controle de som manual
+    muteBtn.addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
+    });
   </script>
 
+  <!-- Script principal do jogo -->
   <script src="script.js"></script>
 </body>
 </html>
