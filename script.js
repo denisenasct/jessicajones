@@ -115,7 +115,6 @@ function escolherRumo(decisao) {
   mostrarEtapa(decisao === "escanear" ? 0 : "manipulado");
 }
 
-// Inicia a música com fade-in
 function iniciarMusica() {
   if (!audio) return;
   audio.volume = 0;
@@ -143,23 +142,21 @@ function iniciarMusica() {
   });
 }
 
-// Corrige o botão de som para iniciar o áudio se necessário
 if (muteBtn) {
   muteBtn.addEventListener("click", () => {
     if (!audio) return;
 
-    // Se ainda não começou a tocar, tenta iniciar
+    // Tenta iniciar se ainda não começou
     if (audio.paused) {
       audio.play().then(() => {
         audio.muted = false;
         muteBtn.textContent = "🔊 Som";
-      }).catch(() => {
-        // falha ao iniciar (ex: mobile sem interação)
-      });
+        muteBtn.classList.remove("muted");
+      }).catch(() => {});
     } else {
-      // Alternar mute
       audio.muted = !audio.muted;
       muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
+      muteBtn.classList.toggle("muted", audio.muted);
     }
   });
 }
