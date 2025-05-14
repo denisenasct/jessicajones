@@ -110,40 +110,8 @@ function escolherRumo(decisao) {
   mostrarEtapa(decisao === "escanear" ? 0 : "manipulado");
 }
 
-function iniciarMusica() {
-  if (!audio) return;
-  audio.volume = 0;
-  audio.muted = false;
-  const fadeIn = () => {
-    let vol = 0;
-    const fade = setInterval(() => {
-      if (vol < 0.7) {
-        vol += 0.01;
-        audio.volume = Math.min(vol, 0.7);
-      } else {
-        clearInterval(fade);
-      }
-    }, 100);
-  };
-  audio.play().then(fadeIn).catch(() => {
-    ["click", "touchstart"].forEach(evt => {
-      document.body.addEventListener(evt, () => {
-        audio.muted = false;
-        audio.play().then(fadeIn);
-      }, { once: true });
-    });
-  });
-}
+// 🔧 Expondo função para uso no HTML:
+window.escolherRumo = escolherRumo;
 
-if (muteBtn) {
-  muteBtn.addEventListener("click", () => {
-    if (!audio) return;
-    const muted = audio.muted = !audio.muted;
-    muteBtn.textContent = muted ? "🔇 Som" : "🔊 Som";
-    muteBtn.classList.toggle("muted", muted);
-  });
-}
-
-window.addEventListener("DOMContentLoaded", iniciarMusica);
 
 
