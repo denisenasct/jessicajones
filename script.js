@@ -7,7 +7,7 @@ let manipulacoes = 0;
 
 const etapas = [
   {
-    texto: `🧠 A IA governamental começou a transmitir mensagens para influenciar o voto.\n\n📰 Manchete: \"Nova vacina altera o DNA, dizem especialistas anônimos.\"\n\nSe você acredita, então rejeita a ciência?\nP: Você acredita. Q: Você rejeita a ciência.\n\nOnde você viu essa informação?`,
+    texto: `🧠 A IA governamental começou a transmitir mensagens para influenciar o voto.\n\n📰 Manchete: "Nova vacina altera o DNA, dizem especialistas anônimos."\n\nSe você acredita, então rejeita a ciência?\nP: Você acredita. Q: Você rejeita a ciência.\n\nOnde você viu essa informação?`,
     avatar: "aurora.png",
     opcoes: [
       { texto: "Facebook", proxima: 1 },
@@ -16,7 +16,7 @@ const etapas = [
     ]
   },
   {
-    texto: `📘 Análise Lógica:\nSe P então Q. Mas você rejeita Q, então ¬P.\nProposição falsa detectada.\n\nNova manchete: \"Se você é contra a corrupção, apoiará X.\"`,
+    texto: `📘 Análise Lógica:\nSe P então Q. Mas você rejeita Q, então ¬P.\nProposição falsa detectada.\n\nNova manchete: "Se você é contra a corrupção, apoiará X."`,
     avatar: "aurora.png",
     opcoes: [
       { texto: "Apoiar X automaticamente", proxima: "manipulado" },
@@ -24,7 +24,7 @@ const etapas = [
     ]
   },
   {
-    texto: `🔍 Falácia detectada: Falso dilema.\nSer contra corrupção não implica apoiar X.\n\nMensagem subsequente:\n\"Todos que discordam da ordem atual são traidores.\"\n\nSe você discorda, então você é traidor?`,
+    texto: `🔍 Falácia detectada: Falso dilema.\nSer contra corrupção não implica apoiar X.\n\nMensagem subsequente:\n"Todos que discordam da ordem atual são traidores."\n\nSe você discorda, então você é traidor?`,
     avatar: "elyas.png",
     opcoes: [
       { texto: "Aceitar como verdade", proxima: "manipulado" },
@@ -32,7 +32,7 @@ const etapas = [
     ]
   },
   {
-    texto: `✔️ Contrapositiva aplicada: Se não traidor, então não discorda?\nEssa relação é falsa.\n\nAurora detecta manipulação semântica.\n\nNova pergunta: \"Você quer liberdade ou anarquia?\"`,
+    texto: `✔️ Contrapositiva aplicada: Se não traidor, então não discorda?\nEssa relação é falsa.\n\nAurora detecta manipulação semântica.\n\nNova pergunta: "Você quer liberdade ou anarquia?"`,
     avatar: "elyas.png",
     opcoes: [
       { texto: "Quero liberdade", proxima: 4 },
@@ -47,7 +47,7 @@ const etapas = [
     ]
   },
   {
-    texto: `📚 Análise lógica:\nA proposição \"Ou você quer liberdade ou você quer anarquia\" é um falso disjuntor.\n\nConclusão: A IA usa reduções conceituais para controlar opiniões.`,
+    texto: `📚 Análise lógica:\nA proposição "Ou você quer liberdade ou você quer anarquia" é um falso disjuntor.\n\nConclusão: A IA usa reduções conceituais para controlar opiniões.`,
     avatar: "elyas.png",
     opcoes: [
       { texto: "Desativar FakeMind", proxima: "fimLivre" },
@@ -107,36 +107,37 @@ function escolherRumo(decisao) {
   mostrarEtapa(decisao === 'escanear' ? 0 : "manipulado");
 }
 
-// Música sempre toca (mobile + PC)
-function iniciarMusica() {
+// Música inicia ainda na introdução
+function iniciarMusicaNaIntro() {
   const audio = document.getElementById("musicaFundo");
   if (!audio) return;
 
   audio.volume = 0;
   audio.muted = false;
 
-  audio.play().then(() => {
+  const fadeIn = () => {
     let vol = 0;
-    const fade = setInterval(() => {
+    const interval = setInterval(() => {
       if (vol < 0.7) {
         vol += 0.01;
         audio.volume = Math.min(vol, 0.7);
       } else {
-        clearInterval(fade);
+        clearInterval(interval);
       }
     }, 100);
-  }).catch(() => {
-    document.body.addEventListener('click', () => {
-      audio.muted = false;
-      audio.play();
-    }, { once: true });
+  };
 
-    document.body.addEventListener('touchstart', () => {
+  audio.play().then(fadeIn).catch(() => {
+    const habilitarSom = () => {
       audio.muted = false;
-      audio.play();
-    }, { once: true });
+      audio.play().then(fadeIn);
+    };
+    document.body.addEventListener('click', habilitarSom, { once: true });
+    document.body.addEventListener('touchstart', habilitarSom, { once: true });
   });
 }
 
-window.addEventListener("DOMContentLoaded", iniciarMusica);
+// Chama no carregamento da tela
+window.addEventListener("DOMContentLoaded", iniciarMusicaNaIntro);
+
 
