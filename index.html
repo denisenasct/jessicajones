@@ -76,12 +76,10 @@
         audio.play().catch(() => {});
       }
 
-      // Toca música no primeiro toque/click
       ["click", "touchstart"].forEach(evt =>
         window.addEventListener(evt, iniciarSom, { once: true })
       );
 
-      // Botão de som
       muteBtn.addEventListener("click", () => {
         if (!audio) return;
         audio.muted = !audio.muted;
@@ -94,7 +92,8 @@
   </script>
 
   <!-- Lógica do jogo -->
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
+
 
