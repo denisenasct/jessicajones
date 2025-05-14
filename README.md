@@ -120,5 +120,7 @@ Inspirado por autores como **Carl Jung, Virginia Woolf, Stephen King, Clarice Li
 - Propostas de extensão universitária e cidadania digital
 - Ferramenta de ensino para ENEM, concursos públicos e programas de inclusão
 
+> Por fim, **Veritas.Logic** não ensina apenas a programar. Ele ensina a **pensar contra algoritmos que querem nos programar**.
+
 ---
 
