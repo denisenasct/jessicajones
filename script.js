@@ -1,6 +1,8 @@
 const narrativa = document.getElementById("narrativa");
 const opcoes = document.getElementById("opcoes");
 const avatar = document.getElementById("avatarContainer");
+const audio = document.getElementById("musicaFundo");
+const muteBtn = document.getElementById("muteToggle");
 
 let etapa = 0;
 let manipulacoes = 0;
@@ -107,37 +109,48 @@ function escolherRumo(decisao) {
   mostrarEtapa(decisao === 'escanear' ? 0 : "manipulado");
 }
 
-// Música inicia ainda na introdução
-function iniciarMusicaNaIntro() {
-  const audio = document.getElementById("musicaFundo");
+// Iniciar música na introdução (mobile e PC)
+function iniciarMusica() {
   if (!audio) return;
-
   audio.volume = 0;
   audio.muted = false;
 
   const fadeIn = () => {
     let vol = 0;
-    const interval = setInterval(() => {
+    const fade = setInterval(() => {
       if (vol < 0.7) {
         vol += 0.01;
         audio.volume = Math.min(vol, 0.7);
       } else {
-        clearInterval(interval);
+        clearInterval(fade);
       }
     }, 100);
   };
 
-  audio.play().then(fadeIn).catch(() => {
-    const habilitarSom = () => {
-      audio.muted = false;
-      audio.play().then(fadeIn);
-    };
-    document.body.addEventListener('click', habilitarSom, { once: true });
-    document.body.addEventListener('touchstart', habilitarSom, { once: true });
-  });
+  const tentarPlay = () => {
+    audio.play().then(fadeIn).catch(() => {
+      document.body.addEventListener("click", () => {
+        audio.muted = false;
+        audio.play().then(fadeIn);
+      }, { once: true });
+
+      document.body.addEventListener("touchstart", () => {
+        audio.muted = false;
+        audio.play().then(fadeIn);
+      }, { once: true });
+    });
+  };
+
+  tentarPlay();
 }
 
-// Chama no carregamento da tela
-window.addEventListener("DOMContentLoaded", iniciarMusicaNaIntro);
+window.addEventListener("DOMContentLoaded", iniciarMusica);
 
+// Botão mutar som
+if (muteBtn) {
+  muteBtn.addEventListener("click", () => {
+    audio.muted = !audio.muted;
+    muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
+  });
+}
 
