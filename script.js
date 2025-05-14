@@ -5,7 +5,6 @@ const audio = document.getElementById("musicaFundo");
 const muteBtn = document.getElementById("muteToggle");
 
 let etapa = 0;
-let manipulacoes = 0;
 
 const etapas = [
   {
@@ -65,13 +64,15 @@ const finais = {
   fimVerdadeiro: "📢 A verdade foi espalhada.\nO povo começa a pensar.\nAurora e Elyas foram parcialmente manipulados, mas você... resistiu.\n\nResultado: Nível de autonomia = ALTO.\nParábola encerrada."
 };
 
+// Digitação simulada
 function digitarTexto(texto, destino, callback) {
+  if (!destino) return;
   destino.innerHTML = "";
   let i = 0;
   function digitar() {
     if (i < texto.length) {
       const char = texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i);
-      destino.innerHTML += char;
+      destino.insertAdjacentHTML("beforeend", char);
       i++;
       setTimeout(digitar, 30);
     } else if (callback) {
@@ -81,7 +82,10 @@ function digitarTexto(texto, destino, callback) {
   digitar();
 }
 
+// Exibe uma etapa com avatar, narrativa e botões
 function mostrarEtapa(index) {
+  if (!narrativa || !opcoes || !avatar) return;
+
   if (typeof index === "string") {
     narrativa.innerHTML = finais[index].replace(/\n/g, "<br>");
     opcoes.innerHTML = "<button onclick=\"location.reload()\">Reiniciar</button>";
@@ -91,7 +95,9 @@ function mostrarEtapa(index) {
 
   etapa = index;
   const obj = etapas[etapa];
-  avatar.innerHTML = `<img src='img/${obj.avatar}' class='avatar' alt='Avatar'>`;
+
+  avatar.innerHTML = `<img src="img/${obj.avatar}" class="avatar" alt="Avatar">`;
+
   digitarTexto(obj.texto, narrativa, () => {
     opcoes.innerHTML = "";
     obj.opcoes.forEach(op => {
@@ -101,15 +107,18 @@ function mostrarEtapa(index) {
       opcoes.appendChild(btn);
     });
   });
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+// Alterna entre a introdução e o jogo
 function escolherRumo(decisao) {
   document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
-  mostrarEtapa(decisao === 'escanear' ? 0 : "manipulado");
+  mostrarEtapa(decisao === "escanear" ? 0 : "manipulado");
 }
 
-// Iniciar música na introdução (mobile e PC)
+// Inicia a música com fade-in
 function iniciarMusica() {
   if (!audio) return;
   audio.volume = 0;
@@ -127,30 +136,26 @@ function iniciarMusica() {
     }, 100);
   };
 
-  const tentarPlay = () => {
-    audio.play().then(fadeIn).catch(() => {
-      document.body.addEventListener("click", () => {
-        audio.muted = false;
-        audio.play().then(fadeIn);
-      }, { once: true });
-
-      document.body.addEventListener("touchstart", () => {
+  audio.play().then(fadeIn).catch(() => {
+    ["click", "touchstart"].forEach(evt => {
+      document.body.addEventListener(evt, () => {
         audio.muted = false;
         audio.play().then(fadeIn);
       }, { once: true });
     });
-  };
-
-  tentarPlay();
+  });
 }
 
-window.addEventListener("DOMContentLoaded", iniciarMusica);
-
-// Botão mutar som
+// Botão de som
 if (muteBtn) {
   muteBtn.addEventListener("click", () => {
+    if (!audio) return;
     audio.muted = !audio.muted;
     muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
   });
 }
+
+// Inicia música ao carregar página
+window.addEventListener("DOMContentLoaded", iniciarMusica);
+
 
