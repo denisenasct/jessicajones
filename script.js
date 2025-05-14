@@ -113,5 +113,3 @@ function escolherRumo(decisao) {
 // 🔧 Expondo função para uso no HTML:
 window.escolherRumo = escolherRumo;
 
-
-
