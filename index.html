@@ -10,7 +10,7 @@
 </head>
 <body>
   <!-- Botão de som -->
-  <button id="muteToggle" style="position: fixed; top: 10px; right: 10px; z-index: 99; background: black; border: 1px solid #00ff00; color: #00ff00; padding: 5px 10px; border-radius: 5px; font-size: 0.9rem; cursor: pointer;">
+  <button id="muteToggle" style="position: fixed; top: 10px; right: 10px; z-index: 9999; background: black; border: 1px solid #00ff00; color: #00ff00; padding: 5px 10px; border-radius: 5px; font-size: 0.9rem; cursor: pointer;">
     🔊 Som
   </button>
 
@@ -37,11 +37,11 @@
   </div>
 
   <!-- Música de fundo -->
-  <audio id="musicaFundo" loop>
+  <audio id="musicaFundo" loop preload="auto">
     <source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Introdução com som e digitação -->
+  <!-- Script de introdução + som -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras antes que a população eleja o pior candidato.\n\nVeritas.Logic iniciado...`;
@@ -50,9 +50,9 @@
       const audio = document.getElementById("musicaFundo");
       const muteBtn = document.getElementById("muteToggle");
 
+      // Função para digitar texto com efeito
       let i = 0;
       const velocidade = 40;
-
       function digitarIntro() {
         if (i < textoIntro.length) {
           const char = textoIntro.charAt(i) === "\n" ? "<br>" : textoIntro.charAt(i);
@@ -64,8 +64,9 @@
         }
       }
 
+      // Função para tocar música com fade-in
       function iniciarSom() {
-        if (audio.paused) {
+        if (audio && audio.paused) {
           audio.volume = 0;
           audio.muted = false;
           audio.play().then(() => {
@@ -82,22 +83,25 @@
         }
       }
 
-      // Inicia música com interação
+      // Toca música no primeiro toque/click (mobile + desktop)
       ["click", "touchstart"].forEach(evt =>
-        window.addEventListener(evt, () => iniciarSom(), { once: true })
+        window.addEventListener(evt, iniciarSom, { once: true })
       );
 
-      // Botão de mute
+      // Botão de mute som
       muteBtn.addEventListener("click", () => {
+        if (!audio) return;
         audio.muted = !audio.muted;
         muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
       });
 
-      digitarIntro(); // Iniciar digitação
+      // Inicia a digitação
+      digitarIntro();
     });
   </script>
 
-  <!-- Lógica principal -->
+  <!-- Script principal -->
   <script src="script.js"></script>
 </body>
 </html>
+
