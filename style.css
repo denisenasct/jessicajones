@@ -215,4 +215,33 @@ body::before {
   .terminal {
     padding: 1.5rem;
   }
+
+  #muteToggle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+#muteToggle:hover {
+  background: #00ff00;
+  color: black;
+}
+
+#muteToggle.muted {
+  background: rgba(0, 0, 0, 0.8);
+  color: #ff3333;
+  border: 1px solid #ff3333;
+  box-shadow: 0 0 8px #ff3333;
+}
+
 }
