@@ -1,1 +1,102 @@
- 
+ <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Veritas.Logic - Verdade ou Consciência?</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- Botão de som -->
+<button id="muteToggle" class="mute-button">🔊 Som</button>
+
+<!-- Tela de introdução -->
+<div id="tela-intro">
+<div class="intro-matrix-overlay"></div>
+<div class="intro-texto">
+<h1><i class="fas fa-terminal"></i> Veritas.Logic</h1>
+<p id="descricaoDigitada" class="intro-pre"></p>
+<div id="botoesInicio" style="display:none;">
+<button onclick="escolherRumo('escanear')">Escanear os protocolos</button>
+<button onclick="escolherRumo('ignorar')">Ignorar e prosseguir</button>
+</div>
+</div>
+</div>
+
+<!-- Terminal principal -->
+<div class="terminal-bg" id="terminal" style="display: none;">
+<div class="terminal">
+<div id="avatarContainer"></div>
+<div id="narrativa"></div>
+<div id="opcoes"></div>
+</div>
+</div>
+
+<!-- Música de fundo -->
+<audio id="musicaFundo" loop preload="auto">
+<source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
+</audio>
+
+  <!-- Lógica do jogo -->
+<script src="script.js" defer></script>
+
+<!-- Digitação e som de introdução -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras antes que a população eleja o pior candidato.\n\nVeritas.Logic iniciado...`;
+
+const descricao = document.getElementById("descricaoDigitada");
+const audio = document.getElementById("musicaFundo");
+const muteBtn = document.getElementById("muteToggle");
+
+let i = 0;
+const velocidade = 40;
+
+function digitarIntro() {
+if (i < textoIntro.length) {
+const char = textoIntro.charAt(i) === "\n" ? "<br>" : textoIntro.charAt(i);
+descricao.innerHTML += char;
+i++;
+setTimeout(digitarIntro, velocidade);
+} else {
+document.getElementById("botoesInicio").style.display = "block";
+}
+}
+
+function iniciarSom() {
+if (!audio) return;
+audio.volume = 0;
+audio.muted = false;
+const fade = setInterval(() => {
+if (audio.volume < 0.7) {
+audio.volume = Math.min(audio.volume + 0.01, 0.7);
+} else {
+clearInterval(fade);
+}
+}, 100);
+audio.play().catch(() => {});
+}
+
+["click", "touchstart"].forEach(evt =>
+window.addEventListener(evt, iniciarSom, { once: true })
+);
+
+muteBtn.addEventListener("click", () => {
+if (!audio) return;
+audio.muted = !audio.muted;
+muteBtn.classList.toggle("muted", audio.muted);
+muteBtn.textContent = audio.muted ? "🔇 Som" : "🔊 Som";
+});
+
+digitarIntro();
+});
+</script>
+
+  <!-- Lógica do jogo -->
+  <script src="script.js" defer></script>
+</body>
+</html>
+
+~
