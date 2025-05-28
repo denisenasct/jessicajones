@@ -1,3 +1,5 @@
+// script.js completo com funcionalidades avançadas e efeito de compartilhamento simbólico
+
 let avatar = localStorage.getItem("avatar") || "";
 let etapaAtual = 0;
 let progresso = 0;
@@ -31,9 +33,9 @@ const narrativa = [
   },
   {
     id: 3,
-    texto: "👁️‍🗨️ Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.\n\nVocê se aproximou da consciência, mas não o suficiente.",
+    texto: "👁️‍🔦 Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.",
     escolhas: [
-      { texto: "Reiniciar", destino: "reiniciar" }
+      { texto: "Reiniciar", destino: 0 }
     ]
   },
   {
@@ -62,7 +64,7 @@ const narrativa = [
     id: 7,
     texto: "🔮 O silêncio permite introspecção. Você começa a reconhecer padrões internos de manipulação aprendidos ao longo da vida.",
     escolhas: [
-      { texto: "Reiniciar", destino: "reiniciar" }
+      { texto: "Reiniciar", destino: 0 }
     ]
   },
   {
@@ -75,9 +77,9 @@ const narrativa = [
   },
   {
     id: 9,
-    texto: "📢 O manifesto circula. Algumas consciências despertam. A IA reconfigura sua abordagem. Você não venceu. Mas mudou o jogo.\n\nParabéns. Você despertou — e também os outros.",
+    texto: "📢 O manifesto circula. Algumas consciências despertam. A IA reconfigura sua abordagem.\n\n<mark>Parabéns. Você despertou. Outros também.</mark>",
     escolhas: [
-      { texto: "Reiniciar", destino: "reiniciar" }
+      { texto: "Reiniciar Jogo", destino: "reiniciarFinal" }
     ]
   }
 ];
@@ -97,7 +99,6 @@ function iniciarNarrativa() {
 function mostrarCena(id) {
   const cena = narrativa.find((c) => c.id === id);
   etapaAtual = id;
-
   if (typeof id === "number") escolhasHistorico.push(id);
 
   const avatarPath = localStorage.getItem("avatar") || "img/aurora.png";
@@ -105,8 +106,13 @@ function mostrarCena(id) {
     <img src="${avatarPath}" class="avatar" alt="avatar" onerror="this.style.display='none'" />
   `;
 
-  document.getElementById("narrativa").innerHTML = `<p>${cena.texto}</p>`;
-  if (narracaoAtiva) narrarTexto(cena.texto);
+  let textoFinal = cena.texto;
+  if (id === 3 || id === 7) {
+    textoFinal += "<br><mark>Você se aproximou da consciência, mas não o suficiente. Continue tentando.</mark>";
+  }
+
+  document.getElementById("narrativa").innerHTML = `<p>${textoFinal}</p>`;
+  if (narracaoAtiva) narrarTexto(textoFinal);
 
   atualizarProgresso();
   atualizarVisual(id);
@@ -118,8 +124,9 @@ function mostrarCena(id) {
     const botao = document.createElement("button");
     botao.innerText = escolha.texto;
     botao.onclick = () => {
-      if (escolha.destino === "reiniciar") {
-        reiniciarParaInicio();
+      if (escolha.destino === "reiniciarFinal") {
+        ativarCompartilhamentoSimbolico();
+        setTimeout(() => reiniciarParaInicio(), 3000);
       } else {
         mostrarCena(escolha.destino);
       }
@@ -153,7 +160,7 @@ function reiniciarParaInicio() {
 function narrarTexto(texto) {
   const synth = window.speechSynthesis;
   synth.cancel();
-  const utterance = new SpeechSynthesisUtterance(texto);
+  const utterance = new SpeechSynthesisUtterance(texto.replace(/<[^>]+>/g, ""));
   utterance.lang = "pt-BR";
   synth.speak(utterance);
 }
@@ -162,4 +169,14 @@ function alternarNarracao() {
   narracaoAtiva = !narracaoAtiva;
   document.getElementById("btnNarrar").innerText = narracaoAtiva ? "🔊 Narrando" : "🔇 Silenciar";
 }
+
+function ativarCompartilhamentoSimbolico() {
+  const terminal = document.getElementById("terminal");
+  const efeito = document.createElement("div");
+  efeito.className = "efeito-compartilhamento";
+  efeito.innerText = "VERITAS LIBERADA...";
+  terminal.appendChild(efeito);
+  setTimeout(() => efeito.remove(), 3000);
+}
+
 
