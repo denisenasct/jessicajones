@@ -1,114 +1,112 @@
-// script.js atualizado com avatar fixo em bolinha, nivel de manipulação e comentários
+// narrativa.js — narrativa não linear sem pontuação
 
+let avatar = localStorage.getItem("avatar") || "";
 let etapaAtual = 0;
-let pontosLogica = 0;
-let avatarEscolhido = "";
 
-const etapas = [
+const narrativa = [
   {
-    texto: "📡 A IA detecta aumento nas buscas por 'vacinas perigosas'.",
-    proposicao: "P → Q — Se você acredita, então você rejeita a ciência.\nComentário: Implicação que conecta crença com desinformação.",
-    opcoes: [
-      { texto: "Acredito na manchete", logico: false },
-      { texto: "Rejeito a manchete", logico: true }
+    id: 0,
+    texto: "\uD83D\uDD0E Terminal: Sinais detectados no protocolo de mídia \"V-Stream\". Um vídeo popular contradiz dados verificáveis.",
+    escolhas: [
+      { texto: "Ignorar e seguir", destino: 1 },
+      { texto: "Analisar os comentários", destino: 2 }
     ]
   },
   {
-    texto: "📰 Manchete: 'Nova vacina altera o DNA'.",
-    proposicao: "P ↔ Q — Só se você verifica a fonte, a informação é útil.\nComentário: Equivalência que reforça a importância da verificação.",
-    opcoes: [
-      { texto: "Verifico a fonte", logico: true },
-      { texto: "Confio sem checar", logico: false }
+    id: 1,
+    texto: "\u26A1 Alerta: Passividade detectada. A IA sugere fontes similares. Você entra em um ciclo de confirmação...",
+    escolhas: [
+      { texto: "Recuar e investigar", destino: 2 },
+      { texto: "Continuar no fluxo", destino: 3 }
     ]
   },
   {
-    texto: "⚖️ Ou apoia o líder, ou é inimigo do povo.",
-    proposicao: "P ⊕ Q — Disjunção exclusiva manipulada.\nComentário: Falsa dicotomia política. Rejeitar essa lógica é resistir.",
-    opcoes: [
-      { texto: "Recuso essa lógica binária", logico: true },
-      { texto: "Aceito o dilema", logico: false }
+    id: 2,
+    texto: "\uD83D\uDCAC Comentários mostram padrões linguísticos semelhantes — frases como 'todo mundo sabe' ou 'se você não vê, é burro'.",
+    escolhas: [
+      { texto: "Filtrar por fontes confiáveis", destino: 4 },
+      { texto: "Responder com lógica proposicional", destino: 5 }
     ]
   },
   {
-    texto: "🧩 Uma afirmação é sempre verdadeira ou sempre falsa?",
-    proposicao: "P ∨ ¬P — Tautologia.\nComentário: Essa estrutura lógica é sempre verdadeira, usada para confundir."
-    ,
-    opcoes: [
-      { texto: "Sim, sempre verdadeira", logico: true },
-      { texto: "Depende do contexto", logico: false }
+    id: 3,
+    texto: "\uD83D\uDC41\u200D\uD83D\uDDE8 Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.",
+    escolhas: [
+      { texto: "Reiniciar", destino: 0 }
     ]
   },
   {
-    texto: "📢 'Se você questiona, então é traidor'.",
-    proposicao: "Contrapositiva de P → Q\nComentário: Negar a proposição é uma forma de resistência consciente.",
-    opcoes: [
-      { texto: "Negar é pensar", logico: true },
-      { texto: "Aceito sem pensar", logico: false }
+    id: 4,
+    texto: "\uD83D\uDD75\uFE0F A filtragem revela que a maioria dos comentários vem de bots. Você recupera parte da consciência crítica.",
+    escolhas: [
+      { texto: "Prosseguir para investigar o autor do vídeo", destino: 6 }
     ]
   },
   {
-    texto: "🔍 Suas escolhas seguiram um padrão coerente?",
-    proposicao: "Comentário: Aqui se testa a consistência lógica de todo o percurso.",
-    opcoes: [
-      { texto: "Fui consistente", logico: true },
-      { texto: "Não pensei nisso", logico: false }
+    id: 5,
+    texto: "\uD83E\uDEE0 Você responde com: 'Se P então Q. Mas não Q. Logo, não P'. Alguns usuários reagem com raiva. Outros silenciam.",
+    escolhas: [
+      { texto: "Refletir sobre a reação", destino: 6 }
     ]
   },
   {
-    texto: "🎯 Caminho oculto desbloqueado! Você resistiu logicamente à manipulação da IA.",
-    proposicao: "Final: Baixo nível de manipulação. Parabéns!",
-    opcoes: [
-      { texto: "Reiniciar", logico: false }
+    id: 6,
+    texto: "\uD83E\uDD16 O sistema reconhece um desvio do padrão. Sua consciência se fortalece. O algoritmo hesita em sugerir novos conteúdos.",
+    escolhas: [
+      { texto: "Ficar em silêncio e observar", destino: 7 },
+      { texto: "Infiltrar-se nos fóruns de criação de conteúdo", destino: 8 }
     ]
   },
   {
-    texto: "🔒 Você foi manipulado. Suas escolhas falharam na lógica formal.",
-    proposicao: "Final: Nível de manipulação: Alto ou Médio.",
-    opcoes: [
-      { texto: "Reiniciar", logico: false }
+    id: 7,
+    texto: "\uD83D\uDD2E O silêncio permite introspecção. Você começa a reconhecer padrões internos de manipulação aprendidos ao longo da vida.",
+    escolhas: [
+      { texto: "Reiniciar", destino: 0 }
+    ]
+  },
+  {
+    id: 8,
+    texto: "\uD83D\uDEE0 Nos bastidores da plataforma, criadores usam padrões de atenção baseados em falácias emocionais. Você compreende como a verdade foi sequestrada.",
+    escolhas: [
+      { texto: "Liberar um manifesto lógico", destino: 9 },
+      { texto: "Silenciar e armazenar dados para depois", destino: 7 }
+    ]
+  },
+  {
+    id: 9,
+    texto: "\uD83D\uDCE2 O manifesto circula. Algumas consciências despertam. A IA reconfigura sua abordagem. Você não venceu. Mas mudou o jogo.",
+    escolhas: [
+      { texto: "Recomeçar", destino: 0 }
     ]
   }
 ];
 
-function mostrarEtapa(indice) {
-  etapaAtual = indice;
-  const etapa = etapas[indice];
-
-  
-  document.getElementById("avatarContainer").innerHTML = `<img src="${avatarEscolhido}" class="avatar"/>`;
-  document.getElementById("narrativa").innerText = etapa.texto;
-  document.getElementById("proposicao").innerText = "";
-
-  const opcoesContainer = document.getElementById("opcoes");
-  opcoesContainer.innerHTML = "";
-
-  etapa.opcoes.forEach((op, i) => {
-    const botao = document.createElement("button");
-    botao.innerText = op.texto;
-    botao.onclick = () => processarEscolha(op, etapa.proposicao);
-    opcoesContainer.appendChild(botao);
-  });
+function setarAvatar(path) {
+  localStorage.setItem("avatar", path);
+  document.getElementById("botaoIniciar").style.display = "block";
 }
 
-function processarEscolha(op, comentario) {
-  if (op.logico) pontosLogica++;
-  document.getElementById("proposicao").innerText = comentario;
-  
-  setTimeout(() => {
-    if (etapaAtual === 5) {
-      if (pontosLogica >= 5) mostrarEtapa(6);
-      else mostrarEtapa(7);
-    } else if (etapaAtual < 5) {
-      mostrarEtapa(etapaAtual + 1);
-    } else {
-      window.location.reload();
-    }
-  }, 9000); // tempo para leitura
-}
-
-function escolherAvatar(avatarPath) {
-  avatarEscolhido = avatarPath;
+function iniciarNarrativa() {
   document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
-  mostrarEtapa(0);
+  mostrarCena(0);
+}
+
+function mostrarCena(id) {
+  const cena = narrativa.find(c => c.id === id);
+  etapaAtual = id;
+
+  const avatar = localStorage.getItem("avatar") || "img/aurora.png";
+  document.getElementById("avatarContainer").innerHTML = `<img src="${avatar}" class="avatar" alt="avatar">`;
+
+  document.getElementById("narrativa").innerHTML = `<p>${cena.texto}</p>`;
+  const opcoes = document.getElementById("opcoes");
+  opcoes.innerHTML = "";
+
+  cena.escolhas.forEach(escolha => {
+    const botao = document.createElement("button");
+    botao.innerText = escolha.texto;
+    botao.onclick = () => mostrarCena(escolha.destino);
+    opcoes.appendChild(botao);
+  });
 }
