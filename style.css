@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Courier New', monospace;
-  background-color: #0a0a0a;
+  background-color: black;
   color: #00ff00;
   height: auto;
   min-height: 100vh;
@@ -89,18 +89,6 @@ body::before {
   box-sizing: border-box;
 }
 
-#descricaoDigitada::after {
-  content: "|";
-  animation: blink 1s steps(2, start) infinite;
-  margin-left: 5px;
-}
-
-@keyframes blink {
-  to {
-    visibility: hidden;
-  }
-}
-
 .intro-texto button {
   background: transparent;
   border: 1px solid #00ff00;
@@ -139,7 +127,6 @@ body::before {
   box-shadow: 0 0 20px #00ff00;
   text-align: left;
   box-sizing: border-box;
-  transition: all 0.5s ease-in-out;
 }
 
 #avatarContainer {
@@ -161,11 +148,6 @@ body::before {
   line-height: 1.6;
   white-space: pre-wrap;
   overflow-wrap: break-word;
-  transition: opacity 0.4s ease-in-out;
-}
-
-#opcoes {
-  transition: opacity 0.4s ease-in-out;
 }
 
 #opcoes button {
@@ -184,16 +166,6 @@ body::before {
 #opcoes button:hover {
   background-color: #00ff00;
   color: black;
-}
-
-#opcoes button.resposta-logica {
-  border-color: #66ff66;
-  box-shadow: 0 0 12px #66ff66;
-}
-
-#opcoes button.resposta-comum {
-  border-color: #ff4444;
-  box-shadow: 0 0 12px #ff4444;
 }
 
 .mute-button {
@@ -248,9 +220,23 @@ body::before {
   margin-right: 4px;
 }
 
-button:focus {
-  outline: 2px solid #00ff00;
-  outline-offset: 2px;
+.botao-personagem {
+  background: transparent;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 10px 20px;
+  margin: 10px 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ff00;
+  transition: all 0.3s ease;
+}
+
+.botao-personagem:hover {
+  background-color: #00ff00;
+  color: black;
+  box-shadow: 0 0 20px #00ff00;
 }
 
 @media (max-width: 768px) {
@@ -287,4 +273,5 @@ button:focus {
     padding: 1.5rem;
   }
 }
+
 
