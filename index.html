@@ -8,9 +8,7 @@
   <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
 </head>
 <body>
-  <!-- Botões fixos no topo -->
   <button id="muteToggle" class="mute-button">🔊 Som</button>
-  <button id="btnNarrar" class="mute-button" style="top: 50px;">🔇 Silenciar</button>
 
   <!-- Tela de introdução -->
   <div id="tela-intro">
@@ -34,9 +32,10 @@
   <!-- Terminal principal -->
   <div class="terminal-bg" id="terminal" style="display:none;">
     <div class="terminal">
-      <!-- Barra de progresso -->
-      <div id="barraProgressoContainer"><div id="barraProgresso"></div></div>
-      <!-- Avatar, narrativa e escolhas -->
+      <button id="btnNarrar" onclick="alternarNarracao()">🔇 Silenciar</button>
+      <div id="barraProgressoContainer">
+        <div id="barraProgresso"></div>
+      </div>
       <div id="avatarContainer"></div>
       <div id="narrativa"></div>
       <div id="opcoes"></div>
@@ -99,4 +98,3 @@
   </script>
 </body>
 </html>
-
