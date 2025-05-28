@@ -106,8 +106,7 @@ O jogo pode ser utilizado em **contextos de educação popular, escolas pública
 
 ## ✍️ Autoria e Propósito Acadêmico
 
-Este jogo foi desenvolvido por estudantes de Sistemas de Informação, como parte de um projeto de educação lógica voltado à inclusão, inovação didática e combate à manipulação digital.
-Este jogo foi desenvolvido pelos estudantes de Sistemas de Informação: Denise Tavares, Beatriz Astle, João Astle e Maria Luiza Melo, como parte de um projeto de educação lógica voltado à inclusão, inovação didática e combate à manipulação digital.
+Este jogo foi desenvolvido pelos estudantes de Sistemas de Informação: Denise Tavares, Beatriz Astle, João Astle, Maria Luiza Melo, Caio Marques Emerenciano e Augusto Cesar, como parte de um projeto de educação lógica voltado à inclusão, inovação didática e combate à manipulação digital.
 
 Inspirado por autores como **Carl Jung, Virginia Woolf, Stephen King, Clarice Lispector e George Orwell**, o jogo busca explorar o inconsciente coletivo por meio da lógica formal e crítica social.
 
