@@ -1,5 +1,10 @@
+// script.js completo com funcionalidades avançadas
+
 let avatar = localStorage.getItem("avatar") || "";
 let etapaAtual = 0;
+let progresso = 0;
+let escolhasHistorico = [];
+let narracaoAtiva = false;
 
 const narrativa = [
   {
@@ -28,7 +33,7 @@ const narrativa = [
   },
   {
     id: 3,
-    texto: "👁️‍🗨️ Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.",
+    texto: "👁️‍🔬 Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.",
     escolhas: [
       { texto: "Reiniciar", destino: 0 }
     ]
@@ -79,23 +84,23 @@ const narrativa = [
   }
 ];
 
-// Função chamada ao clicar em um avatar
 function setarAvatar(path) {
   localStorage.setItem("avatar", path);
   iniciarNarrativa();
 }
 
-// Inicia o jogo e mostra a primeira cena
 function iniciarNarrativa() {
   document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
+  document.getElementById("barraProgresso").style.width = "0%";
   mostrarCena(0);
 }
 
-// Mostra a cena atual com texto, avatar e opções
 function mostrarCena(id) {
   const cena = narrativa.find(c => c.id === id);
   etapaAtual = id;
+
+  if (typeof id === "number") escolhasHistorico.push(id);
 
   const avatarPath = localStorage.getItem("avatar") || "img/aurora.png";
   document.getElementById("avatarContainer").innerHTML = `
@@ -103,6 +108,11 @@ function mostrarCena(id) {
   `;
 
   document.getElementById("narrativa").innerHTML = `<p>${cena.texto}</p>`;
+  if (narracaoAtiva) narrarTexto(cena.texto);
+
+  atualizarProgresso();
+  atualizarVisual(id);
+
   const opcoes = document.getElementById("opcoes");
   opcoes.innerHTML = "";
 
@@ -113,19 +123,50 @@ function mostrarCena(id) {
       if (escolha.destino === "reiniciar") {
         reiniciarParaInicio();
       } else {
-        mostrarCena(escolha.destino);
+        if (escolha.texto.includes("Reiniciar") || escolha.texto.includes("Liberar") || escolha.texto.includes("Responder")) {
+          if (confirm("Tem certeza? Essa decisão pode alterar o curso da narrativa.")) {
+            mostrarCena(escolha.destino);
+          }
+        } else {
+          mostrarCena(escolha.destino);
+        }
       }
     };
     opcoes.appendChild(botao);
   });
 }
 
-// Retorna à tela de introdução e limpa o avatar
+function atualizarProgresso() {
+  progresso = Math.min(100, (escolhasHistorico.length / narrativa.length) * 100);
+  document.getElementById("barraProgresso").style.width = `${progresso}%`;
+}
+
+function atualizarVisual(id) {
+  const terminal = document.getElementById("terminal");
+  if ([1, 3, 8].includes(id)) {
+    terminal.classList.add("alerta");
+  } else {
+    terminal.classList.remove("alerta");
+  }
+}
+
 function reiniciarParaInicio() {
   localStorage.removeItem("avatar");
   document.getElementById("terminal").style.display = "none";
   document.getElementById("tela-intro").style.display = "flex";
   document.getElementById("descricaoDigitada").innerHTML = "";
-  window.location.reload(); // opcional para reiniciar a digitação e áudio
+  window.location.reload();
 }
 
+function narrarTexto(texto) {
+  const synth = window.speechSynthesis;
+  synth.cancel();
+  const utterance = new SpeechSynthesisUtterance(texto);
+  utterance.lang = "pt-BR";
+  synth.speak(utterance);
+}
+
+function alternarNarracao() {
+  narracaoAtiva = !narracaoAtiva;
+  document.getElementById("btnNarrar").innerText = narracaoAtiva ? "🔊 Narrando" : "🔇 Silenciar";
+}
