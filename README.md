@@ -1,127 +1,123 @@
-# Veritas.Logic: Educação Inclusiva, Lógica Proposicional e Resistência à Manipulação
+# 🎮 Veritas.Logic — Um Jogo de Lógica Proposicional Contra a Desinformação
 
-## 🧠 Visão Geral
+## 🧠 Objetivo do Jogo
 
-**Veritas.Logic** não é um quiz. É uma experiência narrativa interativa e crítica, desenvolvida para simular os mecanismos de manipulação informacional e despertar no jogador a consciência lógica diante da desinformação.
-
-Ambientado em um futuro distópico dominado por uma inteligência artificial governamental — a *FakeMind* — o jogo apresenta ao jogador proposições enganosas, dilemas políticos e falácias disfarçadas de verdades.
-
-Por meio de uma interface acessível e uma estética inspirada em ficção científica, **Veritas.Logic transforma a lógica formal em uma jornada ética**, onde cada decisão revela o grau de autonomia do pensamento do jogador.
+Veritas.Logic é um jogo narrativo interativo baseado em **lógica proposicional** que simula um mundo distópico onde a **manipulação algorítmica e as fake news dominaram a realidade**. O jogador assume o papel de uma “anomalia consciente” que escapou do controle da IA governamental *FakeMind* e deve tomar decisões lógicas para **restaurar a verdade** e **resgatar a consciência coletiva**.
 
 ---
 
-## 🎯 Objetivos
+## 🌐 Área de Aplicação
 
-- Desenvolver pensamento lógico e crítico em ambientes de incerteza.
-- Explorar a lógica proposicional por meio de enredos baseados em dilemas políticos e sociais.
-- Promover educação inclusiva por meio de linguagem acessível e narrativa gamificada.
-- Combater a desinformação, ensinando os jogadores a reconhecerem falácias e estruturas lógicas manipuladoras.
-- Estimular o debate sobre liberdade de pensamento, democracia e ética algorítmica.
+Este jogo foi desenvolvido dentro da grande área da **Educação Inclusiva**, com extensões possíveis para:
 
----
-
-## ❌ Por que Veritas.Logic *não é* um quiz?
-
-Diferente de um quiz tradicional:
-
-- Não há perguntas com resposta única.
-- O jogador toma decisões contextuais, influenciado por narrativas manipuladoras.
-- Cada escolha leva a um caminho diferente e a um desfecho lógico (livre, manipulado, misto ou consciente).
-- As decisões envolvem interpretação de proposições, como:
-  - `Se P então Q`
-  - `¬P`
-  - *falso disjuntor*
-  - *contrapositiva*
-  - *dilema manipulador*
-
-Essa estrutura reflete o raciocínio lógico formal, mas em um ambiente dramatizado e narrativo — como uma "Matrix educacional".
-
-Veritas.Logic é, portanto, uma **simulação lógica**, não uma avaliação. O erro aqui é pedagógico, não punitivo.
+- **Educação Básica e Alfabetização Crítica**
+- **Tecnologia da Informação e Cidadania Digital**
+- **Saúde Mental e Cognição**
+- **Cultura e Letramento Midiático**
+- **Combate à Desinformação e Fake News**
+- **Formação Ética e Política**
 
 ---
 
-## 🗳️ Fake News e Desinformação Política
+## 🧩 Conceitos Lógicos Aplicados
 
-**Veritas.Logic** foi concebido como uma resposta à crise global de confiança em fontes de informação e à instrumentalização das emoções para fins eleitorais.
-
-Com base em estudos de ciência cognitiva, filosofia da linguagem e propaganda digital, o jogo apresenta ao jogador:
-
-- Manchetes sensacionalistas simuladas
-- Proposições com estrutura lógica distorcida (ex: “Se você não apoia X, é contra Y”)
-- Falsas dicotomias e argumentos ad hominem
-- Inferências políticas enganosas baseadas em apelos morais
-
-O objetivo é **ensinar a desconstrução dessas estruturas**, demonstrando como decisões tomadas sem análise lógica podem conduzir à manipulação das massas — tudo isso por meio da própria narrativa, e não de um discurso moralizante.
+- **Raciocínio Dedutivo**: Toda escolha influencia o desdobramento da narrativa de forma lógica.
+- **Proposições Formais**: O jogo usa proposições do tipo “Se P então Q”, “¬Q ⟹ ¬P”, disjunções e negações.
+- **Falácias Argumentativas**: Exploradas dentro de comentários, algoritmos e conteúdo manipulativo.
+- **Não há pontuação ou quiz**: O jogo evita julgamentos binários e promove **imersão em decisões críticas**.
 
 ---
 
-## 👥 Público-alvo
+## 🎨 Diferenciais
 
-- Estudantes do ensino médio e superior
-- Professores de Filosofia, Sociologia, Programação ou Jornalismo
-- Projetos de combate à desinformação e educação crítica
-- Plataformas de educação inclusiva e cidadania digital
-- Concursos, bancas acadêmicas e projetos de inovação educacional
-
----
-
-## ♿ Inclusão e Acessibilidade
-
-- Texto com digitação automática, simulando narrativa ao vivo
-- Linguagem visual inspirada em terminais para foco cognitivo
-- Botões grandes e acessíveis, compatíveis com celular e desktop
-- Pode ser adaptado para voz sintetizada, braille digital ou narração em áudio
-- Não exige leitura prévia de lógica formal
-
-O jogo pode ser utilizado em **contextos de educação popular, escolas públicas, comunidades periféricas, ambientes de privação de liberdade e programas de alfabetização crítica.**
+- 🔍 **Narrativa não-linear** com finais alternativos
+- 🧠 **Aumento simbólico de “nível de consciência”** baseado nas escolhas do jogador
+- 🗣️ **Frases motivacionais finais** de acordo com a performance lógica:
+  - "Você se aproximou da consciência, mas não o suficiente. Continue tentando."
+  - "Parabéns. Você despertou. Outros também."
+- 🧭 **Barra de progresso visual** em tempo real
+- 🎧 **Trilha sonora cinematográfica** e **opção de narração em voz sintetizada**
+- ♻️ **Reinício automático ou manual**, sem recarregar a página
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## 🛠️ Tecnologias e Ferramentas Utilizadas
 
-- **HTML5 + CSS3 + JavaScript (Vanilla)**
-- Sem bibliotecas externas, garantindo leveza e portabilidade
-- Design responsivo para celulares, tablets e notebooks
-- Funciona sem login, instalação ou dependência de rede constante
-- Publicado em GitHub Pages (acesso gratuito e aberto)
-
----
-
-## ▶️ Como Jogar
-
-1. Acesse: [https://denisenasct.github.io/jessicajones/](https://denisenasct.github.io/jessicajones/)
-2. Clique em “Escanear os protocolos”
-3. Leia a narrativa digitada — ela simula fake news, dilemas morais e armadilhas lógicas
-4. Escolha com base na sua **análise lógica**
-5. Descubra seu desfecho: foi manipulado ou resistiu?
+- **HTML5**, **CSS3** e **JavaScript**
+- Animação com `setTimeout` (efeito digitado)
+- **Web Storage (localStorage)** para manter avatar selecionado
+- **Web Speech API** para narração opcional
+- **GitHub Pages** para publicação do jogo
+- Design responsivo e acessível
 
 ---
 
-## 🧪 Demonstração
+## 📚 Requisitos Atendidos (Critérios Avaliativos)
 
-[https://denisenasct.github.io/jessicajones/](https://denisenasct.github.io/jessicajones/)
-
----
-
-## ✍️ Autoria e Propósito Acadêmico
-
-Este jogo foi desenvolvido pelos estudantes de Sistemas de Informação: Denise Tavares, Beatriz Astle, João Astle e Maria Luiza Melo, como parte de um projeto de educação lógica voltado à inclusão, inovação didática e combate à manipulação digital.
-
-Inspirado por autores como **Carl Jung, Virginia Woolf, Stephen King, Clarice Lispector e George Orwell**, o jogo busca explorar o inconsciente coletivo por meio da lógica formal e crítica social.
-
-> *“A verdade não se grita. Ela se desmonta proposição por proposição.”*
+| Critério                                             | Atendido? | Justificativa                                                                 |
+|------------------------------------------------------|-----------|-------------------------------------------------------------------------------|
+| **1. Lógica e coerência do jogo**                    | ✅         | Narrativa fundamentada em lógica proposicional                               |
+| **2. Originalidade e criatividade**                  | ✅         | Jogo filosófico, narrativo, não é quiz, explora fake news e manipulação     |
+| **3. Adequação aos conceitos de lógica estudados**   | ✅         | Proposições, falácias, deduções e raciocínio lógico embutidos na mecânica   |
+| **4. Apresentação e clareza**                        | ✅         | Layout limpo, claro, responsivo, com barra de progresso                      |
+| **5. Nível de desafio proposto**                     | ✅         | Decisões ambíguas que exigem pensamento crítico                              |
+| **6. Possibilidade de reutilização ou expansão**     | ✅         | Estrutura modular, fácil de expandir com novas cenas e dilemas éticos       |
 
 ---
 
-## 📚 Aplicações Acadêmicas
+## 🚀 Possibilidades de Expansão
 
-- Disciplinas de lógica, ética, filosofia e computação
-- Oficinas de combate à manipulação discursiva e fake news
-- Propostas de extensão universitária e cidadania digital
-- Ferramenta de ensino para ENEM, concursos públicos e programas de inclusão
-  
-
-> Por fim, **Veritas.Logic** não ensina apenas a programar. Ele ensina a **pensar contra algoritmos que querem nos programar**.
+- Integração com outras áreas como **Meio Ambiente**, **Saúde Pública** e **Engenharia**.
+- Tradução para outros idiomas.
+- Gamificação com ranking colaborativo de consciência (sem pontuação tradicional).
+- Versão com acessibilidade total (voz, contraste, navegação por teclado).
 
 ---
 
+## 📍 Como Jogar
+
+1. Escolha seu avatar.
+2. Leia atentamente cada narrativa.
+3. Escolha com base na lógica e pensamento crítico.
+4. Observe como suas decisões alteram o caminho e afetam o “nível de consciência”.
+5. Alcance o final e veja se você conseguiu **espalhar a verdade**.
+6. Reinicie quantas vezes quiser — o conhecimento é um ciclo.
+
+Acesse agora: [Veritas.Logic no GitHub Pages](https://denisenasct.github.io/jessicajones/)
+
+---
+
+## 👩‍💻 Autoria
+
+Desenvolvido por Denise Tavares, Ana Beatriz Astle, Maria Luiza Melo, João Astle  
+Alunos de Sistemas de Informação — CESAR School  
+Projeto acadêmico para a disciplina de **Lógica para Programação**
+
+---
+
+
+## 📂 Estrutura do Projeto
+
+/jessicajones
+├── index.html
+├── style.css
+├── script.js
+├── img/
+│ ├── aurora.png
+│ ├── elyas.png
+│ └── favicon.ico
+└── audio/
+└── epic-war-background-music.mp3
+
+## 🧩 Licença
+
+Este projeto é open source para fins educacionais.  
+Sinta-se à vontade para expandir, remixar e evoluir, dando os devidos créditos.
+
+---
+
+## 🧠 Filosofia por trás do jogo
+
+> "Em tempos de manipulação algorítmica, entender a lógica é mais do que uma habilidade — é um ato de resistência."
+
+---
