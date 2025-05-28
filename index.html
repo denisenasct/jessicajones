@@ -18,9 +18,13 @@
     <div class="intro-texto">
       <h1><i class="fas fa-terminal"></i> Veritas.Logic</h1>
       <p id="descricaoDigitada" class="intro-pre"></p>
-      <div id="botoesInicio" style="display:none;">
-        <button onclick="escolherAvatar('aurora')">Jogar como Aurora</button>
-        <button onclick="escolherAvatar('elyas')">Jogar como Elyas</button>
+      <div id="escolhaAvatar" class="escolha-avatar">
+        <p>Escolha seu avatar:</p>
+        <button onclick="selecionarAvatar('elyas')">Elyas</button>
+        <button onclick="selecionarAvatar('aurora')">Aurora</button>
+      </div>
+      <div id="botaoComecar" style="display:none;">
+        <button onclick="comecarJogo()">Começar a Jornada</button>
       </div>
     </div>
   </div>
@@ -28,10 +32,6 @@
   <!-- Terminal principal -->
   <div class="terminal-bg" id="terminal" style="display: none;">
     <div class="terminal">
-      <div class="proposicao">
-        💡 Este jogo utiliza lógica proposicional para testar sua resistência à manipulação:
-        cada escolha representa uma proposição como <strong>P → Q</strong> ou <strong>P ⊕ Q</strong>.
-      </div>
       <div id="avatarContainer"></div>
       <div id="narrativa"></div>
       <div id="opcoes"></div>
@@ -48,6 +48,21 @@
 
   <!-- Digitação e som de introdução -->
   <script>
+    let avatarEscolhido = "";
+
+    function selecionarAvatar(nome) {
+      avatarEscolhido = nome;
+      document.getElementById("escolhaAvatar").style.display = "none";
+      document.getElementById("botaoComecar").style.display = "block";
+    }
+
+    function comecarJogo() {
+      document.getElementById("tela-intro").style.display = "none";
+      document.getElementById("terminal").style.display = "flex";
+      window.avatarGlobal = avatarEscolhido;
+      if (typeof iniciarJogo === 'function') iniciarJogo();
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras.\n\nVeritas.Logic iniciado...`;
 
@@ -64,8 +79,6 @@
           descricao.innerHTML += char;
           i++;
           setTimeout(digitarIntro, velocidade);
-        } else {
-          document.getElementById("botoesInicio").style.display = "block";
         }
       }
 
