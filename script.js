@@ -115,3 +115,5 @@ mostrarEtapa(decisao === "escanear" ? 0 : "manipulado");
 window.escolherRumo = escolherRumo;
 
 
+
+
