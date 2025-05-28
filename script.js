@@ -2,7 +2,8 @@
 
 let etapaAtual = 0;
 let pontosLogica = 0;
-let avatarEscolhido = "";
+let avatarEscolhido = localStorage.getItem("avatarEscolhido") || "";
+//let avatarEscolhido = "";
 
 const etapas = [
   {
@@ -73,6 +74,12 @@ const etapas = [
 function mostrarEtapa(indice) {
   etapaAtual = indice;
   const etapa = etapas[indice];
+
+  // Garante que o avatar seja carregado do localStorage se necessário
+  if (!avatarEscolhido) {
+    avatarEscolhido = localStorage.getItem("avatarEscolhido") || "img/aurora.png";
+  }
+  
   document.getElementById("avatarContainer").innerHTML = `<img src="${avatarEscolhido}" class="avatar"/>`;
   document.getElementById("narrativa").innerText = etapa.texto;
   document.getElementById("proposicao").innerText = "";
