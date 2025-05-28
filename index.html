@@ -9,6 +9,10 @@
 </head>
 <body>
   <button id="muteToggle" class="mute-button">🔊 Som</button>
+  <button id="btnNarrar" onclick="alternarNarracao()">🔇 Silenciar</button>
+  <div id="barraProgressoContainer">
+    <div id="barraProgresso"></div>
+  </div>
 
   <!-- Tela de introdução -->
   <div id="tela-intro">
@@ -32,10 +36,6 @@
   <!-- Terminal principal -->
   <div class="terminal-bg" id="terminal" style="display:none;">
     <div class="terminal">
-      <button id="btnNarrar" onclick="alternarNarracao()">🔇 Silenciar</button>
-      <div id="barraProgressoContainer">
-        <div id="barraProgresso"></div>
-      </div>
       <div id="avatarContainer"></div>
       <div id="narrativa"></div>
       <div id="opcoes"></div>
