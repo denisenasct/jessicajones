@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -23,11 +24,11 @@
         <div class="avatar-escolhas">
           <div class="avatar-opcao">
             <img src="img/aurora.png" alt="Aurora" class="avatar-bolinha">
-            <button onclick="setarAvatar('img/aurora.png')">Aurora</button>
+            <button onclick="escolherAvatar('aurora')">Aurora</button>
           </div>
           <div class="avatar-opcao">
             <img src="img/elyas.png" alt="Elyas" class="avatar-bolinha">
-            <button onclick="setarAvatar('img/elyas.png')">Elyas</button>
+            <button onclick="escolherAvatar('elyas')">Elyas</button>
           </div>
         </div>
       </div>
@@ -54,20 +55,6 @@
   <!-- Scripts -->
   <script src="script.js" defer></script>
   <script>
-    let avatarEscolhido = "";
-
-    function setarAvatar(avatarPath) {
-      avatarEscolhido = avatarPath;
-      document.getElementById("botaoIniciar").style.display = "block";
-    }
-
-    function iniciarJogo() {
-      localStorage.setItem("avatarEscolhido", avatarEscolhido);
-      document.getElementById("tela-intro").style.display = "none";
-      document.getElementById("terminal").style.display = "flex";
-      if (typeof mostrarEtapa === 'function') mostrarEtapa(0);
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
       const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras.\n\nVeritas.Logic iniciado...`;
 
