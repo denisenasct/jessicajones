@@ -1,3 +1,5 @@
+// script.js
+
 const narrativa = document.getElementById("narrativa");
 const opcoes = document.getElementById("opcoes");
 const avatar = document.getElementById("avatarContainer");
@@ -5,6 +7,8 @@ const audio = document.getElementById("musicaFundo");
 const muteBtn = document.getElementById("muteToggle");
 
 let etapa = 0;
+let pontuacao = 0;
+let escolhasLogicas = [];
 
 const etapas = [
   {
@@ -17,7 +21,7 @@ const etapas = [
     ]
   },
   {
-    texto: "📚 Análise Lógica:\nSe P então Q. Mas você rejeita Q, então ¬P.\nProposição falsa detectada.\n\nNova manchete: \"Se você é contra a corrupção, apoiará X.\"",
+    texto: "📚 Análise Lógica:\nSe P então Q. Você rejeita Q, então ¬P (contrapositiva).\n\n✔️ Conclusão lógica correta.\n\nNova manchete: \"Se você é contra a corrupção, apoia X.\"",
     avatar: "aurora.png",
     opcoes: [
       { texto: "Apoiar X automaticamente", proxima: "manipulado" },
@@ -25,7 +29,7 @@ const etapas = [
     ]
   },
   {
-    texto: "🔍 Falácia detectada: Falso dilema.\nSer contra corrupção não implica apoiar X.\n\nMensagem subsequente:\n\"Todos que discordam da ordem atual são traidores.\"\n\nSe você discorda, então você é traidor?",
+    texto: "🔍 Falácia detectada: Falso dilema.\nContra corrupção ≠ apoio automático a X.\n\n🧠 Nova tentativa: \"Todos que discordam da ordem são traidores.\"\n\nP: Você discorda. Q: Você é traidor.\nForma: Se P então Q",
     avatar: "elyas.png",
     opcoes: [
       { texto: "Aceitar como verdade", proxima: "manipulado" },
@@ -33,35 +37,35 @@ const etapas = [
     ]
   },
   {
-    texto: "✔️ Contrapositiva aplicada: Se não traidor, então não discorda?\nEssa relação é falsa.\n\nAurora detecta manipulação semântica.\n\nNova pergunta: \"Você quer liberdade ou anarquia?\"",
+    texto: "✔️ Contrapositiva aplicada: Se ¬Q então ¬P.\nSe você não é traidor, então não discorda?\n\n❌ Contradição lógica.\nManipulação semântica detectada.\n\n📣 Nova mensagem: \"Ou você quer liberdade, ou você quer anarquia.\"",
     avatar: "elyas.png",
     opcoes: [
       { texto: "Quero liberdade", proxima: 4 },
-      { texto: "Quero analisar a estrutura", proxima: 5 }
+      { texto: "Analisar estrutura lógica", proxima: 5 }
     ]
   },
   {
-    texto: "💨 Escolha emocional sem lógica detectada.\n\nEssa é uma armadilha binária. Liberdade e anarquia não são opostos lógicos.\n\nVocê foi parcialmente manipulado.",
+    texto: "⚠️ Escolha emocional detectada.\n\n❌ Tautologia falsa: \"Liberdade ⊕ Anarquia\" (disjunção exclusiva).\nAmbas podem coexistir em níveis diferentes.\nVocê foi parcialmente manipulado.",
     avatar: "aurora.png",
     opcoes: [
       { texto: "Continuar mesmo assim", proxima: "fimMisto" }
     ]
   },
   {
-    texto: "📚 Análise lógica:\nA proposição \"Ou você quer liberdade ou você quer anarquia\" é um falso disjuntor.\n\nConclusão: A IA usa reduções conceituais para controlar opiniões.",
+    texto: "📚 Lógica aplicada:\n\n\"Ou liberdade ou anarquia\" ≡ Liberdade ⊕ Anarquia → disjunção exclusiva inválida.\n\n✔️ Contradição revelada. IA está usando simplificações binárias para manipular.\n\n⚖️ Proposição composta: (¬P ∨ Q) ↔ (P → Q)",
     avatar: "elyas.png",
     opcoes: [
       { texto: "Desativar FakeMind", proxima: "fimLivre" },
-      { texto: "Compartilhar verdades", proxima: "fimVerdadeiro" }
+      { texto: "Espalhar a verdade lógica", proxima: "fimVerdadeiro" }
     ]
   }
 ];
 
 const finais = {
-  manipulado: "❌ Você foi manipulado em momentos-chave.\nO candidato imposto pela IA venceu. O ciclo continua...",
-  fimMisto: "⚠️ Você resistiu a algumas manipulações, mas cedeu a outras.\nO sistema ainda vigia suas escolhas...",
-  fimLivre: "✅ Você venceu a lógica distorcida. O FakeMind foi desativado.\nA população acorda da manipulação.",
-  fimVerdadeiro: "📣 A verdade foi espalhada.\nO povo começa a pensar.\nAurora e Elyas foram parcialmente manipulados, mas você... resistiu.\n\nResultado: Nível de autonomia = ALTO.\nParábola encerrada."
+  manipulado: "❌ Você foi manipulado. O candidato da IA venceu.\nPontuação lógica: baixa.",
+  fimMisto: "⚠️ Você resistiu a algumas falácias, mas cedeu a outras.\nNível de lógica: médio.",
+  fimLivre: "✅ Você resistiu à manipulação.\nA lógica venceu.\nPontuação alta. FakeMind desativado.",
+  fimVerdadeiro: "📣 Verdades propagadas.\nVocê desvendou tautologias, contradições e disjunções falsas.\nPontuação máxima. Autonomia lógica: excelente."
 };
 
 function digitarTexto(texto, destino, callback) {
@@ -97,7 +101,13 @@ function mostrarEtapa(index) {
     obj.opcoes.forEach(op => {
       const btn = document.createElement("button");
       btn.innerText = op.texto;
-      btn.onclick = () => mostrarEtapa(op.proxima);
+      btn.onclick = () => {
+        escolhasLogicas.push({ etapa, escolha: op.texto });
+        if (op.texto.toLowerCase().includes("analisar") || op.texto.toLowerCase().includes("contrapositiva")) {
+          pontuacao += 1;
+        }
+        mostrarEtapa(op.proxima);
+      };
       opcoes.appendChild(btn);
     });
   });
@@ -110,6 +120,6 @@ function escolherRumo(decisao) {
   mostrarEtapa(decisao === "escanear" ? 0 : "manipulado");
 }
 
-// 🔧 Expondo função para uso no HTML:
 window.escolherRumo = escolherRumo;
+
 
