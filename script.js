@@ -1,4 +1,4 @@
-// Veritas.Logic - script.js atualizado com avatar, reinício, e proposições ocultas
+// Veritas.Logic - JS 100% funcional com avatar, lógica pós-escolha e responsividade
 
 let etapaAtual = 0;
 let pontosLogica = 0;
@@ -52,33 +52,25 @@ const etapas = [
       { texto: "Sim, fui consistente", logico: true },
       { texto: "Não pensei nisso", logico: false }
     ]
-  },
-  {
-    texto: "🎯 Caminho oculto desbloqueado! Você resistiu logicamente à manipulação da IA.",
-    proposicao: "Pontuação lógica suficiente para final secreto.",
-    opcoes: [
-      { texto: "Finalizar com consciência", logico: true }]
-  },
-  {
-    texto: "🔒 Você foi manipulado. Suas escolhas não seguiram a lógica formal.",
-    proposicao: "Pontuação insuficiente. Fim alternativo.",
-    opcoes: [
-      { texto: "Reiniciar", logico: false }]
   }
 ];
 
 function mostrarEtapa(indice) {
   etapaAtual = indice;
   const etapa = etapas[indice];
+
   const narrativa = document.getElementById("narrativa");
   const avatarContainer = document.getElementById("avatarContainer");
   const opcoesContainer = document.getElementById("opcoes");
+  const proposicao = document.getElementById("proposicao");
 
   narrativa.innerText = etapa.texto;
-  avatarContainer.innerHTML = `<img src="${avatarEscolhido}" class="avatar">`;
+  avatarContainer.innerHTML = `<img src="img/${avatarEscolhido}.png" class="avatar">`;
   opcoesContainer.innerHTML = "";
+  proposicao.style.display = "none";
+  proposicao.innerText = "";
 
-  etapa.opcoes.forEach((op, i) => {
+  etapa.opcoes.forEach((op) => {
     const botao = document.createElement("button");
     botao.innerText = op.texto;
     botao.onclick = () => processarEscolha(op, etapa);
@@ -89,31 +81,51 @@ function mostrarEtapa(indice) {
 function processarEscolha(op, etapa) {
   if (op.logico) pontosLogica++;
 
-  if (etapaAtual === 5) {
-    if (pontosLogica >= 5) mostrarEtapa(6);
-    else mostrarEtapa(7);
-    return;
-  }
-
-  mostrarEtapa(etapaAtual + 1);
+  const proposicao = document.getElementById("proposicao");
+  proposicao.innerText = etapa.proposicao;
+  proposicao.style.display = "block";
 
   setTimeout(() => {
-    const proposicaoEl = document.createElement("div");
-    proposicaoEl.className = "proposicao";
-    proposicaoEl.innerHTML = `💡 ${etapa.proposicao}`;
-    document.getElementById("narrativa").appendChild(proposicaoEl);
-  }, 300);
+    if (etapaAtual === etapas.length - 1) {
+      mostrarFinal();
+    } else {
+      mostrarEtapa(etapaAtual + 1);
+    }
+  }, 1500);
 }
 
-function escolherAvatar(avatar) {
-  avatarEscolhido = avatar;
-  document.getElementById("intro").style.display = "none";
+function mostrarFinal() {
+  const narrativa = document.getElementById("narrativa");
+  const opcoesContainer = document.getElementById("opcoes");
+  const proposicao = document.getElementById("proposicao");
+
+  narrativa.innerText = pontosLogica >= 5
+    ? "✅ Você resistiu à manipulação. A lógica venceu."
+    : "❌ Você foi manipulado. A IA venceu dessa vez.";
+
+  proposicao.innerText = `Pontuação lógica: ${pontosLogica}/6`;
+  proposicao.style.display = "block";
+
+  opcoesContainer.innerHTML = '<button onclick="reiniciarJogo()">Reiniciar Jornada</button>';
+}
+
+function escolherAvatar(nome) {
+  avatarEscolhido = nome;
+  document.getElementById("escolherAvatar").style.display = "none";
+  document.getElementById("botaoIniciar").style.display = "block";
+}
+
+function iniciarJogo() {
+  document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
   mostrarEtapa(0);
 }
 
 function reiniciarJogo() {
-  window.location.reload();
-}
+  location.reload();
+} 
+
+window.escolherAvatar = escolherAvatar;
+window.iniciarJogo = iniciarJogo;
 
 
