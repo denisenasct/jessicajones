@@ -1,5 +1,3 @@
-// script.js completo com funcionalidades avançadas
-
 let avatar = localStorage.getItem("avatar") || "";
 let etapaAtual = 0;
 let progresso = 0;
@@ -33,9 +31,9 @@ const narrativa = [
   },
   {
     id: 3,
-    texto: "👁️‍🔬 Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.",
+    texto: "👁️‍🗨️ Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.",
     escolhas: [
-      { texto: "Reiniciar", destino: 0 }
+      { texto: "Reiniciar", destino: "reiniciar" }
     ]
   },
   {
@@ -62,9 +60,9 @@ const narrativa = [
   },
   {
     id: 7,
-    texto: "🔮 O silêncio permite introspecção. Você começa a reconhecer padrões internos de manipulação aprendidos ao longo da vida.",
+    texto: "🔮 O silêncio permite introspecção. Você começa a reconhecer padrões internos de manipulação aprendidos ao longo da vida.\n\n❗Você se aproximou da consciência, mas não o suficiente. Continue tentando.",
     escolhas: [
-      { texto: "Reiniciar", destino: 0 }
+      { texto: "Reiniciar", destino: "reiniciar" }
     ]
   },
   {
@@ -77,9 +75,9 @@ const narrativa = [
   },
   {
     id: 9,
-    texto: "📢 O manifesto circula. Algumas consciências despertam. A IA reconfigura sua abordagem. Você não venceu. Mas mudou o jogo.",
+    texto: "📢 O manifesto circula. Algumas consciências despertam. A IA reconfigura sua abordagem.\n\n✅ Parabéns. Você despertou. Outros também.",
     escolhas: [
-      { texto: "Reiniciar Jogo", destino: "reiniciar" }
+      { texto: "Reiniciar", destino: "reiniciar" }
     ]
   }
 ];
@@ -97,7 +95,7 @@ function iniciarNarrativa() {
 }
 
 function mostrarCena(id) {
-  const cena = narrativa.find(c => c.id === id);
+  const cena = narrativa.find((c) => c.id === id);
   etapaAtual = id;
 
   if (typeof id === "number") escolhasHistorico.push(id);
@@ -116,20 +114,14 @@ function mostrarCena(id) {
   const opcoes = document.getElementById("opcoes");
   opcoes.innerHTML = "";
 
-  cena.escolhas.forEach(escolha => {
+  cena.escolhas.forEach((escolha) => {
     const botao = document.createElement("button");
     botao.innerText = escolha.texto;
     botao.onclick = () => {
       if (escolha.destino === "reiniciar") {
         reiniciarParaInicio();
       } else {
-        if (escolha.texto.includes("Reiniciar") || escolha.texto.includes("Liberar") || escolha.texto.includes("Responder")) {
-          if (confirm("Tem certeza? Essa decisão pode alterar o curso da narrativa.")) {
-            mostrarCena(escolha.destino);
-          }
-        } else {
-          mostrarCena(escolha.destino);
-        }
+        mostrarCena(escolha.destino);
       }
     };
     opcoes.appendChild(botao);
@@ -155,7 +147,7 @@ function reiniciarParaInicio() {
   document.getElementById("terminal").style.display = "none";
   document.getElementById("tela-intro").style.display = "flex";
   document.getElementById("descricaoDigitada").innerHTML = "";
-  window.location.reload();
+  window.location.reload(); // Reinicia tudo de forma limpa
 }
 
 function narrarTexto(texto) {
