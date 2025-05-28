@@ -1,9 +1,110 @@
-/* === Veritas.Logic - CSS Final Atualizado === */
-
 html, body {
-margin: 0;
-@@ -70,19 +70,45 @@ body::before {
-min-height: 120px;
+  margin: 0;
+  padding: 0;
+  font-family: 'Courier New', monospace;
+  background-color: black;
+  color: #00ff00;
+  height: auto;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-image: url('img/matrix-numbers.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#tela-intro {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-image: url('img/apocalipse.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.intro-matrix-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/matrix-numbers.gif');
+  background-size: cover;
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.intro-texto {
+  position: relative;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 2rem;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 0 25px #00ff00;
+  max-width: 700px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.intro-texto h1 {
+  font-size: 2.5rem;
+  text-shadow: 0 0 10px #00ff00;
+  margin-bottom: 1rem;
+}
+
+#descricaoDigitada {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  padding: 0 1rem;
+  line-height: 1.6;
+  font-size: 1.2rem;
+  min-height: 120px;
+  box-sizing: border-box;
+}
+
+#botaoIniciar {
+  background-color: #00ff00;
+  color: black;
+  padding: 14px 28px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 2rem;
+  box-shadow: 0 0 12px #00ff00;
+}
+
+#botaoIniciar:hover {
+  background-color: #00cc00;
+  box-shadow: 0 0 20px #00ff00;
 }
 
 .avatar-escolhas {
@@ -11,7 +112,6 @@ min-height: 120px;
   justify-content: center;
   gap: 2rem;
   margin-top: 1rem;
-  flex-wrap: wrap;
 }
 
 .avatar-opcao {
@@ -23,8 +123,8 @@ min-height: 120px;
 .avatar-bolinha {
   width: 90px;
   height: 90px;
-border-radius: 50%;
-border: 2px solid #00ff00;
+  border-radius: 50%;
+  border: 2px solid #00ff00;
   object-fit: cover;
   margin-bottom: 0.5rem;
   box-shadow: 0 0 10px #00ff00;
@@ -36,7 +136,7 @@ border: 2px solid #00ff00;
   color: #00ff00;
   padding: 6px 14px;
   font-size: 0.9rem;
-cursor: pointer;
+  cursor: pointer;
   border-radius: 5px;
   box-shadow: 0 0 5px #00ff00;
   transition: 0.3s;
@@ -48,15 +148,81 @@ cursor: pointer;
 }
 
 .terminal-bg {
-@@ -154,11 +180,6 @@ body::before {
-color: black;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.terminal {
+  width: 100%;
+  max-width: 800px;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 20px #00ff00;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+#avatarContainer {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.avatar-jogo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  box-shadow: 0 0 15px #00ff00;
+  object-fit: cover;
+}
+
+#narrativa {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+#proposicao {
+  margin-top: -1rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+  color: #00cc99;
+  font-size: 0.95rem;
+  display: none;
+  transition: opacity 0.5s;
+}
+
+#opcoes button {
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 10px 20px;
+  margin: 10px 5px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+#opcoes button:hover {
+  background-color: #00ff00;
+  color: black;
 }
 
 .resultado-final {
-font-weight: bold;
-color: #00ff99;
-@@ -167,15 +188,42 @@ body::before {
-text-align: center;
+  font-weight: bold;
+  color: #00ff99;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  text-align: center;
 }
 
 .mute-button {
@@ -71,6 +237,7 @@ text-align: center;
   border-radius: 6px;
   font-size: 0.9rem;
   cursor: pointer;
+  transition: background 0.3s, color 0.3s;
   box-shadow: 0 0 10px #00ff00;
 }
 
@@ -87,25 +254,47 @@ text-align: center;
 }
 
 @media (max-width: 768px) {
-.intro-texto {
-padding: 1.5rem;
-border-radius: 10px;
-}
+  .intro-texto {
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-top: 5vh;
+  }
+
+  .intro-texto h1 {
+    font-size: 2rem;
+  }
+
+  #descricaoDigitada {
+    font-size: 1rem;
+    padding: 0 0.5rem;
+  }
 
   .avatar-bolinha {
     width: 70px;
     height: 70px;
-}
+  }
 
-.terminal {
-@@ -185,4 +233,9 @@ body::before {
-#narrativa {
-font-size: 0.95rem;
-}
+  .avatar-jogo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .avatar-opcao button {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+  }
+
+  #narrativa {
+    font-size: 0.95rem;
+  }
 
   #opcoes button {
     width: 100%;
     margin: 10px 0;
+  }
+
+  .terminal {
+    padding: 1.5rem;
   }
 }
 
