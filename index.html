@@ -6,7 +6,6 @@
   <title>Veritas.Logic - Verdade ou Consciência?</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <!-- Botão de som -->
@@ -16,16 +15,24 @@
   <div id="tela-intro">
     <div class="intro-matrix-overlay"></div>
     <div class="intro-texto">
-      <h1><i class="fas fa-terminal"></i> Veritas.Logic</h1>
+      <h1>Veritas.Logic</h1>
       <p id="descricaoDigitada" class="intro-pre"></p>
-      <div id="escolhaAvatar" class="escolha-avatar">
-        <p>Escolha seu avatar:</p>
-        <button onclick="selecionarAvatar('elyas')">Elyas</button>
-        <button onclick="selecionarAvatar('aurora')">Aurora</button>
+
+      <div id="escolherAvatar" class="escolha-avatar">
+        <p>Escolha seu avatar para começar a jornada:</p>
+        <div class="avatar-escolhas">
+          <div class="avatar-opcao" onclick="escolherAvatar('aurora')">
+            <img src="img/aurora.png" alt="Aurora">
+            <span>Aurora</span>
+          </div>
+          <div class="avatar-opcao" onclick="escolherAvatar('elyas')">
+            <img src="img/elyas.png" alt="Elyas">
+            <span>Elyas</span>
+          </div>
+        </div>
       </div>
-      <div id="botaoComecar" style="display:none;">
-        <button onclick="comecarJogo()">Começar a Jornada</button>
-      </div>
+
+      <button id="botaoIniciar" onclick="iniciarJogo()" style="display:none;">Começar a Jornada</button>
     </div>
   </div>
 
@@ -35,6 +42,7 @@
       <div id="avatarContainer"></div>
       <div id="narrativa"></div>
       <div id="opcoes"></div>
+      <div id="proposicao"></div>
     </div>
   </div>
 
@@ -43,33 +51,15 @@
     <source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Lógica do jogo -->
+  <!-- Scripts -->
   <script src="script.js" defer></script>
-
-  <!-- Digitação e som de introdução -->
   <script>
-    let avatarEscolhido = "";
-
-    function selecionarAvatar(nome) {
-      avatarEscolhido = nome;
-      document.getElementById("escolhaAvatar").style.display = "none";
-      document.getElementById("botaoComecar").style.display = "block";
-    }
-
-    function comecarJogo() {
-      document.getElementById("tela-intro").style.display = "none";
-      document.getElementById("terminal").style.display = "flex";
-      window.avatarGlobal = avatarEscolhido;
-      if (typeof iniciarJogo === 'function') iniciarJogo();
-    }
-
     document.addEventListener("DOMContentLoaded", () => {
       const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras.\n\nVeritas.Logic iniciado...`;
 
       const descricao = document.getElementById("descricaoDigitada");
       const audio = document.getElementById("musicaFundo");
       const muteBtn = document.getElementById("muteToggle");
-
       let i = 0;
       const velocidade = 40;
 
@@ -112,3 +102,4 @@
   </script>
 </body>
 </html>
+
