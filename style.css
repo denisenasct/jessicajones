@@ -99,16 +99,9 @@ button:hover {
   max-width: 800px;
   text-align: left;
   box-shadow: 0 0 15px #00ff00;
-  transition: all 0.4s ease;
+  position: relative;
 }
 
-/* EFEITO VISUAL PARA CENAS MANIPULADAS */
-.terminal.alerta {
-  box-shadow: 0 0 20px red;
-  border-color: red;
-}
-
-/* Avatar */
 #avatarContainer img.avatar {
   width: 60px;
   height: 60px;
@@ -124,7 +117,6 @@ button:hover {
   margin-bottom: 1rem;
 }
 
-/* Botões de opções */
 #opcoes button {
   background: transparent;
   border: 1px solid #00ff00;
@@ -138,24 +130,56 @@ button:hover {
   color: black;
 }
 
-/* BARRA DE PROGRESSO */
 #barraProgressoContainer {
   width: 100%;
+  background-color: #222;
   height: 6px;
-  background: #333;
-  margin-bottom: 10px;
-  border-radius: 3px;
+  margin-top: 1rem;
+  border-radius: 4px;
   overflow: hidden;
 }
 
 #barraProgresso {
   height: 100%;
+  background-color: #00ff00;
   width: 0%;
-  background: linear-gradient(to right, #00ff00, #009900);
   transition: width 0.4s ease-in-out;
 }
 
-/* Responsivo */
+.alerta {
+  animation: alertaBrilho 1s infinite alternate;
+}
+
+@keyframes alertaBrilho {
+  from {
+    box-shadow: 0 0 10px red;
+  }
+  to {
+    box-shadow: 0 0 20px red;
+  }
+}
+
+#mensagemFinal {
+  font-size: 1.2rem;
+  color: #00ff00;
+  margin-top: 1rem;
+  text-align: center;
+  display: none;
+}
+
+#mensagemFinal.desperto {
+  animation: brilhoVerdade 1s infinite alternate;
+}
+
+@keyframes brilhoVerdade {
+  from {
+    text-shadow: 0 0 5px #00ff00;
+  }
+  to {
+    text-shadow: 0 0 20px #00ff00;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .avatar-escolhas {
     flex-direction: column;
@@ -163,31 +187,5 @@ button:hover {
   .terminal {
     padding: 1rem;
   }
-
-  #barraProgressoContainer {
-  height: 10px;
-  background: #444;
-  border-radius: 5px;
-  margin-top: 10px;
-  overflow: hidden;
 }
-
-#barraProgresso {
-  height: 10px;
-  width: 0%;
-  background: #00ff00;
-  transition: width 0.5s;
-}
-
-.alerta {
-  animation: piscarAlerta 0.8s infinite alternate;
-}
-
-@keyframes piscarAlerta {
-  from { box-shadow: 0 0 15px red; }
-  to { box-shadow: 0 0 25px yellow; }
-}
-
-}
-
 
