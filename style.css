@@ -1,8 +1,17 @@
+/* === Veritas.Logic - CSS Final Atualizado === */
+
+html, body {
+margin: 0;
+@@ -70,19 +70,45 @@ body::before {
+min-height: 120px;
+}
+
 .avatar-escolhas {
   display: flex;
   justify-content: center;
   gap: 2rem;
   margin-top: 1rem;
+  flex-wrap: wrap;
 }
 
 .avatar-opcao {
@@ -14,8 +23,8 @@
 .avatar-bolinha {
   width: 90px;
   height: 90px;
-  border-radius: 50%;
-  border: 2px solid #00ff00;
+border-radius: 50%;
+border: 2px solid #00ff00;
   object-fit: cover;
   margin-bottom: 0.5rem;
   box-shadow: 0 0 10px #00ff00;
@@ -27,7 +36,7 @@
   color: #00ff00;
   padding: 6px 14px;
   font-size: 0.9rem;
-  cursor: pointer;
+cursor: pointer;
   border-radius: 5px;
   box-shadow: 0 0 5px #00ff00;
   transition: 0.3s;
@@ -36,5 +45,67 @@
 .avatar-opcao button:hover {
   background-color: #00ff00;
   color: black;
+}
+
+.terminal-bg {
+@@ -154,11 +180,6 @@ body::before {
+color: black;
+}
+
+.resultado-final {
+font-weight: bold;
+color: #00ff99;
+@@ -167,15 +188,42 @@ body::before {
+text-align: center;
+}
+
+.mute-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.mute-button:hover {
+  background: #00ff00;
+  color: black;
+}
+
+.mute-button.muted {
+  background: rgba(0, 0, 0, 0.8);
+  color: #ff3333;
+  border: 1px solid #ff3333;
+  box-shadow: 0 0 8px #ff3333;
+}
+
+@media (max-width: 768px) {
+.intro-texto {
+padding: 1.5rem;
+border-radius: 10px;
+}
+
+  .avatar-bolinha {
+    width: 70px;
+    height: 70px;
+}
+
+.terminal {
+@@ -185,4 +233,9 @@ body::before {
+#narrativa {
+font-size: 0.95rem;
+}
+
+  #opcoes button {
+    width: 100%;
+    margin: 10px 0;
+  }
 }
 
