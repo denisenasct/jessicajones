@@ -2,8 +2,7 @@
 
 let etapaAtual = 0;
 let pontosLogica = 0;
-let avatarEscolhido = localStorage.getItem("avatarEscolhido") || "";
-//let avatarEscolhido = "";
+let avatarEscolhido = "";
 
 const etapas = [
   {
@@ -75,10 +74,6 @@ function mostrarEtapa(indice) {
   etapaAtual = indice;
   const etapa = etapas[indice];
 
-  // Garante que o avatar seja carregado do localStorage se necessário
-  if (!avatarEscolhido) {
-    avatarEscolhido = localStorage.getItem("avatarEscolhido") || "img/aurora.png";
-  }
   
   document.getElementById("avatarContainer").innerHTML = `<img src="${avatarEscolhido}" class="avatar"/>`;
   document.getElementById("narrativa").innerText = etapa.texto;
@@ -108,7 +103,7 @@ function processarEscolha(op, comentario) {
     } else {
       window.location.reload();
     }
-  }, 3000); // tempo para leitura
+  }, 4000); // tempo para leitura
 }
 
 function escolherAvatar(avatarPath) {
