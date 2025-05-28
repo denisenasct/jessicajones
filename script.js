@@ -1,125 +1,111 @@
-// script.js
+// Veritas.Logic - script.js com final secreto e novas proposições lógicas
 
-const narrativa = document.getElementById("narrativa");
-const opcoes = document.getElementById("opcoes");
-const avatar = document.getElementById("avatarContainer");
-const audio = document.getElementById("musicaFundo");
-const muteBtn = document.getElementById("muteToggle");
-
-let etapa = 0;
-let pontuacao = 0;
-let escolhasLogicas = [];
+let etapaAtual = 0;
+let pontosLogica = 0;
 
 const etapas = [
   {
-    texto: "🧠 A IA governamental começou a transmitir mensagens para influenciar o voto.\n\n📠 Manchete: \"Nova vacina altera o DNA, dizem especialistas anônimos.\"\n\nSe você acredita, então rejeita a ciência?\nP: Você acredita. Q: Você rejeita a ciência.\n\nOnde você viu essa informação?",
-    avatar: "aurora.png",
+    avatar: "img/ia1.png",
+    texto: "📡 A IA governamental detectou um aumento nas buscas por 'vacinas perigosas'.\nP: Você acredita. Q: Você rejeita a ciência.\nProposição: P → Q",
     opcoes: [
-      { texto: "Facebook", proxima: 1 },
-      { texto: "WhatsApp", proxima: 1 },
-      { texto: "TV Estatal", proxima: 1 }
+      { texto: "Acredito", logico: true },
+      { texto: "Não acredito", logico: false }
     ]
   },
   {
-    texto: "📚 Análise Lógica:\nSe P então Q. Você rejeita Q, então ¬P (contrapositiva).\n\n✔️ Conclusão lógica correta.\n\nNova manchete: \"Se você é contra a corrupção, apoia X.\"",
-    avatar: "aurora.png",
+    avatar: "img/ia2.png",
+    texto: "📰 Manchete: 'Nova vacina altera o DNA, dizem especialistas anônimos.'\nP ↔ Q — Se e somente se você verifica a fonte, a informação é útil.",
     opcoes: [
-      { texto: "Apoiar X automaticamente", proxima: "manipulado" },
-      { texto: "Quero analisar logicamente", proxima: 2 }
+      { texto: "Verifico a fonte", logico: true },
+      { texto: "Confio sem checar", logico: false }
     ]
   },
   {
-    texto: "🔍 Falácia detectada: Falso dilema.\nContra corrupção ≠ apoio automático a X.\n\n🧠 Nova tentativa: \"Todos que discordam da ordem são traidores.\"\n\nP: Você discorda. Q: Você é traidor.\nForma: Se P então Q",
-    avatar: "elyas.png",
+    avatar: "img/ia3.png",
+    texto: "⚖️ Dilema: Ou você apoia o líder, ou é inimigo do povo.\nProposição falsa: P ⊕ Q (disjunção exclusiva manipulada)",
     opcoes: [
-      { texto: "Aceitar como verdade", proxima: "manipulado" },
-      { texto: "Aplicar contrapositiva", proxima: 3 }
+      { texto: "Recuso a dicotomia", logico: true },
+      { texto: "Aceito o dilema", logico: false }
     ]
   },
   {
-    texto: "✔️ Contrapositiva aplicada: Se ¬Q então ¬P.\nSe você não é traidor, então não discorda?\n\n❌ Contradição lógica.\nManipulação semântica detectada.\n\n📣 Nova mensagem: \"Ou você quer liberdade, ou você quer anarquia.\"",
-    avatar: "elyas.png",
+    avatar: "img/ia4.png",
+    texto: "🧩 Análise: Uma afirmação é sempre verdadeira ou sempre falsa?\nTautologia: P ∨ ¬P",
     opcoes: [
-      { texto: "Quero liberdade", proxima: 4 },
-      { texto: "Analisar estrutura lógica", proxima: 5 }
+      { texto: "Sim, é sempre verdadeira", logico: true },
+      { texto: "Depende do contexto", logico: false }
     ]
   },
   {
-    texto: "⚠️ Escolha emocional detectada.\n\n❌ Tautologia falsa: \"Liberdade ⊕ Anarquia\" (disjunção exclusiva).\nAmbas podem coexistir em níveis diferentes.\nVocê foi parcialmente manipulado.",
-    avatar: "aurora.png",
+    avatar: "img/ia5.png",
+    texto: "📢 Propaganda: 'Se você questiona, então é traidor.'\nContrapositiva de P → Q",
     opcoes: [
-      { texto: "Continuar mesmo assim", proxima: "fimMisto" }
+      { texto: "Negar é pensar", logico: true },
+      { texto: "Aceito sem pensar", logico: false }
     ]
   },
   {
-    texto: "📚 Lógica aplicada:\n\n\"Ou liberdade ou anarquia\" ≡ Liberdade ⊕ Anarquia → disjunção exclusiva inválida.\n\n✔️ Contradição revelada. IA está usando simplificações binárias para manipular.\n\n⚖️ Proposição composta: (¬P ∨ Q) ↔ (P → Q)",
-    avatar: "elyas.png",
+    avatar: "img/ia6.png",
+    texto: "🔍 Reflexão: As decisões tomadas até aqui formam um padrão lógico coerente?",
     opcoes: [
-      { texto: "Desativar FakeMind", proxima: "fimLivre" },
-      { texto: "Espalhar a verdade lógica", proxima: "fimVerdadeiro" }
+      { texto: "Sim, fui consistente", logico: true },
+      { texto: "Não pensei nisso", logico: false }
+    ]
+  },
+  {
+    avatar: "img/ia7.png",
+    texto: "🎯 Caminho oculto desbloqueado! Você resistiu logicamente à manipulação da IA.",
+    opcoes: [
+      { texto: "Finalizar com consciência", logico: true }
+    ]
+  },
+  {
+    avatar: "img/ia7.png",
+    texto: "🔒 Você foi manipulado. Suas escolhas não seguiram a lógica formal.",
+    opcoes: [
+      { texto: "Reiniciar", logico: false }
     ]
   }
 ];
 
-const finais = {
-  manipulado: "❌ Você foi manipulado. O candidato da IA venceu.\nPontuação lógica: baixa.",
-  fimMisto: "⚠️ Você resistiu a algumas falácias, mas cedeu a outras.\nNível de lógica: médio.",
-  fimLivre: "✅ Você resistiu à manipulação.\nA lógica venceu.\nPontuação alta. FakeMind desativado.",
-  fimVerdadeiro: "📣 Verdades propagadas.\nVocê desvendou tautologias, contradições e disjunções falsas.\nPontuação máxima. Autonomia lógica: excelente."
-};
+function mostrarEtapa(indice) {
+  etapaAtual = indice;
+  const etapa = etapas[indice];
+  document.getElementById("avatarContainer").innerHTML = `<img src="${etapa.avatar}" class="avatar">`;
+  document.getElementById("narrativa").innerText = etapa.texto;
 
-function digitarTexto(texto, destino, callback) {
-  if (!destino) return;
-  destino.innerHTML = "";
-  let i = 0;
-  function digitar() {
-    if (i < texto.length) {
-      const char = texto.charAt(i) === "\n" ? "<br>" : texto.charAt(i);
-      destino.insertAdjacentHTML("beforeend", char);
-      i++;
-      setTimeout(digitar, 30);
-    } else if (callback) {
-      callback();
-    }
-  }
-  digitar();
+  const opcoesContainer = document.getElementById("opcoes");
+  opcoesContainer.innerHTML = "";
+
+  etapa.opcoes.forEach((op, i) => {
+    const botao = document.createElement("button");
+    botao.innerText = op.texto;
+    botao.onclick = () => processarEscolha(op);
+    opcoesContainer.appendChild(botao);
+  });
 }
 
-function mostrarEtapa(index) {
-  if (!narrativa || !opcoes || !avatar) return;
-  if (typeof index === "string") {
-    narrativa.innerHTML = finais[index].replace(/\n/g, "<br>");
-    opcoes.innerHTML = "<button onclick=\"location.reload()\">Reiniciar</button>";
-    avatar.innerHTML = "";
+function processarEscolha(op) {
+  if (op.logico) pontosLogica++;
+
+  // Final secreto se atingiu lógica suficiente
+  if (etapaAtual === 5) {
+    if (pontosLogica >= 5) {
+      mostrarEtapa(6); // Final secreto
+    } else {
+      mostrarEtapa(7); // Final manipulado
+    }
     return;
   }
-  etapa = index;
-  const obj = etapas[etapa];
-  avatar.innerHTML = `<img src="img/${obj.avatar}" class="avatar" alt="Avatar">`;
-  digitarTexto(obj.texto, narrativa, () => {
-    opcoes.innerHTML = "";
-    obj.opcoes.forEach(op => {
-      const btn = document.createElement("button");
-      btn.innerText = op.texto;
-      btn.onclick = () => {
-        escolhasLogicas.push({ etapa, escolha: op.texto });
-        if (op.texto.toLowerCase().includes("analisar") || op.texto.toLowerCase().includes("contrapositiva")) {
-          pontuacao += 1;
-        }
-        mostrarEtapa(op.proxima);
-      };
-      opcoes.appendChild(btn);
-    });
-  });
-  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  mostrarEtapa(etapaAtual + 1);
 }
 
-function escolherRumo(decisao) {
+function escolherRumo(acao) {
   document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
-  mostrarEtapa(decisao === "escanear" ? 0 : "manipulado");
+  mostrarEtapa(0);
 }
 
-window.escolherRumo = escolherRumo;
 
 
