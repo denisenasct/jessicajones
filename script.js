@@ -1,5 +1,3 @@
-// narrativa.js — narrativa não linear sem pontuação
-
 let avatar = localStorage.getItem("avatar") || "";
 let etapaAtual = 0;
 
@@ -81,9 +79,10 @@ const narrativa = [
   }
 ];
 
+// Inicia o jogo imediatamente ao escolher o avatar
 function setarAvatar(path) {
   localStorage.setItem("avatar", path);
-  document.getElementById("botaoIniciar").style.display = "block";
+  iniciarNarrativa();
 }
 
 function iniciarNarrativa() {
@@ -110,3 +109,4 @@ function mostrarCena(id) {
     opcoes.appendChild(botao);
   });
 }
+
