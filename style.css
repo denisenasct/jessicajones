@@ -1,9 +1,13 @@
-body {
+from ace_tools import display_dataframe_to_user
+
+css_code = """
+html, body {
   margin: 0;
   padding: 0;
   font-family: 'Courier New', monospace;
   background-color: black;
   color: #00ff00;
+  height: auto;
   min-height: 100vh;
   overflow-x: hidden;
   overflow-y: auto;
@@ -35,13 +39,27 @@ body::before {
   background-size: cover;
   background-position: center;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   flex-direction: column;
   z-index: 1;
   padding: 2rem 1rem;
   box-sizing: border-box;
   overflow-y: auto;
+}
+
+.intro-matrix-overlay::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('img/matrix-numbers.gif');
+  background-size: cover;
+  opacity: 0.1;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .intro-texto {
@@ -54,6 +72,7 @@ body::before {
   box-shadow: 0 0 25px #00ff00;
   max-width: 700px;
   width: 100%;
+  box-sizing: border-box;
   margin: 10vh auto 2rem auto;
 }
 
@@ -70,13 +89,14 @@ body::before {
   line-height: 1.6;
   font-size: 1.2rem;
   min-height: 120px;
+  box-sizing: border-box;
 }
 
 .intro-texto button {
   background: #00ff00;
-  border: none;
   color: black;
-  padding: 12px 24px;
+  border: none;
+  padding: 14px 28px;
   font-size: 1rem;
   cursor: pointer;
   border-radius: 8px;
@@ -86,8 +106,7 @@ body::before {
 }
 
 .intro-texto button:hover {
-  background-color: black;
-  color: #00ff00;
+  background-color: #00cc00;
   box-shadow: 0 0 20px #00ff00;
 }
 
@@ -95,8 +114,7 @@ body::before {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  margin-top: 1.5rem;
-  flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 .avatar-opcao {
@@ -159,11 +177,13 @@ body::before {
 }
 
 .avatar {
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  box-shadow: 0 0 15px #00ff00;
   object-fit: cover;
+  border: 2px solid #00ff00;
+  box-shadow: 0 0 10px #00ff00;
+  margin: 0 auto;
 }
 
 #narrativa {
@@ -192,6 +212,52 @@ body::before {
   color: black;
 }
 
+.mute-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  box-shadow: 0 0 10px #00ff00;
+}
+
+.mute-button:hover {
+  background: #00ff00;
+  color: black;
+}
+
+.mute-button.muted {
+  background: rgba(0, 0, 0, 0.8);
+  color: #ff3333;
+  border: 1px solid #ff3333;
+  box-shadow: 0 0 8px #ff3333;
+}
+
+.proposicao {
+  background-color: rgba(0, 255, 0, 0.1);
+  border-left: 4px solid #00ff00;
+  padding: 8px 12px;
+  margin: 16px 0;
+  font-style: italic;
+  font-size: 0.95rem;
+  box-shadow: inset 0 0 5px #00ff00;
+}
+
+.resultado-final {
+  font-weight: bold;
+  color: #00ff99;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .intro-texto {
     padding: 1.5rem;
@@ -208,18 +274,9 @@ body::before {
     padding: 0 0.5rem;
   }
 
-  .avatar-bolinha {
-    width: 70px;
-    height: 70px;
-  }
-
-  .avatar-opcao button {
-    font-size: 0.8rem;
-  }
-
   .avatar {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
   }
 
   #narrativa {
@@ -235,4 +292,10 @@ body::before {
     padding: 1.5rem;
   }
 }
+"""
+
+with open("/mnt/data/style.css", "w") as f:
+    f.write(css_code)
+
+"/mnt/data/style.css"
 
