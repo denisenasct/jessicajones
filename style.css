@@ -1,8 +1,8 @@
-ml, body {
+html, body {
   margin: 0;
   padding: 0;
   font-family: 'Courier New', monospace;
-  background-color: black;
+  background-color: #0a0a0a;
   color: #00ff00;
   height: auto;
   min-height: 100vh;
@@ -89,6 +89,18 @@ body::before {
   box-sizing: border-box;
 }
 
+#descricaoDigitada::after {
+  content: "|";
+  animation: blink 1s steps(2, start) infinite;
+  margin-left: 5px;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
 .intro-texto button {
   background: transparent;
   border: 1px solid #00ff00;
@@ -127,6 +139,7 @@ body::before {
   box-shadow: 0 0 20px #00ff00;
   text-align: left;
   box-sizing: border-box;
+  transition: all 0.5s ease-in-out;
 }
 
 #avatarContainer {
@@ -148,6 +161,11 @@ body::before {
   line-height: 1.6;
   white-space: pre-wrap;
   overflow-wrap: break-word;
+  transition: opacity 0.4s ease-in-out;
+}
+
+#opcoes {
+  transition: opacity 0.4s ease-in-out;
 }
 
 #opcoes button {
@@ -166,6 +184,16 @@ body::before {
 #opcoes button:hover {
   background-color: #00ff00;
   color: black;
+}
+
+#opcoes button.resposta-logica {
+  border-color: #66ff66;
+  box-shadow: 0 0 12px #66ff66;
+}
+
+#opcoes button.resposta-comum {
+  border-color: #ff4444;
+  box-shadow: 0 0 12px #ff4444;
 }
 
 .mute-button {
@@ -196,7 +224,6 @@ body::before {
   box-shadow: 0 0 8px #ff3333;
 }
 
-/* Melhorias visuais para elementos lógicos */
 .proposicao {
   background-color: rgba(0, 255, 0, 0.1);
   border-left: 4px solid #00ff00;
@@ -205,16 +232,6 @@ body::before {
   font-style: italic;
   font-size: 0.95rem;
   box-shadow: inset 0 0 5px #00ff00;
-}
-
-#opcoes button.resposta-logica {
-  border-color: #66ff66;
-  box-shadow: 0 0 12px #66ff66;
-}
-
-#opcoes button.resposta-comum {
-  border-color: #ff4444;
-  box-shadow: 0 0 12px #ff4444;
 }
 
 .resultado-final {
@@ -229,6 +246,11 @@ body::before {
   font-weight: bold;
   color: #00ff00;
   margin-right: 4px;
+}
+
+button:focus {
+  outline: 2px solid #00ff00;
+  outline-offset: 2px;
 }
 
 @media (max-width: 768px) {
@@ -265,3 +287,4 @@ body::before {
     padding: 1.5rem;
   }
 }
+
