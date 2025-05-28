@@ -103,7 +103,7 @@ function processarEscolha(op, comentario) {
     } else {
       window.location.reload();
     }
-  }, 4000); // tempo para leitura
+  }, 9000); // tempo para leitura
 }
 
 function escolherAvatar(avatarPath) {
