@@ -9,13 +9,18 @@
 </head>
 <body>
   <button id="muteToggle" class="mute-button">🔊 Som</button>
-  <button id="btnNarrar" onclick="alternarNarracao()">🔇 Silenciar</button>
-  <div id="barraProgressoContainer"><div id="barraProgresso"></div></div>
 
   <!-- Tela de introdução -->
   <div id="tela-intro">
     <div class="intro-texto">
       <h1>Veritas.Logic</h1>
+      <p class="introducao-jogo">
+        <strong>Educação Inclusiva:</strong><br>
+        Este jogo promove o raciocínio lógico e o pensamento crítico através de uma narrativa interativa e acessível, 
+        que simula desafios enfrentados em uma sociedade manipulada por inteligências artificiais.  
+        Com escolhas simbólicas, ele convida o jogador a identificar armadilhas cognitivas e aplicar lógica proposicional em contextos reais, 
+        integrando alfabetização digital à inclusão educacional.
+      </p>
       <p id="descricaoDigitada"></p>
 
       <div class="avatar-escolhas">
@@ -36,8 +41,10 @@
     <div class="terminal">
       <div id="avatarContainer"></div>
       <div id="narrativa"></div>
-      <div id="mensagemFinal"></div>
       <div id="opcoes"></div>
+      <div id="efeitoFinal" style="display:none;"></div>
+      <div id="barraProgressoContainer"><div id="barraProgresso"></div></div>
+      <button id="btnNarrar" onclick="alternarNarracao()">🔇 Silenciar</button>
     </div>
   </div>
 
