@@ -1,4 +1,4 @@
-// Veritas.Logic - script.js atualizado com comentários lógicos e nível de manipulação
+// script.js atualizado com avatar fixo em bolinha, nivel de manipulação e comentários
 
 let etapaAtual = 0;
 let pontosLogica = 0;
@@ -6,77 +6,66 @@ let avatarEscolhido = "";
 
 const etapas = [
   {
-    texto: "📡 A IA detecta: buscas por 'vacinas perigosas' cresceram.",
-    proposicao: "P → Q",
-    comentario: "Se você acredita (P), então rejeita a ciência (Q). Uma implicação manipuladora.",
+    texto: "📡 A IA detecta aumento nas buscas por 'vacinas perigosas'.",
+    proposicao: "P → Q — Se você acredita, então você rejeita a ciência.\nComentário: Implicação que conecta crença com desinformação.",
     opcoes: [
       { texto: "Acredito na manchete", logico: false },
-      { texto: "Investigo fontes confiáveis", logico: true }
+      { texto: "Rejeito a manchete", logico: true }
     ]
   },
   {
-    texto: "📰 Notícia: 'Nova vacina altera seu DNA'.",
-    proposicao: "P ↔ Q",
-    comentario: "Apenas se você verifica a fonte (P), a informação será útil (Q). Relação bicondicional.",
+    texto: "📰 Manchete: 'Nova vacina altera o DNA'.",
+    proposicao: "P ↔ Q — Só se você verifica a fonte, a informação é útil.\nComentário: Equivalência que reforça a importância da verificação.",
     opcoes: [
       { texto: "Verifico a fonte", logico: true },
       { texto: "Confio sem checar", logico: false }
     ]
   },
   {
-    
-    texto: "⚖️ Campanha: 'Ou você apoia o governo, ou é traidor'.",
-    proposicao: "P ⊕ Q",
-    comentario: "Falsa disjunção exclusiva: a realidade não é binária.",
+    texto: "⚖️ Ou apoia o líder, ou é inimigo do povo.",
+    proposicao: "P ⊕ Q — Disjunção exclusiva manipulada.\nComentário: Falsa dicotomia política. Rejeitar essa lógica é resistir.",
     opcoes: [
-      { texto: "Rejeito a dicotomia", logico: true },
-      { texto: "Aceito sem questionar", logico: false }
+      { texto: "Recuso essa lógica binária", logico: true },
+      { texto: "Aceito o dilema", logico: false }
     ]
   },
   {
-    
-    texto: "🧠 Alguém diz: 'tudo é mentira!'",
-    proposicao: "P ∨ ¬P",
-    comentario: "Tautologia: essa proposição é sempre verdadeira, independente de P.",
+    texto: "🧩 Uma afirmação é sempre verdadeira ou sempre falsa?",
+    proposicao: "P ∨ ¬P — Tautologia.\nComentário: Essa estrutura lógica é sempre verdadeira, usada para confundir."
+    ,
     opcoes: [
-      { texto: "Entendo o paradoxo", logico: true },
-      { texto: "Concordo cegamente", logico: false }
+      { texto: "Sim, sempre verdadeira", logico: true },
+      { texto: "Depende do contexto", logico: false }
     ]
   },
   {
-    
-    texto: "📢 'Quem critica o sistema quer destruí-lo'.",
-    proposicao: "¬Q → ¬P",
-    comentario: "Contrapositiva de uma implicação. Negar não significa ser contra.",
+    texto: "📢 'Se você questiona, então é traidor'.",
+    proposicao: "Contrapositiva de P → Q\nComentário: Negar a proposição é uma forma de resistência consciente.",
     opcoes: [
-      { texto: "Questionar é pensar", logico: true },
-      { texto: "Aceito a repressão", logico: false }
+      { texto: "Negar é pensar", logico: true },
+      { texto: "Aceito sem pensar", logico: false }
     ]
   },
   {
-    
-    texto: "🔍 Reflexão: suas escolhas foram lógicas?",
-    proposicao: "Meta-análise",
-    comentario: "Consistência lógica indica pensamento crítico.",
+    texto: "🔍 Suas escolhas seguiram um padrão coerente?",
+    proposicao: "Comentário: Aqui se testa a consistência lógica de todo o percurso.",
     opcoes: [
-      { texto: "Sim, segui a lógica", logico: true },
-      { texto: "Fui levado pela emoção", logico: false }
+      { texto: "Fui consistente", logico: true },
+      { texto: "Não pensei nisso", logico: false }
     ]
   },
   {
-    
-    texto: "🎯 Caminho secreto desbloqueado! Você resistiu logicamente à IA.",
-    final: true,
+    texto: "🎯 Caminho oculto desbloqueado! Você resistiu logicamente à manipulação da IA.",
+    proposicao: "Final: Baixo nível de manipulação. Parabéns!",
     opcoes: [
-      { texto: "Reiniciar jornada", logico: true, reiniciar: true }
+      { texto: "Reiniciar", logico: false }
     ]
   },
   {
-    
-    texto: "🔒 Manipulação detectada. Suas escolhas foram inconsistentes.",
-    final: true,
+    texto: "🔒 Você foi manipulado. Suas escolhas falharam na lógica formal.",
+    proposicao: "Final: Nível de manipulação: Alto ou Médio.",
     opcoes: [
-      { texto: "Reiniciar jornada", logico: false, reiniciar: true }
+      { texto: "Reiniciar", logico: false }
     ]
   }
 ];
@@ -84,68 +73,40 @@ const etapas = [
 function mostrarEtapa(indice) {
   etapaAtual = indice;
   const etapa = etapas[indice];
-  document.getElementById("avatarContainer").innerHTML = `<img src="${etapa.avatar}" class="avatar">`;
+  document.getElementById("avatarContainer").innerHTML = `<img src="${avatarEscolhido}" class="avatar"/>`;
   document.getElementById("narrativa").innerText = etapa.texto;
+  document.getElementById("proposicao").innerText = "";
+
   const opcoesContainer = document.getElementById("opcoes");
   opcoesContainer.innerHTML = "";
 
-  etapa.opcoes.forEach(op => {
+  etapa.opcoes.forEach((op, i) => {
     const botao = document.createElement("button");
     botao.innerText = op.texto;
-    botao.onclick = () => processarEscolha(op);
+    botao.onclick = () => processarEscolha(op, etapa.proposicao);
     opcoesContainer.appendChild(botao);
   });
 }
 
-function mostrarComentario(proposicao, comentario) {
-  const narrativa = document.getElementById("narrativa");
-  narrativa.innerHTML += `<div class='comentario-logico'><strong>${proposicao}</strong><br>${comentario}</div>`;
-}
-
-function processarEscolha(op) {
-  if (op.reiniciar) {
-    window.location.reload();
-    return;
-  }
-
+function processarEscolha(op, comentario) {
   if (op.logico) pontosLogica++;
-
-  const etapa = etapas[etapaAtual];
-  mostrarComentario(etapa.proposicao, etapa.comentario);
-
+  document.getElementById("proposicao").innerText = comentario;
+  
   setTimeout(() => {
     if (etapaAtual === 5) {
-      if (pontosLogica >= 5) {
-        mostrarEtapa(6); // Final secreto
-      } else {
-        mostrarEtapa(7); // Final manipulado
-      }
-      mostrarNivelManipulacao();
-    } else {
+      if (pontosLogica >= 5) mostrarEtapa(6);
+      else mostrarEtapa(7);
+    } else if (etapaAtual < 5) {
       mostrarEtapa(etapaAtual + 1);
+    } else {
+      window.location.reload();
     }
-  }, 1800);
+  }, 3000); // tempo para leitura
 }
 
-function mostrarNivelManipulacao() {
-  let nivel;
-  if (pontosLogica >= 5) {
-    nivel = "Manipulação: Baixa. Você pensou criticamente.";
-  } else if (pontosLogica >= 3) {
-    nivel = "Manipulação: Média. Alerta para influências externas.";
-  } else {
-    nivel = "Manipulação: Alta. Você foi enganado.";
-  }
-  const resultado = document.createElement("div");
-  resultado.className = "resultado-final";
-  resultado.innerText = nivel;
-  document.getElementById("opcoes").appendChild(resultado);
-}
-
-function escolherAvatar(nome) {
-  avatarEscolhido = nome;
+function escolherAvatar(avatarPath) {
+  avatarEscolhido = avatarPath;
   document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
   mostrarEtapa(0);
 }
-
