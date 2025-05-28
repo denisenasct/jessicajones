@@ -79,26 +79,33 @@ const narrativa = [
   }
 ];
 
-// Inicia o jogo imediatamente ao escolher o avatar
+// Função chamada ao clicar em um avatar
 function setarAvatar(path) {
   localStorage.setItem("avatar", path);
   iniciarNarrativa();
 }
 
+// Inicia o jogo e mostra a primeira cena
 function iniciarNarrativa() {
   document.getElementById("tela-intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
   mostrarCena(0);
 }
 
+// Mostra a cena atual com texto, avatar e opções
 function mostrarCena(id) {
   const cena = narrativa.find(c => c.id === id);
   etapaAtual = id;
 
-  const avatar = localStorage.getItem("avatar") || "img/aurora.png";
-  document.getElementById("avatarContainer").innerHTML = `<img src="${avatar}" class="avatar" alt="avatar">`;
+  const avatarPath = localStorage.getItem("avatar") || "img/aurora.png";
+
+  // Verifica se o avatar está disponível
+  document.getElementById("avatarContainer").innerHTML = `
+    <img src="${avatarPath}" class="avatar" alt="avatar" onerror="this.style.display='none'" />
+  `;
 
   document.getElementById("narrativa").innerHTML = `<p>${cena.texto}</p>`;
+
   const opcoes = document.getElementById("opcoes");
   opcoes.innerHTML = "";
 
@@ -109,4 +116,3 @@ function mostrarCena(id) {
     opcoes.appendChild(botao);
   });
 }
-
