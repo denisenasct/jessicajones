@@ -1,49 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veritas.Logic - Verdade ou Consciência?</title>
+  <title>Veritas.Logic: Narrativa</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
 </head>
 <body>
-  <!-- Botão de som -->
   <button id="muteToggle" class="mute-button">🔊 Som</button>
 
   <!-- Tela de introdução -->
   <div id="tela-intro">
-    <div class="intro-matrix-overlay"></div>
     <div class="intro-texto">
       <h1>Veritas.Logic</h1>
-      <p id="descricaoDigitada" class="intro-pre"></p>
+      <p id="descricaoDigitada"></p>
 
-      <div id="escolherAvatar" class="escolha-avatar">
-        <p>Escolha seu avatar:</p>
-        <div class="avatar-escolhas">
-          <div class="avatar-opcao">
-            <img src="img/aurora.png" alt="Aurora" class="avatar-bolinha">
-            <button onclick="escolherAvatar('aurora')">Aurora</button>
-          </div>
-          <div class="avatar-opcao">
-            <img src="img/elyas.png" alt="Elyas" class="avatar-bolinha">
-            <button onclick="escolherAvatar('elyas')">Elyas</button>
-          </div>
+      <div class="avatar-escolhas">
+        <div class="avatar-opcao">
+          <img src="img/aurora.png" alt="Aurora" class="avatar-bolinha">
+          <button onclick="setarAvatar('img/aurora.png')">Aurora</button>
+        </div>
+        <div class="avatar-opcao">
+          <img src="img/elyas.png" alt="Elyas" class="avatar-bolinha">
+          <button onclick="setarAvatar('img/elyas.png')">Elyas</button>
         </div>
       </div>
 
-      <button id="botaoIniciar" onclick="iniciarJogo()" style="display:none;">Começar a Jornada</button>
+      <button id="botaoIniciar" onclick="iniciarNarrativa()" style="display:none;">Iniciar Consciência</button>
     </div>
   </div>
 
   <!-- Terminal principal -->
-  <div class="terminal-bg" id="terminal" style="display: none;">
+  <div class="terminal-bg" id="terminal" style="display:none;">
     <div class="terminal">
       <div id="avatarContainer"></div>
       <div id="narrativa"></div>
       <div id="opcoes"></div>
-      <div id="proposicao"></div>
     </div>
   </div>
 
@@ -52,17 +45,17 @@
     <source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- Scripts -->
-  <script src="script.js" defer></script>
+  <!-- Script de narrativa -->
+  <script src="narrativa.js" defer></script>
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras.\n\nVeritas.Logic iniciado...`;
+      const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: navegar entre escolhas, decifrar a manipulação e desativar a distorção.`;
 
       const descricao = document.getElementById("descricaoDigitada");
       const audio = document.getElementById("musicaFundo");
       const muteBtn = document.getElementById("muteToggle");
       let i = 0;
-      const velocidade = 40;
+      const velocidade = 35;
 
       function digitarIntro() {
         if (i < textoIntro.length) {
@@ -103,5 +96,3 @@
   </script>
 </body>
 </html>
-
-
