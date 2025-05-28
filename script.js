@@ -1,4 +1,4 @@
-// Veritas.Logic - JS 100% funcional com avatar, lógica pós-escolha e responsividade
+// Veritas.Logic - JS com delay maior para leitura de proposição
 
 let etapaAtual = 0;
 let pontosLogica = 0;
@@ -91,7 +91,7 @@ function processarEscolha(op, etapa) {
     } else {
       mostrarEtapa(etapaAtual + 1);
     }
-  }, 1500);
+  }, 4000); // tempo maior para o jogador ler a proposição
 }
 
 function mostrarFinal() {
@@ -123,7 +123,7 @@ function iniciarJogo() {
 
 function reiniciarJogo() {
   location.reload();
-} 
+}
 
 window.escolherAvatar = escolherAvatar;
 window.iniciarJogo = iniciarJogo;
