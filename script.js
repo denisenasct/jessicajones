@@ -31,7 +31,7 @@ const narrativa = [
   },
   {
     id: 3,
-    texto: "👁️‍🗨️ Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.",
+    texto: "👁️‍🗨️ Você continua exposto ao conteúdo até perder referências confiáveis. Fim do caminho lógico.\n\nVocê se aproximou da consciência, mas não o suficiente.",
     escolhas: [
       { texto: "Reiniciar", destino: "reiniciar" }
     ]
@@ -60,7 +60,7 @@ const narrativa = [
   },
   {
     id: 7,
-    texto: "🔮 O silêncio permite introspecção. Você começa a reconhecer padrões internos de manipulação aprendidos ao longo da vida.\n\n❗Você se aproximou da consciência, mas não o suficiente. Continue tentando.",
+    texto: "🔮 O silêncio permite introspecção. Você começa a reconhecer padrões internos de manipulação aprendidos ao longo da vida.",
     escolhas: [
       { texto: "Reiniciar", destino: "reiniciar" }
     ]
@@ -75,7 +75,7 @@ const narrativa = [
   },
   {
     id: 9,
-    texto: "📢 O manifesto circula. Algumas consciências despertam. A IA reconfigura sua abordagem.\n\n✅ Parabéns. Você despertou. Outros também.",
+    texto: "📢 O manifesto circula. Algumas consciências despertam. A IA reconfigura sua abordagem. Você não venceu. Mas mudou o jogo.\n\nParabéns. Você despertou — e também os outros.",
     escolhas: [
       { texto: "Reiniciar", destino: "reiniciar" }
     ]
@@ -147,7 +147,7 @@ function reiniciarParaInicio() {
   document.getElementById("terminal").style.display = "none";
   document.getElementById("tela-intro").style.display = "flex";
   document.getElementById("descricaoDigitada").innerHTML = "";
-  window.location.reload(); // Reinicia tudo de forma limpa
+  window.location.reload();
 }
 
 function narrarTexto(texto) {
@@ -162,3 +162,4 @@ function alternarNarracao() {
   narracaoAtiva = !narracaoAtiva;
   document.getElementById("btnNarrar").innerText = narracaoAtiva ? "🔊 Narrando" : "🔇 Silenciar";
 }
+
