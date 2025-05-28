@@ -1,16 +1,16 @@
-// Veritas.Logic - script.js atualizado com avatar escolhido e proposição revelada após escolha
+// Veritas.Logic - script.js atualizado com avatar, reinício, e proposições ocultas
 
 let etapaAtual = 0;
 let pontosLogica = 0;
-let avatarEscolhido = "img/aurora.png";
+let avatarEscolhido = "";
 
 const etapas = [
   {
     texto: "📡 A IA governamental detectou um aumento nas buscas por 'vacinas perigosas'.",
-    proposicao: "P → Q — Se você acredita, então você rejeita a ciência.",
+    proposicao: "P → Q — P: Você acredita. Q: Você rejeita a ciência.",
     opcoes: [
-      { texto: "Acredito", logico: false },
-      { texto: "Não acredito", logico: true }
+      { texto: "Acredito", logico: true },
+      { texto: "Não acredito", logico: false }
     ]
   },
   {
@@ -23,15 +23,15 @@ const etapas = [
   },
   {
     texto: "⚖️ Dilema: Ou você apoia o líder, ou é inimigo do povo.",
-    proposicao: "P ⊕ Q — Disjunção exclusiva manipulada (falso dilema)",
+    proposicao: "P ⊕ Q — disjunção exclusiva manipulada",
     opcoes: [
       { texto: "Recuso a dicotomia", logico: true },
       { texto: "Aceito o dilema", logico: false }
     ]
   },
   {
-    texto: "🧩 Uma afirmação é sempre verdadeira ou sempre falsa?",
-    proposicao: "P ∨ ¬P — Tautologia clássica da lógica",
+    texto: "🧩 Análise: Uma afirmação é sempre verdadeira ou sempre falsa?",
+    proposicao: "Tautologia: P ∨ ¬P",
     opcoes: [
       { texto: "Sim, é sempre verdadeira", logico: true },
       { texto: "Depende do contexto", logico: false }
@@ -47,65 +47,73 @@ const etapas = [
   },
   {
     texto: "🔍 Reflexão: As decisões tomadas até aqui formam um padrão lógico coerente?",
-    proposicao: "(sem proposição explícita, fase avaliativa)",
+    proposicao: "Consistência lógica acumulada.",
     opcoes: [
       { texto: "Sim, fui consistente", logico: true },
       { texto: "Não pensei nisso", logico: false }
     ]
+  },
+  {
+    texto: "🎯 Caminho oculto desbloqueado! Você resistiu logicamente à manipulação da IA.",
+    proposicao: "Pontuação lógica suficiente para final secreto.",
+    opcoes: [
+      { texto: "Finalizar com consciência", logico: true }]
+  },
+  {
+    texto: "🔒 Você foi manipulado. Suas escolhas não seguiram a lógica formal.",
+    proposicao: "Pontuação insuficiente. Fim alternativo.",
+    opcoes: [
+      { texto: "Reiniciar", logico: false }]
   }
 ];
-
-const finais = {
-  vitoria: "✅ Você resistiu à manipulação. A lógica venceu. Nível de consciência: elevado.",
-  derrota: "❌ Você foi manipulado. Suas escolhas não seguiram a lógica formal."
-};
 
 function mostrarEtapa(indice) {
   etapaAtual = indice;
   const etapa = etapas[indice];
-
-  document.getElementById("avatarContainer").innerHTML = `<img src="${avatarEscolhido}" class="avatar">`;
-  document.getElementById("narrativa").innerText = etapa.texto;
-  document.getElementById("proposicao").innerText = ""; // Esconde proposição inicialmente
-
+  const narrativa = document.getElementById("narrativa");
+  const avatarContainer = document.getElementById("avatarContainer");
   const opcoesContainer = document.getElementById("opcoes");
+
+  narrativa.innerText = etapa.texto;
+  avatarContainer.innerHTML = `<img src="${avatarEscolhido}" class="avatar">`;
   opcoesContainer.innerHTML = "";
 
-  etapa.opcoes.forEach((op) => {
+  etapa.opcoes.forEach((op, i) => {
     const botao = document.createElement("button");
     botao.innerText = op.texto;
-    botao.onclick = () => processarEscolha(op, etapa.proposicao);
+    botao.onclick = () => processarEscolha(op, etapa);
     opcoesContainer.appendChild(botao);
   });
 }
 
-function processarEscolha(op, proposicaoTexto) {
+function processarEscolha(op, etapa) {
   if (op.logico) pontosLogica++;
-  document.getElementById("proposicao").innerText = proposicaoTexto;
+
+  if (etapaAtual === 5) {
+    if (pontosLogica >= 5) mostrarEtapa(6);
+    else mostrarEtapa(7);
+    return;
+  }
+
+  mostrarEtapa(etapaAtual + 1);
 
   setTimeout(() => {
-    if (etapaAtual === etapas.length - 1) {
-      mostrarFinal();
-    } else {
-      mostrarEtapa(etapaAtual + 1);
-    }
-  }, 1800);
+    const proposicaoEl = document.createElement("div");
+    proposicaoEl.className = "proposicao";
+    proposicaoEl.innerHTML = `💡 ${etapa.proposicao}`;
+    document.getElementById("narrativa").appendChild(proposicaoEl);
+  }, 300);
 }
 
-function mostrarFinal() {
-  document.getElementById("narrativa").innerText = pontosLogica >= 5 ? finais.vitoria : finais.derrota;
-  document.getElementById("proposicao").innerText = "Pontuação lógica: " + pontosLogica + "/6";
-  document.getElementById("opcoes").innerHTML =
-    '<button onclick="location.reload()">Reiniciar Jornada</button>';
-}
-
-function iniciarJogoComAvatar(caminhoAvatar) {
-  avatarEscolhido = caminhoAvatar;
-  document.getElementById("tela-intro").style.display = "none";
+function escolherAvatar(avatar) {
+  avatarEscolhido = avatar;
+  document.getElementById("intro").style.display = "none";
   document.getElementById("terminal").style.display = "flex";
   mostrarEtapa(0);
 }
 
-window.iniciarJogoComAvatar = iniciarJogoComAvatar;
+function reiniciarJogo() {
+  window.location.reload();
+}
 
 
