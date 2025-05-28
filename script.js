@@ -107,5 +107,3 @@ function escolherRumo(acao) {
   mostrarEtapa(0);
 }
 
-
-
