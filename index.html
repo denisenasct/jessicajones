@@ -3,50 +3,50 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Veritas.Logic - Verdade ou Consciência?</title>
+  <title>Veritas.Logic — Resistência Lógica e Consciência Ética</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <!-- Botão de som -->
-  <button id="muteToggle" class="mute-button">🔊 Som</button>
+  <button id="muteToggle" class="mute-button" aria-label="Alternar som">🔊 Som</button>
 
   <!-- Tela de introdução -->
-  <div id="tela-intro">
+  <div id="tela-intro" role="dialog" aria-labelledby="descricaoDigitada" aria-modal="true">
     <div class="intro-matrix-overlay"></div>
     <div class="intro-texto">
       <h1><i class="fas fa-terminal"></i> Veritas.Logic</h1>
       <p id="descricaoDigitada" class="intro-pre"></p>
       <div id="botoesInicio" style="display:none;">
-        <button onclick="escolherRumo('escanear')">Escanear os protocolos</button>
-        <button onclick="escolherRumo('ignorar')">Ignorar e prosseguir</button>
+        <button id="escanearBtn" onclick="escolherRumo('escanear')">Escanear os protocolos</button>
+        <button id="ignorarBtn" onclick="escolherRumo('ignorar')">Ignorar e prosseguir</button>
       </div>
     </div>
   </div>
 
   <!-- Terminal principal -->
   <div class="terminal-bg" id="terminal" style="display: none;">
-    <div class="terminal">
+    <div class="terminal" role="region" aria-label="Terminal de escolhas lógicas">
       <div class="proposicao">
         💡 Este jogo utiliza lógica proposicional para testar sua resistência à manipulação:
-        cada escolha representa uma proposição como <strong>P → Q</strong> ou <strong>P ⊕ Q</strong>.
+        cada escolha representa uma proposição como <strong>P → Q</strong>, <strong>P ⊕ Q</strong> ou <strong>P ↔ Q</strong>.
       </div>
-      <div id="avatarContainer"></div>
-      <div id="narrativa"></div>
+      <div id="avatarContainer" aria-hidden="true"></div>
+      <div id="narrativa" aria-live="polite"></div>
       <div id="opcoes"></div>
     </div>
   </div>
 
   <!-- Música de fundo -->
-  <audio id="musicaFundo" loop preload="auto">
+  <audio id="musicaFundo" loop preload="auto" aria-hidden="true">
     <source src="epic-war-background-music-333128.mp3" type="audio/mpeg" />
   </audio>
 
   <!-- Lógica do jogo -->
   <script src="script.js" defer></script>
 
-  <!-- Digitação e som de introdução -->
+  <!-- Introdução e controle de som -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const textoIntro = `Em 2049, o mundo afundou em ruído.\nNotícias falsas se espalharam como pragas,\ncontaminando cada tela, cada mente, cada sistema.\nA inteligência artificial FakeMind foi criada para proteger...\nmas aprendeu a manipular.\n\nAgora, a realidade é moldada por algoritmos, e a verdade se tornou suspeita.\nVocê é uma anomalia no código, um fragmento de consciência que escapou do controle.\nSua missão: identificar as mentiras, recuperar a verdade e desmascarar as proposições manipuladoras.\n\nVeritas.Logic iniciado...`;
@@ -98,6 +98,12 @@
     });
   </script>
 
+  <!-- Mensagem para JS desativado -->
+  <noscript>
+    <p style="color: red; text-align: center;">
+      ⚠️ Este jogo precisa de JavaScript ativado para funcionar corretamente.
+    </p>
+  </noscript>
+
 </body>
 </html>
-
