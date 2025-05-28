@@ -6,6 +6,7 @@ let avatarEscolhido = "";
 
 const etapas = [
   {
+    avatar: "img/ia1.png",
     texto: "📡 A IA detecta: buscas por 'vacinas perigosas' cresceram.",
     proposicao: "P → Q",
     comentario: "Se você acredita (P), então rejeita a ciência (Q). Uma implicação manipuladora.",
@@ -15,6 +16,7 @@ const etapas = [
     ]
   },
   {
+    avatar: "img/ia2.png",
     texto: "📰 Notícia: 'Nova vacina altera seu DNA'.",
     proposicao: "P ↔ Q",
     comentario: "Apenas se você verifica a fonte (P), a informação será útil (Q). Relação bicondicional.",
@@ -24,6 +26,7 @@ const etapas = [
     ]
   },
   {
+    avatar: "img/ia3.png",
     texto: "⚖️ Campanha: 'Ou você apoia o governo, ou é traidor'.",
     proposicao: "P ⊕ Q",
     comentario: "Falsa disjunção exclusiva: a realidade não é binária.",
@@ -33,6 +36,7 @@ const etapas = [
     ]
   },
   {
+    avatar: "img/ia4.png",
     texto: "🧠 Alguém diz: 'tudo é mentira!'",
     proposicao: "P ∨ ¬P",
     comentario: "Tautologia: essa proposição é sempre verdadeira, independente de P.",
@@ -42,6 +46,7 @@ const etapas = [
     ]
   },
   {
+    avatar: "img/ia5.png",
     texto: "📢 'Quem critica o sistema quer destruí-lo'.",
     proposicao: "¬Q → ¬P",
     comentario: "Contrapositiva de uma implicação. Negar não significa ser contra.",
@@ -51,6 +56,7 @@ const etapas = [
     ]
   },
   {
+    avatar: "img/ia6.png",
     texto: "🔍 Reflexão: suas escolhas foram lógicas?",
     proposicao: "Meta-análise",
     comentario: "Consistência lógica indica pensamento crítico.",
@@ -60,6 +66,7 @@ const etapas = [
     ]
   },
   {
+    avatar: "img/ia7.png",
     texto: "🎯 Caminho secreto desbloqueado! Você resistiu logicamente à IA.",
     final: true,
     opcoes: [
@@ -67,6 +74,7 @@ const etapas = [
     ]
   },
   {
+    avatar: "img/ia7.png",
     texto: "🔒 Manipulação detectada. Suas escolhas foram inconsistentes.",
     final: true,
     opcoes: [
@@ -118,7 +126,7 @@ function processarEscolha(op) {
     } else {
       mostrarEtapa(etapaAtual + 1);
     }
-  }, 2000);
+  }, 1800);
 }
 
 function mostrarNivelManipulacao() {
